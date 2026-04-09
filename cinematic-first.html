@@ -1,0 +1,2951 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sportly — Prima Consegna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Barlow+Condensed:wght@300;400;500;600;700;800;900&family=Barlow:wght@300;400;500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/lenis@1.3.21/dist/lenis.css">
+<style>
+/* ══════════════════════════════════════════
+   DESIGN TOKENS
+══════════════════════════════════════════ */
+:root {
+  --w:   #ffffff;
+  --w2:  #f8f7f3;
+  --w3:  #f0ede6;
+  --w4:  #e6e2d9;
+  --rule: #dedbd2;
+  --k:  #0a0a0a;
+  --k2: #1a1a1a;
+  --k3: #3a3a3a;
+  --k4: #6a6a6a;
+  --k5: #9a9a9a;
+  --lime: #b8d435;
+  --teal: #0e9090;
+  --mono: 'Space Mono', monospace;
+  --cond: 'Barlow Condensed', sans-serif;
+  --body: 'Barlow', sans-serif;
+  --serif: 'Playfair Display', Georgia, serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; background: var(--w); }
+body {
+  font-family: var(--body);
+  color: var(--k);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  cursor: none;
+}
+
+/* ══════════════════════════════════════════
+   CUSTOM CURSOR
+══════════════════════════════════════════ */
+#cursor {
+  position: fixed;
+  width: 8px; height: 8px;
+  background: var(--k);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: width .2s, height .2s, background .2s;
+  mix-blend-mode: multiply;
+}
+#cursor-ring {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 1px solid var(--k);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%,-50%);
+  opacity: .3;
+  transition: width .35s cubic-bezier(.16,1,.3,1),
+              height .35s cubic-bezier(.16,1,.3,1),
+              opacity .35s, border-color .2s;
+}
+
+/* ══════════════════════════════════════════
+   PROGRESS
+══════════════════════════════════════════ */
+#prog {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--lime), var(--teal));
+  z-index: 9990;
+  pointer-events: none;
+  transform-origin: left;
+}
+
+/* ══════════════════════════════════════════
+   INTRO SPLASH
+══════════════════════════════════════════ */
+#intro {
+  position: fixed;
+  inset: 0;
+  background: var(--w);
+  z-index: 8000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.intro-line {
+  position: absolute;
+  left: 0; right: 0;
+  height: 1px;
+  background: var(--rule);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.intro-line.t { top: 48%; }
+.intro-line.b { bottom: 48%; }
+.intro-logo-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  position: relative;
+  z-index: 2;
+}
+#intro-logo-img {
+  height: clamp(48px, 8vw, 96px);
+  width: auto;
+  opacity: 0;
+  transform: scale(1.4);
+}
+.intro-label {
+  font-family: var(--mono);
+  font-size: clamp(.5rem, 1vw, .68rem);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--k4);
+  margin-top: 1.5rem;
+  opacity: 0;
+  transform: translateY(8px);
+}
+.intro-curtain {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 50%;
+  background: var(--w);
+  z-index: 3;
+}
+.intro-curtain.l { left: 0; }
+.intro-curtain.r { right: 0; }
+
+/* ══════════════════════════════════════════
+   NAV
+══════════════════════════════════════════ */
+nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 700;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3.5rem;
+  height: 56px;
+  background: rgba(255,255,255,.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: border-color .4s, transform .5s cubic-bezier(.16,1,.3,1), opacity .4s;
+  transform: translateY(-100%);
+  opacity: 0;
+}
+nav.visible {
+  transform: translateY(0);
+  opacity: 1;
+  border-color: var(--rule);
+}
+.nav-logo { height: 42px; margin-right: 1rem; }
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.nav-links a {
+  font-family: var(--mono);
+  font-size: .57rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--k4);
+  text-decoration: none;
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--k); }
+.nav-right {
+  font-family: var(--mono);
+  font-size: .57rem;
+  letter-spacing: 1px;
+  color: var(--k5);
+}
+
+/* ══════════════════════════════════════════
+   HERO — BOOK PLAY CONNECT equal weight
+══════════════════════════════════════════ */
+#hero {
+  min-height: 100svh;
+  background: var(--w);
+  position: relative;
+  overflow: hidden;
+  padding-top: 56px;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+.hero-grid-col { border-right: 1px solid rgba(0,0,0,.04); height: 100%; }
+.hero-grid-col:first-child { border-left: 1px solid rgba(0,0,0,.04); }
+
+.hero-bg-text {
+  position: absolute;
+  font-family: var(--cond);
+  font-weight: 900;
+  font-size: clamp(10rem, 20vw, 24rem);
+  line-height: 1;
+  letter-spacing: -8px;
+  color: rgba(0,0,0,.025);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  white-space: nowrap;
+  pointer-events: none;
+  will-change: transform;
+  user-select: none;
+}
+
+/* Main content — hero body */
+.hero-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 3.5rem 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* Eyebrow */
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: .6rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--k4);
+  margin-bottom: 3.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .8s ease, transform .8s ease;
+}
+.hero-eyebrow.in { opacity: 1; transform: translateY(0); }
+.hero-eyebrow::before {
+  content: '';
+  width: 28px; height: 1px;
+  background: var(--k4);
+}
+
+/* THE THREE WORDS — equal weight, same line */
+.hero-triad {
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  overflow: hidden;
+  margin-bottom: 3.5rem;
+}
+
+.hero-word {
+  font-family: var(--cond);
+  font-weight: 900;
+  font-size: clamp(5rem, 13vw, 15rem);
+  line-height: .85;
+  letter-spacing: -3px;
+  text-transform: uppercase;
+  display: block;
+  transform: translateY(110%);
+  transition: transform 1s cubic-bezier(.16,1,.3,1);
+  white-space: nowrap;
+}
+.hero-word.in { transform: translateY(0); }
+.hero-word:nth-child(1) { color: var(--k); transition-delay: .05s; }
+.hero-word:nth-child(2) {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 700;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--k);
+  letter-spacing: -2px;
+  transition-delay: .14s;
+}
+.hero-word:nth-child(3) { color: var(--teal); transition-delay: .23s; }
+
+/* Separators between words */
+.hero-word-sep {
+  font-family: var(--cond);
+  font-weight: 300;
+  font-size: clamp(2rem, 4vw, 4rem);
+  color: var(--rule);
+  line-height: .85;
+  padding: 0 clamp(.5rem, 1.2vw, 1.8rem);
+  align-self: flex-end;
+  padding-bottom: .4em;
+  transform: translateY(110%);
+  transition: transform 1s cubic-bezier(.16,1,.3,1);
+  display: block;
+}
+.hero-word-sep.in { transform: translateY(0); }
+.hero-word-sep:nth-of-type(1) { transition-delay: .09s; }
+.hero-word-sep:nth-of-type(2) { transition-delay: .18s; }
+
+/* Hero descriptor row */
+.hero-desc-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  border-top: 1px solid var(--rule);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .8s ease .6s, transform .8s cubic-bezier(.16,1,.3,1) .6s;
+}
+.hero-desc-row.in { opacity: 1; transform: translateY(0); }
+
+.hero-desc-col {
+  padding: 1.5rem 0;
+  border-right: 1px solid var(--rule);
+  padding-right: 2.5rem;
+}
+.hero-desc-col:first-child { padding-left: 0; }
+.hero-desc-col:last-child { border-right: none; padding-left: 2.5rem; }
+.hero-desc-col:nth-child(2) { padding-left: 2.5rem; }
+
+.hdc-label {
+  font-family: var(--mono);
+  font-size: .55rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--k5);
+  margin-bottom: .5rem;
+}
+.hdc-value {
+  font-family: var(--cond);
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: -.5px;
+  color: var(--k);
+  line-height: 1;
+  margin-bottom: .25rem;
+}
+.hdc-value.lime { color: var(--lime); }
+.hdc-value.teal { color: var(--teal); }
+.hdc-sub {
+  font-size: .78rem;
+  font-weight: 300;
+  color: var(--k4);
+  line-height: 1.5;
+}
+
+/* Hero bottom bar — KPIs */
+.hero-kpi-bar {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  border-top: 1px solid var(--rule);
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .8s ease .8s, transform .8s cubic-bezier(.16,1,.3,1) .8s;
+}
+.hero-kpi-bar.in { opacity: 1; transform: translateY(0); }
+
+.hero-kpi-item {
+  padding: 1.25rem 3.5rem;
+  border-right: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.hero-kpi-item:last-child { border-right: none; }
+.hki-num {
+  font-family: var(--cond);
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.hki-num.lime { color: var(--lime); }
+.hki-num.teal { color: var(--teal); }
+.hki-lbl {
+  font-family: var(--mono);
+  font-size: .55rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--k5);
+  margin-bottom: .2rem;
+}
+.hki-sub {
+  font-size: .78rem;
+  font-weight: 300;
+  color: var(--k4);
+  line-height: 1.4;
+}
+
+/* Scroll cue */
+.hero-scroll {
+  position: absolute;
+  bottom: 7rem;
+  right: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .75rem;
+  opacity: 0;
+  transition: opacity .8s ease 1.2s;
+  z-index: 2;
+}
+.hero-scroll.in { opacity: 1; }
+.hero-scroll-track {
+  width: 1px;
+  height: 60px;
+  background: var(--rule);
+  position: relative;
+  overflow: hidden;
+}
+.hero-scroll-track::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0; right: 0;
+  height: 100%;
+  background: var(--k);
+  animation: scrollDrop 1.6s ease-in-out infinite;
+}
+@keyframes scrollDrop {
+  0%   { top: -100%; }
+  50%  { top: 0; }
+  100% { top: 100%; }
+}
+.hero-scroll-text {
+  font-family: var(--mono);
+  font-size: .48rem;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--k4);
+  writing-mode: vertical-rl;
+}
+
+/* ══════════════════════════════════════════
+   SECTION SYSTEM
+══════════════════════════════════════════ */
+.s {
+  padding: 9rem 3.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.s--white { background: var(--w); }
+.s--dark { background: var(--k); }
+.s--dark .body-p { color: rgba(255,255,255,.4); }
+.s--dark .body-p strong { color: rgba(255,255,255,.8); }
+.s--dark .ss-title { color: rgba(255,255,255,.6); border-color: rgba(255,255,255,.06); }
+.s--off   { background: var(--w2); }
+.s--warm  { background: var(--w3); }
+.s--k     { background: var(--k); }
+.container { max-width: 1280px; margin: 0 auto; }
+
+/* ══════════════════════════════════════════
+   LENIS-DRIVEN REVEAL SYSTEM
+   Each element animates as it enters viewport
+   driven by IntersectionObserver + Lenis timing
+══════════════════════════════════════════ */
+
+/* Base state — hidden */
+[data-reveal] {
+  opacity: 0;
+}
+
+/* Directional transforms per type */
+[data-reveal="up"]    { transform: translateY(50px); }
+[data-reveal="down"]  { transform: translateY(-30px); }
+[data-reveal="left"]  { transform: translateX(-50px); }
+[data-reveal="right"] { transform: translateX(50px); }
+[data-reveal="scale"] { transform: scale(.88); }
+[data-reveal="fade"]  { transform: none; }
+[data-reveal="clip"]  {
+  transform: none;
+  clip-path: inset(0 0 100% 0);
+}
+[data-reveal="word"] {
+  transform: none;
+  clip-path: inset(0 0 100% 0);
+}
+
+/* Revealed state */
+[data-reveal].revealed {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0 0% 0);
+  transition:
+    opacity .9s cubic-bezier(.16,1,.3,1),
+    transform .9s cubic-bezier(.16,1,.3,1),
+    clip-path .9s cubic-bezier(.16,1,.3,1);
+}
+
+/* Staggered delays */
+[data-delay="1"] { transition-delay: .08s; }
+[data-delay="2"] { transition-delay: .16s; }
+[data-delay="3"] { transition-delay: .24s; }
+[data-delay="4"] { transition-delay: .32s; }
+[data-delay="5"] { transition-delay: .40s; }
+[data-delay="6"] { transition-delay: .48s; }
+[data-delay="7"] { transition-delay: .56s; }
+[data-delay="8"] { transition-delay: .64s; }
+[data-delay="9"] { transition-delay: .72s; }
+
+/* ══════════════════════════════════════════
+   SECTION HEADER SYSTEM
+══════════════════════════════════════════ */
+.sh { margin-bottom: 5rem; }
+.sh-eyebrow {
+  font-family: var(--mono);
+  font-size: .58rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--k5);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+.sh-eyebrow::before {
+  content: '';
+  width: 20px; height: 1px;
+  background: currentColor;
+  flex-shrink: 0;
+}
+.s--k .sh-eyebrow { color: rgba(255,255,255,.3); }
+
+.sh-title {
+  font-family: var(--cond);
+  font-weight: 900;
+  font-size: clamp(3rem, 6.5vw, 7rem);
+  line-height: .88;
+  letter-spacing: -2px;
+  color: var(--k);
+  overflow: hidden;
+}
+.sh-title em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -.5px;
+  color: var(--teal);
+}
+.s--k .sh-title { color: var(--w); }
+.s--k .sh-title em { color: var(--lime); }
+
+.sh-rule {
+  width: 100%; height: 1px;
+  background: var(--rule);
+  margin-top: 2.5rem;
+}
+.s--k .sh-rule { background: rgba(255,255,255,.08); }
+
+/* ══════════════════════════════════════════
+   SECTION 01 — SCELTA (Cinematic scroll narrative)
+══════════════════════════════════════════ */
+
+/* Full-width intro pull quote */
+.s01-pullquote {
+  padding: 4rem 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 5rem;
+  position: relative;
+}
+.s01-pq-text {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 3vw, 2.8rem);
+  font-style: italic;
+  line-height: 1.3;
+  color: var(--k);
+  max-width: 800px;
+}
+.s01-pq-text strong {
+  font-style: normal;
+  color: var(--teal);
+  font-weight: 700;
+}
+.s01-pq-num {
+  position: absolute;
+  right: 0; top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--cond);
+  font-size: 8rem;
+  font-weight: 900;
+  color: rgba(0,0,0,.04);
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* Two-column layout */
+.s01-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: start;
+  margin-bottom: 5rem;
+}
+
+/* Stat tiles */
+.stat-tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+.stat-tile {
+  background: var(--w);
+  padding: 2.5rem 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: background .25s;
+}
+.stat-tile:hover { background: var(--w2); }
+.stat-tile::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .4s cubic-bezier(.16,1,.3,1);
+}
+.stat-tile:hover::after { transform: scaleX(1); }
+.stat-tile.lime::after { background: var(--lime); }
+.stat-tile.teal::after { background: var(--teal); }
+.st-n {
+  font-family: var(--cond);
+  font-size: 3.5rem;
+  font-weight: 900;
+  letter-spacing: -2px;
+  line-height: 1;
+  margin-bottom: .5rem;
+  display: block;
+}
+.st-n.lime { color: var(--lime); }
+.st-n.teal { color: var(--teal); }
+.st-label {
+  font-family: var(--mono);
+  font-size: .55rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--k5);
+  margin-bottom: .3rem;
+}
+.st-desc {
+  font-size: .8rem;
+  font-weight: 300;
+  color: var(--k4);
+  line-height: 1.6;
+}
+
+/* Body text */
+.body-p {
+  font-size: .92rem;
+  font-weight: 300;
+  line-height: 1.85;
+  color: var(--k3);
+  margin-bottom: 1.5rem;
+}
+.body-p strong { font-weight: 600; color: var(--k); }
+.s--k .body-p { color: rgba(255,255,255,.4); }
+.s--k .body-p strong { color: rgba(255,255,255,.8); }
+
+/* Full-width market table */
+.market-table-wrap {
+  border: 1px solid var(--rule);
+  overflow: hidden;
+}
+.market-table-head {
+  background: var(--k);
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  padding: .75rem 1.5rem;
+}
+.mth {
+  font-family: var(--mono);
+  font-size: .53rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.3);
+  font-weight: 400;
+}
+.market-table-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--rule);
+  align-items: center;
+  transition: background .15s;
+}
+.market-table-row:last-child { border-bottom: none; }
+.market-table-row:hover { background: var(--w2); }
+.mtr-name {
+  font-family: var(--cond);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -.2px;
+  color: var(--k);
+}
+.mtr-val {
+  font-family: var(--mono);
+  font-size: .75rem;
+  color: var(--k3);
+  font-weight: 700;
+}
+.mtr-val.lime { color: var(--lime); }
+.mtr-val.teal { color: var(--teal); }
+.mtr-sub { font-size: .72rem; font-weight: 300; color: var(--k5); }
+
+/* Bar chart */
+.bar-chart { display: flex; flex-direction: column; gap: 1.1rem; }
+.bar-row {
+  display: grid;
+  grid-template-columns: 160px 1fr 60px;
+  align-items: center;
+  gap: 1rem;
+}
+.bar-lbl { font-size: .78rem; font-weight: 400; color: var(--k3); text-align: right; }
+.bar-track {
+  height: 4px;
+  background: var(--rule);
+  overflow: hidden;
+  position: relative;
+}
+.bar-fill {
+  height: 100%;
+  width: 0%;
+  transition: width 1.4s cubic-bezier(.16,1,.3,1);
+}
+.bar-fill.lime  { background: var(--lime); }
+.bar-fill.teal  { background: var(--teal); }
+.bar-fill.k3    { background: var(--k3); }
+.bar-fill.muted { background: var(--rule); }
+.bar-val {
+  font-family: var(--mono);
+  font-size: .68rem;
+  font-weight: 700;
+  color: var(--k);
+}
+
+/* Callout */
+.callout {
+  border-left: 2px solid var(--lime);
+  padding: 1.25rem 1.5rem;
+  margin: 2rem 0;
+  background: rgba(184,212,53,.04);
+}
+.s--k .callout { border-color: var(--lime); background: rgba(184,212,53,.05); }
+.callout-text {
+  font-size: .88rem;
+  font-style: italic;
+  line-height: 1.8;
+  color: var(--k3);
+}
+.s--k .callout-text { color: rgba(255,255,255,.4); }
+.callout-text strong { font-style: normal; color: var(--k); font-weight: 600; }
+.s--k .callout-text strong { color: #fff; }
+
+/* ══════════════════════════════════════════
+   SECTION 02 — PRODOTTO
+   Narrative: one module at a time
+══════════════════════════════════════════ */
+
+/* Intro line */
+.s02-intro-line {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 3rem;
+  align-items: center;
+  margin-bottom: 5rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.modules-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+.mod {
+  background: var(--w2);
+  padding: 2.5rem 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: background .25s;
+}
+.mod:hover { background: var(--w); }
+.mod::after {
+  content: attr(data-num);
+  position: absolute;
+  bottom: 1rem; right: 1.5rem;
+  font-family: var(--cond);
+  font-size: 6rem;
+  font-weight: 900;
+  color: rgba(0,0,0,.04);
+  line-height: 1;
+  transition: color .3s, transform .4s cubic-bezier(.16,1,.3,1);
+  transform: translateY(8px);
+}
+.mod:hover::after { color: rgba(0,0,0,.07); transform: translateY(0); }
+.mod-tag {
+  font-family: var(--mono);
+  font-size: .55rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: .75rem;
+}
+.mod.c1 .mod-tag { color: var(--lime); }
+.mod.c2 .mod-tag { color: var(--teal); }
+.mod.c3 .mod-tag { color: var(--k3); }
+.mod-title {
+  font-family: var(--cond);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -.4px;
+  color: var(--k);
+  margin-bottom: .6rem;
+}
+.mod-desc {
+  font-size: .8rem;
+  font-weight: 300;
+  color: var(--k4);
+  line-height: 1.7;
+}
+
+/* Architecture */
+.arch {
+  border: 1px solid var(--rule);
+  overflow: hidden;
+}
+.arch-row {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  border-bottom: 1px solid var(--rule);
+}
+.arch-row:last-child { border-bottom: none; }
+.arch-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid var(--rule);
+}
+.arch-label span {
+  font-family: var(--mono);
+  font-size: .48rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #fff;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+.arch-row.l1 .arch-label { background: var(--teal); }
+.arch-row.l2 .arch-label { background: #1a8a88; }
+.arch-row.l3 .arch-label { background: #2a7a78; }
+.arch-row.l4 .arch-label { background: #3a6a68; }
+.arch-blocks { display: flex; }
+.arch-block {
+  flex: 1;
+  padding: 1rem 1.5rem;
+  border-right: 1px solid var(--rule);
+  background: var(--w);
+  transition: background .2s;
+}
+.arch-block:last-child { border-right: none; }
+.arch-block:hover { background: var(--w2); }
+.arch-block-n {
+  font-family: var(--cond);
+  font-size: .9rem;
+  font-weight: 700;
+  letter-spacing: -.2px;
+  color: var(--k);
+  margin-bottom: .2rem;
+}
+.arch-block-d {
+  font-size: .72rem;
+  font-weight: 300;
+  color: var(--k4);
+  line-height: 1.5;
+}
+
+/* ══════════════════════════════════════════
+   SECTION 03 — PROBLEMA (sticky)
+══════════════════════════════════════════ */
+#s03 {
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--k);
+}
+.sticky-panel {
+  position: sticky;
+  top: 56px;
+  height: calc(100svh - 56px);
+  background: var(--k);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 4rem;
+  overflow: hidden;
+}
+.sticky-bg-num {
+  position: absolute;
+  font-family: var(--cond);
+  font-weight: 900;
+  font-size: 36vw;
+  line-height: .7;
+  color: rgba(255,255,255,.03);
+  bottom: -2rem; right: -2rem;
+  pointer-events: none;
+  transition: opacity .4s;
+  will-change: transform;
+}
+.sticky-eyebrow {
+  font-family: var(--mono);
+  font-size: .57rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--lime);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+.sticky-eyebrow::before {
+  content: '';
+  width: 20px; height: 1px;
+  background: var(--lime);
+}
+.sticky-title {
+  font-family: var(--cond);
+  font-weight: 900;
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  line-height: .9;
+  letter-spacing: -1.5px;
+  color: var(--w);
+  margin-bottom: 1.5rem;
+}
+.sticky-title em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--lime);
+}
+.sticky-stat-box {
+  border: 1px solid rgba(255,255,255,.1);
+  padding: 2rem;
+  margin-top: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.sticky-stat-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--lime), transparent);
+}
+.ssb-val {
+  font-family: var(--cond);
+  font-size: 4.5rem;
+  font-weight: 900;
+  letter-spacing: -3px;
+  line-height: 1;
+  color: var(--lime);
+  display: block;
+  transition: opacity .25s ease, transform .3s cubic-bezier(.16,1,.3,1);
+}
+.ssb-lbl {
+  font-family: var(--mono);
+  font-size: .55rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.3);
+  margin: .4rem 0;
+}
+.ssb-desc {
+  font-size: .8rem;
+  font-weight: 300;
+  color: rgba(255,255,255,.3);
+  line-height: 1.65;
+  max-width: 32ch;
+}
+.steps-panel { background: var(--w2); }
+.story-step {
+  min-height: 80svh;
+  padding: 6rem 4rem;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+  transition: background .4s ease;
+}
+.story-step:last-child { border-bottom: none; }
+.story-step.active { background: var(--k2); }
+.story-step::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: transparent;
+  transition: background .4s ease;
+}
+.story-step.active::before { background: var(--lime); }
+.step-n {
+  font-family: var(--mono);
+  font-size: .55rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: .75rem;
+}
+.step-title {
+  font-family: var(--cond);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -.5px;
+  color: var(--w);
+  margin-bottom: .75rem;
+  line-height: 1;
+}
+.step-body {
+  font-size: .88rem;
+  font-weight: 300;
+  color: var(--w4);
+  line-height: 1.8;
+  max-width: 40ch;
+}
+
+/* PS table */
+.ps-table {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+.ps-row {
+  display: grid;
+  grid-template-columns: 1fr 36px 1fr;
+  background: var(--k2);
+  transition: background .2s;
+}
+.ps-row:hover { background: var(--k3); }
+.ps-problem, .ps-solution { padding: 1.25rem 1.75rem; }
+.ps-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--k5);
+  font-size: .7rem;
+  border-left: 1px solid var(--rule);
+  border-right: 1px solid var(--rule);
+}
+.ps-tag {
+  font-family: var(--mono);
+  font-size: .52rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: .3rem;
+  font-weight: 600;
+}
+.ps-problem .ps-tag { color: #c0392b; }
+.ps-solution .ps-tag { color: var(--teal); }
+.ps-text { font-size: .8rem; font-weight: 300; color: var(--w4); line-height: 1.5; }
+
+/* ══════════════════════════════════════════
+   SECTION 04 — VALORE
+══════════════════════════════════════════ */
+
+/* Lenis-driven horizontal scroll strip */
+.value-intro-strip {
+  display: flex;
+  gap: 2rem;
+  overflow: hidden;
+  margin-bottom: 4rem;
+  position: relative;
+}
+.value-intro-strip::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 80px;
+  background: linear-gradient(90deg, transparent, var(--w2));
+  pointer-events: none;
+}
+.vs-pill {
+  font-family: var(--cond);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -.2px;
+  white-space: nowrap;
+  padding: .6rem 1.2rem;
+  border: 1px solid var(--rule);
+  color: var(--k4);
+  flex-shrink: 0;
+  transition: border-color .2s, color .2s, background .2s;
+}
+.vs-pill:hover { border-color: var(--teal); color: var(--teal); }
+
+.value-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+}
+.value-col-head {
+  font-family: var(--mono);
+  font-size: .55rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--teal);
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+.vi {
+  display: flex;
+  gap: .75rem;
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--w3);
+}
+.vi:last-child { border-bottom: none; margin: 0; padding: 0; }
+.vi-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--lime);
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+.vi-dot.teal { background: var(--teal); }
+.vi-t {
+  font-family: var(--cond);
+  font-size: .95rem;
+  font-weight: 700;
+  letter-spacing: -.2px;
+  color: var(--k);
+  margin-bottom: .25rem;
+}
+.vi-d { font-size: .78rem; font-weight: 300; color: var(--k4); line-height: 1.65; }
+
+/* Coverage comparison — animated bars */
+.coverage-row {
+  display: grid;
+  grid-template-columns: 140px 1fr 48px;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.cov-name { font-size: .8rem; font-weight: 400; color: var(--k3); text-align: right; }
+.cov-track { height: 6px; background: var(--rule); overflow: hidden; position: relative; }
+.cov-fill { height: 100%; width: 0%; transition: width 1.4s cubic-bezier(.16,1,.3,1); }
+.cov-fill.lime { background: var(--lime); }
+.cov-fill.teal { background: var(--teal); }
+.cov-fill.gray { background: var(--k5); }
+.cov-pct { font-family: var(--mono); font-size: .68rem; font-weight: 700; color: var(--k); }
+
+/* ══════════════════════════════════════════
+   SECTION 05 — TARGET
+══════════════════════════════════════════ */
+
+/* Segment cards */
+.seg-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+.seg-card {
+  background: var(--w);
+  padding: 2.5rem 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: background .25s;
+}
+.seg-card:hover { background: var(--w2); }
+.seg-card-line {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.s1 .seg-card-line { background: var(--lime); }
+.s2 .seg-card-line { background: var(--teal); }
+.s3 .seg-card-line { background: linear-gradient(90deg, var(--lime), var(--teal)); }
+.seg-tag {
+  font-family: var(--mono);
+  font-size: .53rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: .75rem;
+}
+.s1 .seg-tag { color: var(--lime); }
+.s2 .seg-tag { color: var(--teal); }
+.s3 .seg-tag { color: var(--k4); }
+.seg-title {
+  font-family: var(--cond);
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: -.5px;
+  color: var(--k);
+  margin-bottom: .6rem;
+  line-height: 1;
+}
+.seg-title em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+}
+.seg-desc { font-size: .8rem; font-weight: 300; color: var(--k4); line-height: 1.7; margin-bottom: 1.25rem; }
+.seg-traits { display: flex; flex-direction: column; gap: .3rem; }
+.seg-trait {
+  font-family: var(--mono);
+  font-size: .63rem;
+  color: var(--k3);
+  padding-left: .75rem;
+  position: relative;
+}
+.seg-trait::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 50%;
+  transform: translateY(-50%);
+  width: 4px; height: 1px;
+  background: var(--rule);
+}
+
+/* Table */
+.tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .8rem;
+  border: 1px solid var(--rule);
+}
+.tbl thead tr { background: var(--k); }
+.tbl thead th {
+  padding: .7rem 1rem;
+  text-align: left;
+  font-family: var(--mono);
+  font-size: .52rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.35);
+  font-weight: 400;
+}
+.tbl tbody tr { border-bottom: 1px solid var(--rule); transition: background .15s; }
+.tbl tbody tr:hover { background: var(--w2); }
+.tbl tbody td { padding: .7rem 1rem; color: var(--k3); font-weight: 300; line-height: 1.5; }
+.tbl tbody td:first-child {
+  font-family: var(--cond);
+  font-weight: 700;
+  font-size: .92rem;
+  color: var(--k);
+}
+
+/* ══════════════════════════════════════════
+   SECTION 06 — CONCORRENZA
+══════════════════════════════════════════ */
+.comp-tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .8rem;
+  border: 1px solid var(--rule);
+}
+.comp-tbl thead tr { background: var(--k); }
+.comp-tbl thead th {
+  padding: .65rem .75rem;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: .5rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.3);
+  font-weight: 400;
+}
+.comp-tbl thead th:first-child { text-align: left; }
+.comp-tbl tbody tr { border-bottom: 1px solid var(--rule); transition: background .15s; }
+.comp-tbl tbody tr:hover { background: var(--w2); }
+.comp-tbl tbody tr.our { background: rgba(184,212,53,.05); }
+.comp-tbl tbody td { padding: .65rem .75rem; text-align: center; color: var(--k4); font-weight: 300; }
+.comp-tbl tbody td:first-child { text-align: left; font-family: var(--cond); font-weight: 700; font-size: .9rem; color: var(--k); }
+.cc {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  font-family: var(--mono);
+  font-size: .55rem;
+  font-weight: 700;
+}
+.cc.y { background: rgba(14,144,144,.1); color: var(--teal); }
+.cc.p { background: rgba(184,212,53,.15); color: #7a9a10; }
+.cc.n { background: var(--w3); color: var(--k5); }
+
+.diff-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+.diff-card {
+  background: var(--w);
+  padding: 2rem 2rem 2rem 2.5rem;
+  position: relative;
+  transition: background .2s;
+}
+.diff-card:hover { background: var(--w2); }
+.diff-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 3px;
+}
+.diff-card.c1::before { background: var(--lime); }
+.diff-card.c2::before { background: var(--teal); }
+.diff-card.c3::before { background: var(--k3); }
+.diff-card.c4::before { background: var(--k5); }
+.diff-n { font-family: var(--mono); font-size: .53rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--k5); margin-bottom: .4rem; }
+.diff-t { font-family: var(--cond); font-size: 1.05rem; font-weight: 700; color: var(--k); margin-bottom: .4rem; letter-spacing: -.2px; }
+.diff-d { font-size: .78rem; font-weight: 300; color: var(--k4); line-height: 1.65; }
+
+/* ══════════════════════════════════════════
+   SECTION 07 — BUSINESS (dark)
+══════════════════════════════════════════ */
+.bm-streams {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 1px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.06);
+}
+.bm-card {
+  background: rgba(255,255,255,.02);
+  padding: 2.5rem 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: background .25s;
+}
+.bm-card:hover { background: rgba(255,255,255,.05); }
+.bm-card::before {
+  content: attr(data-n);
+  position: absolute;
+  top: -1rem; right: 1rem;
+  font-family: var(--cond);
+  font-size: 8rem;
+  font-weight: 900;
+  color: rgba(255,255,255,.03);
+  line-height: 1;
+}
+.bm-stream { font-family: var(--mono); font-size: .53rem; letter-spacing: 2px; text-transform: uppercase; color: var(--lime); margin-bottom: .5rem; }
+.bm-title { font-family: var(--cond); font-size: 1.4rem; font-weight: 800; letter-spacing: -.3px; color: rgba(255,255,255,.85); margin-bottom: .75rem; }
+.bm-desc { font-size: .78rem; font-weight: 300; color: rgba(255,255,255,.3); line-height: 1.7; }
+.bm-est {
+  font-family: var(--mono);
+  font-size: .63rem;
+  color: var(--lime);
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255,255,255,.06);
+}
+
+/* Pricing */
+.pricing-row {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 1.5rem;
+}
+.price-card {
+  background: var(--w);
+  border: 1px solid rgba(255,255,255,.08);
+  padding: 2.5rem 2rem;
+  position: relative;
+  text-align: center;
+  transition: border-color .25s, transform .3s cubic-bezier(.16,1,.3,1);
+}
+.price-card:hover { border-color: var(--teal); transform: translateY(-4px); }
+.price-card.feat { border-color: var(--teal); }
+.price-badge {
+  position: absolute;
+  top: -1px; right: -1px;
+  background: var(--teal);
+  color: var(--w);
+  font-family: var(--mono);
+  font-size: .5rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: .25rem .75rem;
+}
+.price-tier { font-family: var(--mono); font-size: .55rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--k5); margin-bottom: .75rem; }
+.price-n { font-family: var(--cond); font-size: 4.5rem; font-weight: 900; letter-spacing: -3px; line-height: 1; color: var(--k); margin-bottom: .15rem; }
+.price-p { font-family: var(--mono); font-size: .58rem; color: var(--k5); margin-bottom: 2rem; }
+.pfl { display: flex; flex-direction: column; gap: .5rem; text-align: left; }
+.pfi { display: flex; align-items: flex-start; gap: .5rem; font-size: .76rem; font-weight: 300; color: var(--k3); }
+.pfi::before {
+  content: '';
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--lime);
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+/* Revenue table */
+.rev-tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .8rem;
+  border: 1px solid rgba(255,255,255,.06);
+}
+.rev-tbl thead tr { background: rgba(255,255,255,.04); }
+.rev-tbl thead th {
+  padding: .7rem 1rem;
+  font-family: var(--mono);
+  font-size: .52rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.25);
+  font-weight: 400;
+  text-align: left;
+}
+.rev-tbl thead th:not(:first-child) { text-align: right; }
+.rev-tbl tbody tr { border-bottom: 1px solid rgba(255,255,255,.04); transition: background .15s; }
+.rev-tbl tbody tr:hover { background: rgba(255,255,255,.03); }
+.rev-tbl tbody tr.total { border-top: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.03); }
+.rev-tbl tbody td { padding: .7rem 1rem; color: rgba(255,255,255,.35); font-weight: 300; }
+.rev-tbl tbody td:first-child { font-family: var(--cond); font-weight: 700; color: rgba(255,255,255,.7); font-size: .88rem; }
+.rev-tbl tbody td:not(:first-child) { text-align: right; font-family: var(--mono); font-size: .72rem; }
+.rev-tbl .total td { color: rgba(255,255,255,.6); }
+.hl-lime  { color: #c8e050 !important; font-weight: 700 !important; }
+.hl-teal  { color: #2ab8b8 !important; font-weight: 700 !important; }
+
+/* ══════════════════════════════════════════
+   SECTION 08 — WBS
+══════════════════════════════════════════ */
+.wbs-root {
+  background: var(--k);
+  color: var(--w);
+  padding: 2rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--rule);
+  border-bottom: none;
+}
+.wbs-root-t { font-family: var(--cond); font-size: 1.4rem; font-weight: 900; letter-spacing: -.5px; }
+.wbs-root-s { font-family: var(--mono); font-size: .52rem; color: rgba(255,255,255,.2); letter-spacing: 1px; margin-top: .2rem; }
+.wbs-phases {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+.wbs-phase { background: var(--w); padding: 1.5rem; }
+.wbs-ph { padding-bottom: .75rem; margin-bottom: .75rem; border-bottom: 1px solid var(--rule); }
+.wbs-ph-n { font-family: var(--mono); font-size: .52rem; color: var(--teal); margin-bottom: .25rem; }
+.wbs-ph-t { font-family: var(--cond); font-size: .9rem; font-weight: 700; letter-spacing: -.2px; color: var(--k); line-height: 1.2; }
+.wbs-items { display: flex; flex-direction: column; gap: .3rem; }
+.wbs-item { display: flex; gap: .4rem; font-size: .7rem; font-weight: 300; color: var(--k4); line-height: 1.4; }
+.wbs-item-n { font-family: var(--mono); font-size: .52rem; color: var(--teal); flex-shrink: 0; margin-top: 1px; }
+
+/* Gantt */
+.gantt-wrap { border: 1px solid var(--rule); overflow: hidden; }
+
+/* Timeline */
+.tl-wrap { position: relative; padding-left: 3rem; }
+.tl-wrap::before {
+  content: '';
+  position: absolute;
+  left: .75rem; top: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, var(--lime), var(--teal), transparent);
+}
+.ms-item { position: relative; margin-bottom: 2.5rem; }
+.ms-dot {
+  position: absolute;
+  left: -2.1rem; top: .1rem;
+  width: 1.4rem; height: 1.4rem;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono);
+  font-size: .48rem;
+  font-weight: 700;
+}
+.ms-dot.m1 { background: var(--lime); color: var(--k); }
+.ms-dot.m2 { background: var(--teal); color: #fff; }
+.ms-dot.m3 { background: #1a8888; color: #fff; }
+.ms-dot.m4 { background: #2a7878; color: #fff; }
+.ms-dot.m5 { background: #3a6868; color: #fff; }
+.ms-dot.go { background: var(--k); border: 1.5px solid var(--lime); color: var(--lime); font-size: .4rem; }
+.ms-t { font-family: var(--cond); font-size: 1.05rem; font-weight: 700; letter-spacing: -.2px; color: var(--k); margin-bottom: .2rem; }
+.ms-w { font-family: var(--mono); font-size: .58rem; color: var(--teal); margin-bottom: .3rem; }
+.ms-d { font-size: .78rem; font-weight: 300; color: var(--k4); line-height: 1.6; }
+
+/* ══════════════════════════════════════════
+   OUTRO
+══════════════════════════════════════════ */
+#outro {
+  background: var(--k);
+  min-height: 80svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 8rem 3.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.outro-ring {
+  position: absolute;
+  width: 600px; height: 600px;
+  border: 1px solid rgba(255,255,255,.04);
+  border-radius: 50%;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%) rotate(0deg);
+  will-change: transform;
+  pointer-events: none;
+}
+.outro-ring::before {
+  content: '';
+  position: absolute;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--lime);
+  top: -4px; left: 50%;
+  transform: translateX(-50%);
+}
+.outro-ring-2 {
+  position: absolute;
+  width: 900px; height: 900px;
+  border: 1px solid rgba(255,255,255,.02);
+  border-radius: 50%;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%) rotate(0deg);
+  will-change: transform;
+  pointer-events: none;
+}
+.outro-tag { font-family: var(--mono); font-size: .58rem; letter-spacing: 3px; text-transform: uppercase; color: var(--lime); margin-bottom: 2rem; position: relative; z-index: 2; }
+.outro-h {
+  font-family: var(--cond);
+  font-weight: 900;
+  font-size: clamp(4rem, 11vw, 11rem);
+  letter-spacing: -4px;
+  line-height: .82;
+  color: var(--w);
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 2;
+}
+.outro-h em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--lime); letter-spacing: -2px; }
+.outro-sub { font-size: .88rem; font-weight: 300; color: rgba(255,255,255,.3); max-width: 46ch; line-height: 1.8; margin-bottom: 4rem; position: relative; z-index: 2; }
+.outro-meta { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; justify-content: center; position: relative; z-index: 2; }
+.outro-meta span { font-family: var(--mono); font-size: .56rem; letter-spacing: 1px; color: rgba(255,255,255,.2); }
+.outro-meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--lime); opacity: .4; }
+
+/* ══════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════ */
+footer {
+  background: #050505;
+  border-top: 1px solid rgba(255,255,255,.03);
+  padding: 1.5rem 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-logo { height: 16px; filter: brightness(0) invert(1); opacity: .12; }
+.footer-text { font-family: var(--mono); font-size: .53rem; letter-spacing: 1px; color: rgba(255,255,255,.12); }
+
+/* ══════════════════════════════════════════
+   SUBSECTION
+══════════════════════════════════════════ */
+.ss-title {
+  font-family: var(--cond);
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -.4px;
+  padding-bottom: .75rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: baseline;
+  gap: .75rem;
+  border-bottom: 1px solid var(--rule);
+}
+.s--k .ss-title { color: rgba(255,255,255,.6); border-color: rgba(255,255,255,.06); }
+.ss-n { font-family: var(--mono); font-size: .6rem; color: var(--teal); flex-shrink: 0; }
+.s--k .ss-n { color: var(--lime); }
+
+.rule { width: 100%; height: 1px; background: var(--rule); margin: 3.5rem 0; }
+.rule-k { background: rgba(255,255,255,.06); }
+
+/* ══════════════════════════════════════════
+   LENIS PARALLAX ELEMENTS
+══════════════════════════════════════════ */
+.lenis-parallax { will-change: transform; }
+
+/* Section number watermarks driven by scroll */
+.s-watermark {
+  position: absolute;
+  font-family: var(--cond);
+  font-weight: 900;
+  font-size: clamp(8rem, 18vw, 22rem);
+  line-height: 1;
+  color: rgba(0,0,0,.025);
+  pointer-events: none;
+  user-select: none;
+  will-change: transform;
+}
+.s--k .s-watermark { color: rgba(255,255,255,.025); }
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .s01-grid, .value-two-col { grid-template-columns: 1fr; gap: 3rem; }
+  .modules-grid, .seg-grid { grid-template-columns: 1fr 1fr; }
+  .wbs-phases { grid-template-columns: 1fr 1fr; }
+  .bm-streams, .pricing-row { grid-template-columns: 1fr; }
+  #s03 { grid-template-columns: 1fr; }
+  .sticky-panel { position: relative; height: auto; min-height: 50vh; }
+  nav { padding: 0 1.5rem; }
+  .nav-links { display: none; }
+  .s { padding: 6rem 1.5rem; }
+  .hero-body { padding: 3rem 1.5rem 2rem; }
+  .hero-kpi-bar { grid-template-columns: 1fr; }
+  .hero-kpi-item { border-right: none; border-bottom: 1px solid var(--rule); padding: 1rem 1.5rem; }
+  .hero-kpi-item:last-child { border-bottom: none; }
+  .hero-word { font-size: clamp(3rem, 10vw, 8rem); }
+  .hero-desc-row { grid-template-columns: 1fr; }
+  .hero-desc-col { border-right: none; border-bottom: 1px solid var(--rule); padding: 1rem 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { opacity: 1; transform: none; clip-path: none; transition: none; }
+  .hero-word { transform: none; }
+  .hero-eyebrow, .hero-desc-row, .hero-kpi-bar { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<!-- Progress -->
+<div id="prog"></div>
+
+<!-- ══════════ INTRO ══════════ -->
+<div id="intro">
+  <div class="intro-line t" id="intro-line-t"></div>
+  <div class="intro-line b" id="intro-line-b"></div>
+  <div class="intro-logo-wrap">
+    <img src="https://i.ibb.co/C3yKdHqw/asd.png" alt="Sportly" id="intro-logo-img">
+    <div class="intro-label" id="intro-label">Prima Consegna — Classe 5I — Aprile 2025</div>
+  </div>
+  <div class="intro-curtain l" id="curtain-l"></div>
+  <div class="intro-curtain r" id="curtain-r"></div>
+</div>
+
+<!-- ══════════ NAV ══════════ -->
+<nav id="main-nav">
+  <img src="https://i.ibb.co/C3yKdHqw/asd.png" alt="Sportly" class="nav-logo">
+  <ul class="nav-links">
+    <li><a href="#s01">Progetto</a></li>
+    <li><a href="#s02">Prodotto</a></li>
+    <li><a href="#s03">Problema</a></li>
+    <li><a href="#s04">Valore</a></li>
+    <li><a href="#s05">Target</a></li>
+    <li><a href="#s06">Concorrenza</a></li>
+    <li><a href="#s07">Business</a></li>
+    <li><a href="#s08">WBS</a></li>
+  </ul>
+  <span class="nav-right">5I · Aprile 2025</span>
+</nav>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section id="hero">
+  <div class="hero-grid" aria-hidden="true">
+    <div class="hero-grid-col"></div><div class="hero-grid-col"></div>
+    <div class="hero-grid-col"></div><div class="hero-grid-col"></div>
+    <div class="hero-grid-col"></div><div class="hero-grid-col"></div>
+    <div class="hero-grid-col"></div><div class="hero-grid-col"></div>
+    <div class="hero-grid-col"></div><div class="hero-grid-col"></div>
+    <div class="hero-grid-col"></div><div class="hero-grid-col"></div>
+  </div>
+  <div class="hero-bg-text" id="hero-bg-text" aria-hidden="true">SPORTLY</div>
+
+  <div class="hero-body">
+    <div class="hero-eyebrow" id="hero-eyebrow">
+      Documento di progetto — Sportly
+    </div>
+
+    <!-- THE TRIAD: BOOK · PLAY · CONNECT equal weight -->
+    <div class="hero-triad" aria-label="Book Play Connect">
+      <span class="hero-word" id="hw1">BOOK</span>
+      <span class="hero-word-sep" id="hw-sep1">·</span>
+      <span class="hero-word" id="hw2">PLAY</span>
+      <span class="hero-word-sep" id="hw-sep2">·</span>
+      <span class="hero-word" id="hw3">CONNECT</span>
+    </div>
+
+
+  <div class="hero-kpi-bar" id="hero-kpi">
+    <div class="hero-kpi-item">
+      <span class="hki-num teal">18–45</span>
+      <div>
+        <div class="hki-lbl">Target Primario</div>
+        <div class="hki-sub">Sportivi attivi con smartphone connesso</div>
+      </div>
+    </div>
+    <div class="hero-kpi-item">
+      <span class="hki-num" style="color:var(--k);">15K€</span>
+      <div>
+        <div class="hki-lbl">Proiezione Mese 12</div>
+        <div class="hki-sub">Ricavo mensile stimato a regime</div>
+      </div>
+    </div>
+    <div class="hero-kpi-item">
+      <span class="hki-num lime">4</span>
+      <div>
+        <div class="hki-lbl">Concorrenti Diretti</div>
+        <div class="hki-sub">Nessuno copre l'intero spettro multi-sport</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll" id="hero-scroll">
+    <div class="hero-scroll-track"></div>
+    <span class="hero-scroll-text">Scroll</span>
+  </div>
+</section>
+
+<!-- ══════════════ 01 SCELTA ══════════════ -->
+<section id="s01" class="s s--white">
+  <div class="s-watermark lenis-parallax" data-parallax-speed="0.06" style="right:-5rem;top:2rem;">01</div>
+  <div class="container">
+
+    <div class="sh">
+      <div class="sh-eyebrow" data-reveal="up">01 — Scelta del Progetto</div>
+      <h2 class="sh-title" data-reveal="up" data-delay="1">Un mercato<br>da <em>costruire.</em></h2>
+      <div class="sh-rule" data-reveal="fade" data-delay="2"></div>
+    </div>
+
+    <!-- Pull quote — full width, big serif italic -->
+    <div class="s01-pullquote" data-reveal="up">
+      <p class="s01-pq-text">Mercato <strong>già esistente</strong>, soluzione <strong>non ancora costruita</strong>.</p>
+      <div class="s01-pq-num" aria-hidden="true">65%</div>
+    </div>
+
+    <!-- Two col -->
+    <div class="s01-grid">
+      <div>
+        <p class="body-p" data-reveal="up">Il team ha selezionato lo sviluppo di <strong>Sportly</strong>, applicazione mobile e web per la prenotazione di attività sportive e ricreative. La scelta nasce dall'intersezione di due dinamiche reali: la <strong>crescente domanda di servizi digitali</strong> e la <strong>cronica arretratezza tecnologica</strong> della maggior parte delle strutture dilettantistiche locali.</p>
+        <p class="body-p" data-reveal="up" data-delay="1">La validità del mercato è confermata dall'esistenza di concorrenti già attivi — Playtomic, Wansport, PrenotaWeb — ma la loro copertura frammentata lascia aperto uno spazio significativo per un operatore integrato e verticale.</p>
+
+        <div class="rule" style="margin:2rem 0;" data-reveal="fade" data-delay="2"></div>
+
+        <div class="ss-title" data-reveal="up" data-delay="2">
+          <span class="ss-n">1.1</span>Penetrazione Digitale
+        </div>
+        <div class="bar-chart" style="margin-bottom:2.5rem;">
+          <div class="bar-row" data-reveal="left" data-delay="1">
+            <div class="bar-lbl">ASD non digitalizzate</div>
+            <div class="bar-track"><div class="bar-fill lime" data-w="65"></div></div>
+            <div class="bar-val">65%</div>
+          </div>
+          <div class="bar-row" data-reveal="left" data-delay="2">
+            <div class="bar-lbl">Sportivi attivi (ISTAT)</div>
+            <div class="bar-track"><div class="bar-fill teal" data-w="36"></div></div>
+            <div class="bar-val">36%</div>
+          </div>
+          <div class="bar-row" data-reveal="left" data-delay="3">
+            <div class="bar-lbl">Adulti con smartphone</div>
+            <div class="bar-track"><div class="bar-fill k3" data-w="52"></div></div>
+            <div class="bar-val">&gt;50%</div>
+          </div>
+          <div class="bar-row" data-reveal="left" data-delay="4">
+            <div class="bar-lbl">Copertura concorrenti</div>
+            <div class="bar-track"><div class="bar-fill muted" data-w="35"></div></div>
+            <div class="bar-val">~35%</div>
+          </div>
+        </div>
+
+        <div class="callout" data-reveal="up" data-delay="5">
+          <p class="callout-text"><strong>Opportunity window:</strong> il 65% di mercato analogico è una certezza, non una stima. Ogni struttura ancora su carta è un potenziale cliente Sportly.</p>
+        </div>
+      </div>
+
+      <div>
+        <div class="stat-tiles" data-reveal="right">
+          <div class="stat-tile lime" data-reveal="up" data-delay="1">
+            <span class="st-n lime">65%</span>
+            <div class="st-label">Gap di Mercato</div>
+            <div class="st-desc">ASD italiane prive di sistemi digitali di prenotazione</div>
+          </div>
+          <div class="stat-tile teal" data-reveal="up" data-delay="2">
+            <span class="st-n teal">36%</span>
+            <div class="st-label">Sportivi Attivi</div>
+            <div class="st-desc">Praticano sport regolarmente (ISTAT 2024)</div>
+          </div>
+          <div class="stat-tile lime" data-reveal="up" data-delay="3">
+            <span class="st-n lime">&gt;50%</span>
+            <div class="st-label">Smartphone Italia</div>
+            <div class="st-desc">Adulti connessi — canale digitale già infrastruttura diffusa</div>
+          </div>
+          <div class="stat-tile teal" data-reveal="up" data-delay="4">
+            <span class="st-n teal">4</span>
+            <div class="st-label">Concorrenti Diretti</div>
+            <div class="st-desc">Nessuno copre l'intero spettro multi-sport + community</div>
+          </div>
+        </div>
+
+        <div style="border:1px solid var(--rule);padding:2rem;margin-top:1px;background:var(--w2);" data-reveal="right" data-delay="2">
+          <div style="font-family:var(--mono);font-size:.53rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--k5);margin-bottom:1.25rem;">Stima Mercato Accessibile — Italia</div>
+          <div style="display:flex;flex-direction:column;gap:.85rem;">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px dotted var(--rule);padding-bottom:.85rem;">
+              <span style="font-size:.8rem;font-weight:300;color:var(--k3);">Sportivi 18–35 attivi</span>
+              <span style="font-family:var(--mono);font-size:.75rem;font-weight:700;color:var(--k);">~8M persone</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px dotted var(--rule);padding-bottom:.85rem;">
+              <span style="font-size:.8rem;font-weight:300;color:var(--k3);">Famiglie sportive 35–50</span>
+              <span style="font-family:var(--mono);font-size:.75rem;font-weight:700;color:var(--k);">~5M persone</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:baseline;">
+              <span style="font-size:.8rem;font-weight:300;color:var(--k3);">ASD target (non digitali)</span>
+              <span style="font-family:var(--mono);font-size:.75rem;font-weight:700;color:var(--k);">~40K strutture</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Full-width market table -->
+    <div class="ss-title" data-reveal="up">
+      <span class="ss-n">1.2</span>Stime di Mercato per Segmento
+    </div>
+    <div class="market-table-wrap" data-reveal="up" data-delay="1">
+      <div class="market-table-head">
+        <div class="mth">Segmento</div>
+        <div class="mth">Dimensione</div>
+        <div class="mth">Accessibile</div>
+        <div class="mth">Priorità</div>
+      </div>
+      <div class="market-table-row">
+        <div><div class="mtr-name">Sportivi Digitali 18–35</div><div class="mtr-sub">Padel, calcetto, fitness, running</div></div>
+        <div class="mtr-val">~8M persone</div>
+        <div class="mtr-val lime">~2M target</div>
+        <div class="mtr-val">Alta</div>
+      </div>
+      <div class="market-table-row">
+        <div><div class="mtr-name">Famiglie Attive 35–50</div><div class="mtr-sub">Nuoto bambini, tennis, ginnastica</div></div>
+        <div class="mtr-val">~5M persone</div>
+        <div class="mtr-val teal">~1.2M target</div>
+        <div class="mtr-val">Media</div>
+      </div>
+      <div class="market-table-row">
+        <div><div class="mtr-name">Gestori ASD (B2B)</div><div class="mtr-sub">Palestre, centri sportivi, campi</div></div>
+        <div class="mtr-val">~65K strutture</div>
+        <div class="mtr-val lime">~40K non digitali</div>
+        <div class="mtr-val">Alta</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ 02 PRODOTTO ══════════════ -->
+<section id="s02" class="s s--off">
+  <div class="s-watermark lenis-parallax" data-parallax-speed="0.05" style="left:-4rem;bottom:0;">02</div>
+  <div class="container">
+    <div class="sh">
+      <div class="sh-eyebrow" data-reveal="up">02 — Descrizione dell'Idea</div>
+      <h2 class="sh-title" data-reveal="up" data-delay="1">Ecosistema<br>a <em>due lati.</em></h2>
+      <div class="sh-rule" data-reveal="fade" data-delay="2"></div>
+    </div>
+
+    <div class="s02-intro-line" data-reveal="up">
+      <p class="body-p" style="margin:0;max-width:50ch;">Sportly semplifica l'accesso alle attività sportive per gli utenti finali, e digitalizza la gestione operativa delle strutture. <strong>Tutto in un'unica interfaccia</strong> — campi sportivi, corsi fitness, eventi e attività ricreative.</p>
+      <div style="text-align:right;flex-shrink:0;">
+        <div style="font-family:var(--cond);font-size:3rem;font-weight:900;letter-spacing:-1.5px;color:var(--k);line-height:1;">6</div>
+        <div style="font-family:var(--mono);font-size:.53rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--k5);">Moduli Core</div>
+      </div>
+    </div>
+
+    <!-- Modules: one by one reveal -->
+    <div class="modules-grid">
+      <div class="mod c1" data-num="01" data-reveal="up" data-delay="1">
+        <div class="mod-tag">Modulo 01</div>
+        <div class="mod-title">Ricerca Multi-Sport</div>
+        <div class="mod-desc">Filtri per sport, data, distanza e prezzo. Mappa integrata per trovare strutture nelle vicinanze in tempo reale.</div>
+      </div>
+      <div class="mod c2" data-num="02" data-reveal="up" data-delay="2">
+        <div class="mod-tag">Modulo 02</div>
+        <div class="mod-title">Calendario Real-Time</div>
+        <div class="mod-desc">Slot disponibili in tempo reale. Prenotazione immediata, modifica e cancellazione autonome senza telefonate.</div>
+      </div>
+      <div class="mod c3" data-num="03" data-reveal="up" data-delay="3">
+        <div class="mod-tag">Modulo 03</div>
+        <div class="mod-title">Pagamenti Integrati</div>
+        <div class="mod-desc">Stripe, Apple Pay, Google Pay. Abbonamenti digitali e ricevute automatiche per strutture e utenti.</div>
+      </div>
+      <div class="mod c1" data-num="04" data-reveal="up" data-delay="4">
+        <div class="mod-tag">Modulo 04</div>
+        <div class="mod-title">Notifiche Smart</div>
+        <div class="mod-desc">Conferma prenotazione, reminder H-24 e H-2, avvisi slot liberi e promozioni personalizzate in push.</div>
+      </div>
+      <div class="mod c2" data-num="05" data-reveal="up" data-delay="5">
+        <div class="mod-tag">Modulo 05</div>
+        <div class="mod-title">Community e Social</div>
+        <div class="mod-desc">Cerca compagno di gioco, gruppi sportivi locali, badge fedeltà, classifiche e sfide mensili gamificate.</div>
+      </div>
+      <div class="mod c3" data-num="06" data-reveal="up" data-delay="6">
+        <div class="mod-tag">Modulo 06</div>
+        <div class="mod-title">Dashboard Gestori</div>
+        <div class="mod-desc">Analytics occupazione e ricavi, gestione slot, marketing diretto, widget booking integrabile sul sito proprio.</div>
+      </div>
+    </div>
+
+    <div class="rule" data-reveal="fade"></div>
+
+    <div class="ss-title" data-reveal="up">
+      <span class="ss-n">2.1</span>Architettura Tecnologica
+    </div>
+    <div class="arch" data-reveal="up" data-delay="1">
+      <div class="arch-row l1">
+        <div class="arch-label"><span>Frontend</span></div>
+        <div class="arch-blocks">
+          <div class="arch-block"><div class="arch-block-n">React Native</div><div class="arch-block-d">App mobile cross-platform iOS e Android</div></div>
+          <div class="arch-block"><div class="arch-block-n">React.js (Web)</div><div class="arch-block-d">Portale web per gestori e utenti desktop</div></div>
+          <div class="arch-block"><div class="arch-block-n">Google Maps API</div><div class="arch-block-d">Geolocalizzazione e mappe interattive</div></div>
+        </div>
+      </div>
+      <div class="arch-row l2">
+        <div class="arch-label"><span>Backend</span></div>
+        <div class="arch-blocks">
+          <div class="arch-block"><div class="arch-block-n">Node.js / Express</div><div class="arch-block-d">API RESTful scalabili su AWS Lambda</div></div>
+          <div class="arch-block"><div class="arch-block-n">Stripe API</div><div class="arch-block-d">Gateway pagamenti PCI-compliant</div></div>
+          <div class="arch-block"><div class="arch-block-n">Firebase FCM</div><div class="arch-block-d">Push notifications cross-platform</div></div>
+        </div>
+      </div>
+      <div class="arch-row l3">
+        <div class="arch-label"><span>Database</span></div>
+        <div class="arch-blocks">
+          <div class="arch-block"><div class="arch-block-n">PostgreSQL</div><div class="arch-block-d">Database relazionale principale</div></div>
+          <div class="arch-block"><div class="arch-block-n">Redis Cache</div><div class="arch-block-d">Cache sessioni e slot real-time</div></div>
+          <div class="arch-block"><div class="arch-block-n">AWS S3</div><div class="arch-block-d">Storage immagini e asset con CDN</div></div>
+        </div>
+      </div>
+      <div class="arch-row l4">
+        <div class="arch-label"><span>DevOps</span></div>
+        <div class="arch-blocks">
+          <div class="arch-block"><div class="arch-block-n">AWS / GCP</div><div class="arch-block-d">Cloud hosting scalabile, multi-region</div></div>
+          <div class="arch-block"><div class="arch-block-n">Docker + CI/CD</div><div class="arch-block-d">Containerizzazione e pipeline automatizzata</div></div>
+          <div class="arch-block"><div class="arch-block-n">Sentry / Datadog</div><div class="arch-block-d">Monitoraggio errori e performance 24/7</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ 03 PROBLEMA ══════════════ -->
+<section id="s03">
+  <div class="sticky-panel">
+    <div class="sticky-bg-num" id="sticky-bg-num">1</div>
+    <div class="sticky-eyebrow">03 — Il Problema</div>
+    <h2 class="sticky-title">Sport analogico<br>in un mondo<br><em>digitale.</em></h2>
+    <p style="font-size:.8rem;font-weight:300;color:rgba(255,255,255,.28);line-height:1.7;max-width:28ch;">Il mercato sportivo dilettantistico italiano opera su infrastrutture obsolete. Il problema non è culturale — è strutturale.</p>
+    <div class="sticky-stat-box">
+      <span class="ssb-val" id="ssb-val">65%</span>
+      <div class="ssb-lbl" id="ssb-lbl">ASD senza sistemi digitali</div>
+      <div class="ssb-desc" id="ssb-desc">Più di 6 strutture su 10 gestisce ancora le prenotazioni via telefono o registro cartaceo</div>
+    </div>
+  </div>
+  <div>
+    <div class="story-step active" data-psv="65%" data-psl="ASD senza sistemi digitali" data-psd="Più di 6 strutture su 10 gestisce ancora le prenotazioni via telefono o registro cartaceo" data-bgn="1">
+      <div>
+        <div class="step-n">Problema 01</div>
+        <h3 class="step-title">Prenotazioni<br>ancora manuali</h3>
+        <p class="step-body">Telefonate, Excel, registri cartacei. Doppie prenotazioni, errori frequenti e sovraccarico del personale di front-office. Ogni prenotazione richiede intervento umano diretto.</p>
+      </div>
+    </div>
+    <div class="story-step" data-psv="∞" data-psl="Slot persi ogni settimana" data-psd="Impossibile conoscere la disponibilità senza chiamare — ore di lavoro sprecate, ricavi persi ogni giorno" data-bgn="2">
+      <div>
+        <div class="step-n">Problema 02</div>
+        <h3 class="step-title">Nessuna visibilità<br>real-time</h3>
+        <p class="step-body">Impossibile sapere se un campo è disponibile senza chiamare durante gli orari di apertura. Gli slot liberi si perdono per mancanza di visibilità digitale.</p>
+      </div>
+    </div>
+    <div class="story-step" data-psv="0" data-psl="Strumenti community disponibili" data-psd="Non esiste nessun sistema integrato per trovare compagni o organizzare tornei amatoriali locali" data-bgn="3">
+      <div>
+        <div class="step-n">Problema 03</div>
+        <h3 class="step-title">Community sportiva<br>frammentata</h3>
+        <p class="step-body">Nessuno strumento per trovare compagni di gioco, organizzare tornei amatoriali o aggregare gruppi sportivi locali in modo digitale.</p>
+      </div>
+    </div>
+    <div class="story-step" data-psv="40K+" data-psl="ASD locali invisibili online" data-psd="Le piccole strutture senza presenza digitale perdono clientela rispetto alle grandi catene già indicizzate" data-bgn="4">
+      <div>
+        <div class="step-n">Problema 04</div>
+        <h3 class="step-title">Strutture locali<br>invisibili online</h3>
+        <p class="step-body">Le ASD locali senza presenza digitale perdono clientela rispetto a palestre di catena già su Google e App Store. Il gap competitivo si allarga ogni anno.</p>
+      </div>
+    </div>
+    <div class="story-step" data-psv="94%" data-psl="Strutture con contabilità manuale" data-psd="Incassi in contanti, abbonamenti su carta, zero reportistica automatica per i gestori" data-bgn="5">
+      <div>
+        <div class="step-n">Problema 05</div>
+        <h3 class="step-title">Pagamenti e contabilità<br>disorganizzati</h3>
+        <p class="step-body">Incassi in contanti con rischio ammanchi, abbonamenti tracciati su carta, zero reportistica automatica. Un ciclo di errori costoso che assorbe tempo prezioso dei gestori.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03b PS Table -->
+<section class="s s--dark">
+  <div class="container">
+    <div class="ss-title" data-reveal="up">
+      <span class="ss-n">3.1</span>Pain Point → Soluzione
+    </div>
+    <div class="ps-table" data-reveal="up" data-delay="1">
+      <div class="ps-row">
+        <div class="ps-problem"><div class="ps-tag">Problema 01</div><div class="ps-text">Prenotazioni manuali — telefonate, errori, doppie prenotazioni</div></div>
+        <div class="ps-divider">→</div>
+        <div class="ps-solution"><div class="ps-tag">Soluzione 01</div><div class="ps-text">Booking digitale 24/7 — calendario smart, prenotazione in 30 secondi</div></div>
+      </div>
+      <div class="ps-row">
+        <div class="ps-problem"><div class="ps-tag">Problema 02</div><div class="ps-text">Nessuna visibilità real-time degli slot liberi senza chiamare</div></div>
+        <div class="ps-divider">→</div>
+        <div class="ps-solution"><div class="ps-tag">Soluzione 02</div><div class="ps-text">Accesso multi-dispositivo — disponibilità sempre visibile da qualsiasi device</div></div>
+      </div>
+      <div class="ps-row">
+        <div class="ps-problem"><div class="ps-tag">Problema 03</div><div class="ps-text">Community sportiva frammentata, nessun aggregatore digitale</div></div>
+        <div class="ps-divider">→</div>
+        <div class="ps-solution"><div class="ps-tag">Soluzione 03</div><div class="ps-text">Social feature native — gruppi, tornei, badge, cerca compagno di gioco</div></div>
+      </div>
+      <div class="ps-row">
+        <div class="ps-problem"><div class="ps-tag">Problema 04</div><div class="ps-text">ASD locali invisibili online rispetto alle grandi catene</div></div>
+        <div class="ps-divider">→</div>
+        <div class="ps-solution"><div class="ps-tag">Soluzione 04</div><div class="ps-text">Marketplace centralizzato — visibilità uniforme per tutte le strutture</div></div>
+      </div>
+      <div class="ps-row">
+        <div class="ps-problem"><div class="ps-tag">Problema 05</div><div class="ps-text">Pagamenti in contanti, contabilità su carta, zero dati automatici</div></div>
+        <div class="ps-divider">→</div>
+        <div class="ps-solution"><div class="ps-tag">Soluzione 05</div><div class="ps-text">Pagamenti PCI-compliant + analytics automatizzati in tempo reale</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ 04 VALORE ══════════════ -->
+<section id="s04" class="s s--off">
+  <div class="s-watermark lenis-parallax" data-parallax-speed="0.07" style="right:-3rem;top:0;">04</div>
+  <div class="container">
+    <div class="sh">
+      <div class="sh-eyebrow" data-reveal="up">04 — Valore per il Cliente</div>
+      <h2 class="sh-title" data-reveal="up" data-delay="1">Meno attrito,<br><em>più sport.</em></h2>
+      <div class="sh-rule" data-reveal="fade" data-delay="2"></div>
+    </div>
+
+    <!-- Scrolling pill strip — animated on scroll via lenis -->
+    <div class="value-intro-strip" id="value-strip" data-reveal="fade">
+      <div class="vs-pill">Prenotazione 24/7</div>
+      <div class="vs-pill">Zero telefonate</div>
+      <div class="vs-pill">Community integrata</div>
+      <div class="vs-pill">Pagamenti sicuri</div>
+      <div class="vs-pill">Analytics automatici</div>
+      <div class="vs-pill">Notifiche smart</div>
+      <div class="vs-pill">Effetto rete</div>
+      <div class="vs-pill">Free tier ASD</div>
+      <div class="vs-pill">Multi-sport</div>
+    </div>
+
+    <p class="body-p" data-reveal="up">Sportly crea valore concreto per entrambi i lati del marketplace. Il valore è <strong>moltiplicato dall'effetto rete</strong>: più strutture attraggono più utenti, più utenti attraggono più strutture.</p>
+
+    <div class="value-two-col" style="margin-top:3rem;">
+      <div>
+        <div class="value-col-head" data-reveal="up">Utenti Sportivi (B2C)</div>
+        <div class="vi" data-reveal="up" data-delay="1"><div class="vi-dot"></div><div><div class="vi-t">Risparmio di tempo reale</div><div class="vi-d">Prenotazione in meno di 30 secondi da smartphone, senza telefonate o attese.</div></div></div>
+        <div class="vi" data-reveal="up" data-delay="2"><div class="vi-dot"></div><div><div class="vi-t">Disponibilità continua</div><div class="vi-d">Accesso al calendario 24/7, anche fuori dagli orari di apertura delle strutture.</div></div></div>
+        <div class="vi" data-reveal="up" data-delay="3"><div class="vi-dot"></div><div><div class="vi-t">Scelta e confronto trasparente</div><div class="vi-d">Confronto tra strutture per prezzo, distanza, recensioni e disponibilità oraria reale.</div></div></div>
+        <div class="vi" data-reveal="up" data-delay="4"><div class="vi-dot"></div><div><div class="vi-t">Community sportiva locale</div><div class="vi-d">Trova compagni di gioco, entra in gruppi sportivi locali, partecipa a tornei ed eventi.</div></div></div>
+        <div class="vi" data-reveal="up" data-delay="5"><div class="vi-dot"></div><div><div class="vi-t">Motivazione continuativa</div><div class="vi-d">Badge fedeltà, punti attività e sfide mensili per mantenere alta la frequenza sportiva.</div></div></div>
+      </div>
+      <div>
+        <div class="value-col-head" data-reveal="up" data-delay="1">Gestori Strutture (B2B)</div>
+        <div class="vi" data-reveal="up" data-delay="2"><div class="vi-dot teal"></div><div><div class="vi-t">Aumento tasso di occupazione</div><div class="vi-d">Visibilità su marketplace comune porta nuovi clienti automaticamente, 24/7 senza sforzo.</div></div></div>
+        <div class="vi" data-reveal="up" data-delay="3"><div class="vi-dot teal"></div><div><div class="vi-t">Analytics e dati decisionali</div><div class="vi-d">Dashboard con occupazione, entrate per slot, trend di prenotazione per decisioni informate.</div></div></div>
+        <div class="vi" data-reveal="up" data-delay="4"><div class="vi-dot teal"></div><div><div class="vi-t">Automazione operativa</div><div class="vi-d">Prenotazioni gestite automaticamente. Zero telefonate, zero errori manuali.</div></div></div>
+        <div class="vi" data-reveal="up" data-delay="5"><div class="vi-dot teal"></div><div><div class="vi-t">Pagamenti certi e sicuri</div><div class="vi-d">Gateway PCI-compliant, incassi garantiti a prenotazione, contabilità automatica.</div></div></div>
+        <div class="vi" data-reveal="up" data-delay="6"><div class="vi-dot teal"></div><div><div class="vi-t">Widget booking integrabile</div><div class="vi-d">Il sistema di prenotazione Sportly installabile sul sito della struttura in pochi minuti.</div></div></div>
+      </div>
+    </div>
+
+    <div class="rule" data-reveal="fade"></div>
+    <div class="ss-title" data-reveal="up"><span class="ss-n">4.1</span>Copertura Funzionale vs Concorrenti</div>
+    <div style="margin-top:1.5rem;">
+      <div class="coverage-row" data-reveal="left" data-delay="1">
+        <div class="cov-name">Sportly (target)</div>
+        <div class="cov-track"><div class="cov-fill lime" data-w="95"></div></div>
+        <div class="cov-pct">95%</div>
+      </div>
+      <div class="coverage-row" data-reveal="left" data-delay="2">
+        <div class="cov-name">Playtomic</div>
+        <div class="cov-track"><div class="cov-fill teal" data-w="60"></div></div>
+        <div class="cov-pct">60%</div>
+      </div>
+      <div class="coverage-row" data-reveal="left" data-delay="3">
+        <div class="cov-name">PrenotaWeb</div>
+        <div class="cov-track"><div class="cov-fill gray" data-w="45"></div></div>
+        <div class="cov-pct">45%</div>
+      </div>
+      <div class="coverage-row" data-reveal="left" data-delay="4">
+        <div class="cov-name">Squby</div>
+        <div class="cov-track"><div class="cov-fill gray" data-w="35"></div></div>
+        <div class="cov-pct">35%</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ 05 TARGET ══════════════ -->
+<section id="s05" class="s s--white">
+  <div class="s-watermark lenis-parallax" data-parallax-speed="0.05" style="left:-3rem;top:5rem;">05</div>
+  <div class="container">
+    <div class="sh">
+      <div class="sh-eyebrow" data-reveal="up">05 — Analisi Target Clienti</div>
+      <h2 class="sh-title" data-reveal="up" data-delay="1">Chi sono<br><em>i nostri utenti.</em></h2>
+      <div class="sh-rule" data-reveal="fade" data-delay="2"></div>
+    </div>
+
+    <div class="seg-grid" style="margin-top:1rem;">
+      <div class="seg-card s1" data-reveal="up" data-delay="1">
+        <div class="seg-card-line"></div>
+        <div class="seg-tag">Segmento A — Primario</div>
+        <div class="seg-title">Sportivi<br><em>Digitali</em></div>
+        <div class="seg-desc">18–35 anni, praticano sport regolarmente, usano app per quasi tutto. Alta propensione alla prenotazione digitale e al pagamento contactless.</div>
+        <div class="seg-traits">
+          <div class="seg-trait">Smartphone-native</div>
+          <div class="seg-trait">Sport 2–4 volte/settimana</div>
+          <div class="seg-trait">Padel, fitness, running, calcetto</div>
+          <div class="seg-trait">Disposti a pagare per comodità</div>
+          <div class="seg-trait">Influencer nella cerchia sociale</div>
+        </div>
+      </div>
+      <div class="seg-card s2" data-reveal="up" data-delay="2">
+        <div class="seg-card-line"></div>
+        <div class="seg-tag">Segmento B — Secondario</div>
+        <div class="seg-title">Famiglie<br><em>Attive</em></div>
+        <div class="seg-desc">35–50 anni con figli. Cercano corsi per bambini e orari compatibili con il lavoro. Priorità: semplicità e affidabilità del servizio.</div>
+        <div class="seg-traits">
+          <div class="seg-trait">Utenti smartphone maturi</div>
+          <div class="seg-trait">Pianificazione settimanale</div>
+          <div class="seg-trait">Nuoto, tennis, ginnastica bimbi</div>
+          <div class="seg-trait">Sensibili a recensioni e sicurezza</div>
+          <div class="seg-trait">Alta fedeltà una volta acquisiti</div>
+        </div>
+      </div>
+      <div class="seg-card s3" data-reveal="up" data-delay="3">
+        <div class="seg-card-line"></div>
+        <div class="seg-tag">Segmento C — B2B</div>
+        <div class="seg-title">Gestori<br><em>ASD</em></div>
+        <div class="seg-desc">Responsabili di palestre, campi sportivi, centri ricreativi. Cercano soluzioni low-cost per modernizzare la gestione senza grandi investimenti IT.</div>
+        <div class="seg-traits">
+          <div class="seg-trait">1–50 dipendenti</div>
+          <div class="seg-trait">Budget IT limitato</div>
+          <div class="seg-trait">Decisore diretto (titolare)</div>
+          <div class="seg-trait">Priorità: semplicità di onboarding</div>
+          <div class="seg-trait">Alta retention se onboarding ok</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule" data-reveal="fade"></div>
+    <div class="ss-title" data-reveal="up"><span class="ss-n">5.1</span>Comportamento Digitale per Segmento</div>
+    <div data-reveal="up" data-delay="1">
+      <table class="tbl">
+        <thead>
+          <tr><th>Dimensione</th><th>Sportivi Digitali (A)</th><th>Famiglie Attive (B)</th><th>Gestori ASD (C)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Uso smartphone</td><td>Intensivo, quotidiano</td><td>Regolare, funzionale</td><td>Variabile, spesso limitato</td></tr>
+          <tr><td>Canale acquisizione</td><td>Social media, passaparola</td><td>Google, passaparola</td><td>Email B2B, fiere sport</td></tr>
+          <tr><td>Frequenza utilizzo app</td><td>2–4 volte/settimana</td><td>1–2 volte/settimana</td><td>Giornaliero (gestione)</td></tr>
+          <tr><td>Sensibilità al prezzo</td><td>Media — paga per convenienza</td><td>Alta — cerca valore</td><td>Alta — ROI deve essere chiaro</td></tr>
+          <tr><td>Feature più rilevante</td><td>Booking veloce + community</td><td>Affidabilità + semplicità</td><td>Dashboard analytics + automazione</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout" style="margin-top:2.5rem;" data-reveal="up" data-delay="2">
+      <p class="callout-text">La strategia di acquisizione segue un approccio a <strong>effetto rete progressivo</strong>: si parte dall'onboarding di strutture partner in una o due città pilota — Milano, Bologna — costruendo massa critica di offerta che attrae organicamente gli utenti sportivi della zona.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ 06 CONCORRENZA ══════════════ -->
+<section id="s06" class="s s--warm">
+  <div class="s-watermark lenis-parallax" data-parallax-speed="0.06" style="right:-4rem;bottom:0;">06</div>
+  <div class="container">
+    <div class="sh">
+      <div class="sh-eyebrow" data-reveal="up">06 — Analisi della Concorrenza</div>
+      <h2 class="sh-title" data-reveal="up" data-delay="1">Il mercato esiste.<br><em>La soluzione no.</em></h2>
+      <div class="sh-rule" data-reveal="fade" data-delay="2"></div>
+    </div>
+
+    <div data-reveal="up" data-delay="1">
+      <table class="comp-tbl">
+        <thead>
+          <tr>
+            <th style="text-align:left;">Piattaforma</th>
+            <th>Multi-Sport</th><th>Community</th><th>Dashboard</th><th>Pagamento</th><th>Notifiche</th><th>App Mobile</th><th>Free Tier</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="our"><td><strong>Sportly</strong></td><td><span class="cc y">S</span></td><td><span class="cc y">S</span></td><td><span class="cc y">S</span></td><td><span class="cc y">S</span></td><td><span class="cc y">S</span></td><td><span class="cc y">S</span></td><td><span class="cc y">S</span></td></tr>
+          <tr><td>Playtomic</td><td><span class="cc p">P</span></td><td><span class="cc p">P</span></td><td><span class="cc y">S</span></td><td><span class="cc y">S</span></td><td><span class="cc p">P</span></td><td><span class="cc y">S</span></td><td><span class="cc n">N</span></td></tr>
+          <tr><td>Wansport</td><td><span class="cc y">S</span></td><td><span class="cc n">N</span></td><td><span class="cc p">P</span></td><td><span class="cc p">P</span></td><td><span class="cc n">N</span></td><td><span class="cc p">P</span></td><td><span class="cc p">P</span></td></tr>
+          <tr><td>PrenotaWeb</td><td><span class="cc p">P</span></td><td><span class="cc n">N</span></td><td><span class="cc y">S</span></td><td><span class="cc n">N</span></td><td><span class="cc n">N</span></td><td><span class="cc n">N</span></td><td><span class="cc y">S</span></td></tr>
+          <tr><td>Squby</td><td><span class="cc p">P</span></td><td><span class="cc n">N</span></td><td><span class="cc p">P</span></td><td><span class="cc n">N</span></td><td><span class="cc n">N</span></td><td><span class="cc p">P</span></td><td><span class="cc n">N</span></td></tr>
+          <tr><td>Soluzioni analogiche</td><td><span class="cc n">N</span></td><td><span class="cc n">N</span></td><td><span class="cc n">N</span></td><td><span class="cc n">N</span></td><td><span class="cc n">N</span></td><td><span class="cc n">N</span></td><td><span class="cc n">N</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="display:flex;gap:1.5rem;margin-top:1rem;" data-reveal="up" data-delay="2">
+      <span style="font-family:var(--mono);font-size:.56rem;color:var(--k5);display:flex;align-items:center;gap:.4rem;"><span class="cc y" style="width:16px;height:16px;">S</span>Sì</span>
+      <span style="font-family:var(--mono);font-size:.56rem;color:var(--k5);display:flex;align-items:center;gap:.4rem;"><span class="cc p" style="width:16px;height:16px;">P</span>Parziale</span>
+      <span style="font-family:var(--mono);font-size:.56rem;color:var(--k5);display:flex;align-items:center;gap:.4rem;"><span class="cc n" style="width:16px;height:16px;">N</span>No</span>
+    </div>
+
+    <div class="rule" data-reveal="fade"></div>
+    <div class="ss-title" data-reveal="up"><span class="ss-n">6.1</span>Vantaggi Differenziali</div>
+    <div class="diff-grid" data-reveal="up" data-delay="1">
+      <div class="diff-card c1" data-reveal="up" data-delay="1">
+        <div class="diff-n">Vantaggio 01</div>
+        <div class="diff-t">Copertura Multi-Sport Completa</div>
+        <div class="diff-d">Playtomic copre solo racket sports. Sportly supporta qualsiasi disciplina — dal nuoto alla yoga, dal calcetto al climbing.</div>
+      </div>
+      <div class="diff-card c2" data-reveal="up" data-delay="2">
+        <div class="diff-n">Vantaggio 02</div>
+        <div class="diff-t">Community Integrata Nativa</div>
+        <div class="diff-d">Nessun concorrente offre funzionalità social native. Network effect: più utenti, più valore per tutti.</div>
+      </div>
+      <div class="diff-card c3" data-reveal="up" data-delay="3">
+        <div class="diff-n">Vantaggio 03</div>
+        <div class="diff-t">Free Tier per ASD Piccole</div>
+        <div class="diff-d">Piano gratuito abbassa la barriera all'adozione. Riduce il rischio percepito e accelera la crescita dell'offerta.</div>
+      </div>
+      <div class="diff-card c4" data-reveal="up" data-delay="4">
+        <div class="diff-n">Vantaggio 04</div>
+        <div class="diff-t">Focus Mercato Italiano</div>
+        <div class="diff-d">Concorrenti internazionali non coprono capillarmente il territorio italiano. Vantaggio di prossimità e conoscenza locale.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ 07 BUSINESS ══════════════ -->
+<section id="s07" class="s s--k">
+  <div class="s-watermark lenis-parallax" data-parallax-speed="0.05" style="left:-3rem;top:0;">07</div>
+  <div class="container">
+    <div class="sh">
+      <div class="sh-eyebrow" data-reveal="up">07 — Modello di Business</div>
+      <h2 class="sh-title" data-reveal="up" data-delay="1">Tre flussi.<br><em>Un equilibrio.</em></h2>
+      <div class="sh-rule" data-reveal="fade" data-delay="2"></div>
+    </div>
+
+    <p class="body-p" data-reveal="up">Modello <strong>multi-revenue a tre pilastri</strong>: commissioni (scala con il volume), abbonamenti SaaS (ricorrente prevedibile) e pubblicità ed eventi (upsell progressivo). Progettato per essere sostenibile dal primo anno.</p>
+
+    <div class="bm-streams" data-reveal="up" data-delay="1">
+      <div class="bm-card" data-n="01" data-reveal="up" data-delay="1">
+        <div class="bm-stream">Revenue Stream A</div>
+        <div class="bm-title">Commissioni Prenotazioni</div>
+        <div class="bm-desc">Percentuale su ogni transazione completata. Scala direttamente con il volume — più strutture e utenti, più ricavo automatico senza costi marginali.</div>
+        <div class="bm-est">1,5% per transazione completata</div>
+      </div>
+      <div class="bm-card" data-n="02" data-reveal="up" data-delay="2">
+        <div class="bm-stream">Revenue Stream B</div>
+        <div class="bm-title">SaaS Strutture (B2B)</div>
+        <div class="bm-desc">Abbonamenti mensili ricorrenti per le strutture sportive. Ricavo prevedibile e stabile, bassa churn rate se l'onboarding è efficace e il valore è chiaro.</div>
+        <div class="bm-est">29€/mese (Standard) · 59€/mese (Premium)</div>
+      </div>
+      <div class="bm-card" data-n="03" data-reveal="up" data-delay="3">
+        <div class="bm-stream">Revenue Stream C</div>
+        <div class="bm-title">Pubblicità ed Eventi</div>
+        <div class="bm-desc">Promozione di eventi sportivi, tornei e brand del settore fitness sulla piattaforma, targetizzata per categoria e zona geografica.</div>
+        <div class="bm-est">Da 500€/mese (scala con utenti attivi)</div>
+      </div>
+    </div>
+
+    <div class="rule rule-k" data-reveal="fade"></div>
+    <div class="ss-title" data-reveal="up"><span class="ss-n">7.1</span>Piani SaaS per Strutture</div>
+    <div class="pricing-row" style="margin-top:1.5rem;">
+      <div class="price-card" data-reveal="up" data-delay="1">
+        <div class="price-tier">Base</div>
+        <div class="price-n">0€</div>
+        <div class="price-p">gratuito per sempre</div>
+        <div class="pfl">
+          <div class="pfi">Fino a 2 risorse/campi</div>
+          <div class="pfi">Calendario booking base</div>
+          <div class="pfi">Notifiche email automatiche</div>
+          <div class="pfi">Profilo struttura pubblico</div>
+        </div>
+      </div>
+      <div class="price-card feat" data-reveal="up" data-delay="2">
+        <div class="price-badge">Consigliato</div>
+        <div class="price-tier">Standard</div>
+        <div class="price-n">29€</div>
+        <div class="price-p">al mese</div>
+        <div class="pfl">
+          <div class="pfi">Fino a 10 risorse</div>
+          <div class="pfi">Analytics base occupazione</div>
+          <div class="pfi">Notifiche push personalizzate</div>
+          <div class="pfi">QR code check-in</div>
+          <div class="pfi">Supporto email prioritario</div>
+        </div>
+      </div>
+      <div class="price-card" data-reveal="up" data-delay="3">
+        <div class="price-tier">Premium</div>
+        <div class="price-n">59€</div>
+        <div class="price-p">al mese</div>
+        <div class="pfl">
+          <div class="pfi">Risorse illimitate</div>
+          <div class="pfi">Analytics avanzate + export</div>
+          <div class="pfi">Marketing diretto push</div>
+          <div class="pfi">API + widget integrabile</div>
+          <div class="pfi">Supporto telefonico dedicato</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule rule-k" data-reveal="fade"></div>
+    <div class="ss-title" data-reveal="up"><span class="ss-n">7.2</span>Proiezione Ricavi — Anno 1</div>
+    <div data-reveal="up" data-delay="1">
+      <table class="rev-tbl">
+        <thead>
+          <tr><th>Fonte di Ricavo</th><th>Ipotesi M6</th><th>€/mese M6</th><th>Ipotesi M12</th><th>€/mese M12</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Commissioni (1,5% × 15€ medio)</td><td>1.000 prenotazioni</td><td class="hl-lime">1.500 €</td><td>5.000 prenotazioni</td><td class="hl-teal">7.500 €</td></tr>
+          <tr><td>SaaS Standard (29€/mese)</td><td>30 strutture</td><td class="hl-lime">870 €</td><td>80 strutture</td><td class="hl-teal">2.320 €</td></tr>
+          <tr><td>SaaS Premium (59€/mese)</td><td>10 strutture</td><td class="hl-lime">590 €</td><td>30 strutture</td><td class="hl-teal">1.770 €</td></tr>
+          <tr><td>Pubblicità ed eventi sportivi</td><td>Limitata</td><td class="hl-lime">200 €</td><td>Attiva</td><td class="hl-teal">1.000 €</td></tr>
+          <tr class="total"><td>Totale Stimato</td><td></td><td class="hl-lime">3.160 €</td><td></td><td class="hl-teal">12.590 €</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ 08 WBS ══════════════ -->
+<section id="s08" class="s s--white">
+  <div class="s-watermark lenis-parallax" data-parallax-speed="0.06" style="right:-4rem;top:0;">08</div>
+  <div class="container">
+    <div class="sh">
+      <div class="sh-eyebrow" data-reveal="up">08 — WBS e Timeline</div>
+      <h2 class="sh-title" data-reveal="up" data-delay="1">20 settimane<br><em>al lancio.</em></h2>
+      <div class="sh-rule" data-reveal="fade" data-delay="2"></div>
+    </div>
+
+    <div data-reveal="up" data-delay="1">
+      <div class="wbs-root">
+        <div>
+          <div class="wbs-root-t">Sportly — Progetto Completo</div>
+          <div class="wbs-root-s">8 FASI · 20 SETTIMANE · 40+ DELIVERABLE · TEAM 6-3-14 · CLASSE 5I</div>
+        </div>
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--lime);">Aprile 2025</div>
+      </div>
+      <div class="wbs-phases">
+        <div class="wbs-phase">
+          <div class="wbs-ph"><div class="wbs-ph-n">01 — W1–W2</div><div class="wbs-ph-t">Analisi e Pianificazione</div></div>
+          <div class="wbs-items">
+            <div class="wbs-item"><span class="wbs-item-n">1.1</span><span>Ricerca di mercato</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">1.2</span><span>Requisiti funzionali</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">1.3</span><span>Studio GDPR / legale</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">1.4</span><span>Analisi concorrenza</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">1.5</span><span>Definizione KPI</span></div>
+          </div>
+        </div>
+        <div class="wbs-phase">
+          <div class="wbs-ph"><div class="wbs-ph-n">02 — W3–W5</div><div class="wbs-ph-t">Progettazione Architettura</div></div>
+          <div class="wbs-items">
+            <div class="wbs-item"><span class="wbs-item-n">2.1</span><span>Scelta stack tecnologico</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">2.2</span><span>Diagrammi UML / ER</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">2.3</span><span>Architettura cloud</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">2.4</span><span>Wireframe schermate</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">2.5</span><span>Prototipo UI/UX</span></div>
+          </div>
+        </div>
+        <div class="wbs-phase">
+          <div class="wbs-ph"><div class="wbs-ph-n">03 — W4–W9</div><div class="wbs-ph-t">Sviluppo Backend</div></div>
+          <div class="wbs-items">
+            <div class="wbs-item"><span class="wbs-item-n">3.1</span><span>Database PostgreSQL</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">3.2</span><span>API RESTful</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">3.3</span><span>Integrazione Stripe</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">3.4</span><span>Notifiche Firebase</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">3.5</span><span>QR code check-in</span></div>
+          </div>
+        </div>
+        <div class="wbs-phase">
+          <div class="wbs-ph"><div class="wbs-ph-n">04 — W6–W13</div><div class="wbs-ph-t">Sviluppo Frontend</div></div>
+          <div class="wbs-items">
+            <div class="wbs-item"><span class="wbs-item-n">4.1</span><span>App React Native</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">4.2</span><span>Portale web admin</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">4.3</span><span>UI componenti</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">4.4</span><span>Integrazione API</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">4.5</span><span>Accessibilità / i18n</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="wbs-phases" style="margin-top:1px;">
+        <div class="wbs-phase">
+          <div class="wbs-ph"><div class="wbs-ph-n">05 — W10–W13</div><div class="wbs-ph-t">Integrazione e Test</div></div>
+          <div class="wbs-items">
+            <div class="wbs-item"><span class="wbs-item-n">5.1</span><span>Integrazione moduli</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">5.2</span><span>Unit + integration test</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">5.3</span><span>Test sicurezza GDPR</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">5.4</span><span>Stress test performance</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">5.5</span><span>Test UX utenti reali</span></div>
+          </div>
+        </div>
+        <div class="wbs-phase">
+          <div class="wbs-ph"><div class="wbs-ph-n">06 — W14–W17</div><div class="wbs-ph-t">Beta Testing</div></div>
+          <div class="wbs-items">
+            <div class="wbs-item"><span class="wbs-item-n">6.1</span><span>Selezione gruppo pilota</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">6.2</span><span>Rilascio beta chiusa</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">6.3</span><span>Raccolta feedback</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">6.4</span><span>Bug fixing iterativo</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">6.5</span><span>Validazione metriche</span></div>
+          </div>
+        </div>
+        <div class="wbs-phase">
+          <div class="wbs-ph"><div class="wbs-ph-n">07 — W6–W20</div><div class="wbs-ph-t">Marketing e Lancio</div></div>
+          <div class="wbs-items">
+            <div class="wbs-item"><span class="wbs-item-n">7.1</span><span>Sito promozionale</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">7.2</span><span>Campagne social</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">7.3</span><span>Onboarding strutture</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">7.4</span><span>Materiali comunicazione</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">7.5</span><span>Lancio App/Play Store</span></div>
+          </div>
+        </div>
+        <div class="wbs-phase">
+          <div class="wbs-ph"><div class="wbs-ph-n">08 — W20+</div><div class="wbs-ph-t">Monitoraggio Continuo</div></div>
+          <div class="wbs-items">
+            <div class="wbs-item"><span class="wbs-item-n">8.1</span><span>KPI mensili analytics</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">8.2</span><span>Customer support</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">8.3</span><span>Pianificazione release</span></div>
+            <div class="wbs-item"><span class="wbs-item-n">8.4</span><span>Manutenzione sicurezza</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gantt -->
+    <div class="ss-title" style="margin-top:3.5rem;" data-reveal="up">
+      <span class="ss-n">8.1</span>Gantt — 20 Settimane
+    </div>
+    <div class="gantt-wrap" data-reveal="up" data-delay="1">
+      <svg width="100%" viewBox="0 0 800 230" font-family="Barlow,sans-serif" font-size="7.5" xmlns="http://www.w3.org/2000/svg">
+        <rect width="800" height="230" fill="#f8f7f3"/>
+        <rect x="0" y="0" width="800" height="20" fill="#0a0a0a"/>
+        <text x="155" y="13" fill="rgba(255,255,255,.2)" font-family="Space Mono,monospace" font-size="6" letter-spacing="0.5">FASE</text>
+        <text x="198" y="13" fill="rgba(255,255,255,.18)" font-family="Space Mono,monospace" font-size="5.5" text-anchor="middle">W1–2</text>
+        <text x="248" y="13" fill="rgba(255,255,255,.18)" font-family="Space Mono,monospace" font-size="5.5" text-anchor="middle">W3–4</text>
+        <text x="298" y="13" fill="rgba(255,255,255,.18)" font-family="Space Mono,monospace" font-size="5.5" text-anchor="middle">W5–6</text>
+        <text x="348" y="13" fill="rgba(255,255,255,.18)" font-family="Space Mono,monospace" font-size="5.5" text-anchor="middle">W7–8</text>
+        <text x="398" y="13" fill="rgba(255,255,255,.18)" font-family="Space Mono,monospace" font-size="5.5" text-anchor="middle">W9–10</text>
+        <text x="448" y="13" fill="rgba(255,255,255,.18)" font-family="Space Mono,monospace" font-size="5.5" text-anchor="middle">W11–12</text>
+        <text x="498" y="13" fill="rgba(255,255,255,.18)" font-family="Space Mono,monospace" font-size="5.5" text-anchor="middle">W13–14</text>
+        <text x="548" y="13" fill="rgba(255,255,255,.18)" font-family="Space Mono,monospace" font-size="5.5" text-anchor="middle">W15–16</text>
+        <text x="598" y="13" fill="rgba(255,255,255,.18)" font-family="Space Mono,monospace" font-size="5.5" text-anchor="middle">W17–18</text>
+        <text x="648" y="13" fill="rgba(255,255,255,.18)" font-family="Space Mono,monospace" font-size="5.5" text-anchor="middle">W19–20</text>
+        <g stroke="#dedbd2" stroke-width="0.5">
+          <line x1="173" y1="20" x2="173" y2="210"/><line x1="223" y1="20" x2="223" y2="210"/>
+          <line x1="273" y1="20" x2="273" y2="210"/><line x1="323" y1="20" x2="323" y2="210"/>
+          <line x1="373" y1="20" x2="373" y2="210"/><line x1="423" y1="20" x2="423" y2="210"/>
+          <line x1="473" y1="20" x2="473" y2="210"/><line x1="523" y1="20" x2="523" y2="210"/>
+          <line x1="573" y1="20" x2="573" y2="210"/><line x1="623" y1="20" x2="623" y2="210"/>
+          <line x1="673" y1="20" x2="673" y2="210"/>
+        </g>
+        <rect x="0" y="20"  width="800" height="22" fill="rgba(255,255,255,.4)"/>
+        <rect x="0" y="64"  width="800" height="22" fill="rgba(255,255,255,.4)"/>
+        <rect x="0" y="108" width="800" height="22" fill="rgba(255,255,255,.4)"/>
+        <rect x="0" y="152" width="800" height="22" fill="rgba(255,255,255,.4)"/>
+        <text x="168" y="35" fill="#1a1a1a" font-weight="600" text-anchor="end" font-family="Barlow Condensed,sans-serif" font-size="8">01 Analisi</text>
+        <text x="168" y="57" fill="#1a1a1a" font-weight="600" text-anchor="end" font-family="Barlow Condensed,sans-serif" font-size="8">02 Architettura</text>
+        <text x="168" y="79" fill="#1a1a1a" font-weight="600" text-anchor="end" font-family="Barlow Condensed,sans-serif" font-size="8">03 Backend</text>
+        <text x="168" y="101" fill="#1a1a1a" font-weight="600" text-anchor="end" font-family="Barlow Condensed,sans-serif" font-size="8">04 Frontend</text>
+        <text x="168" y="123" fill="#1a1a1a" font-weight="600" text-anchor="end" font-family="Barlow Condensed,sans-serif" font-size="8">05 Test</text>
+        <text x="168" y="145" fill="#1a1a1a" font-weight="600" text-anchor="end" font-family="Barlow Condensed,sans-serif" font-size="8">06 Beta</text>
+        <text x="168" y="167" fill="#1a1a1a" font-weight="600" text-anchor="end" font-family="Barlow Condensed,sans-serif" font-size="8">07 Lancio</text>
+        <text x="168" y="189" fill="#1a1a1a" font-weight="600" text-anchor="end" font-family="Barlow Condensed,sans-serif" font-size="8">08 Monitor.</text>
+        <rect x="173" y="24" width="50"  height="12" fill="#b8d435" rx="1"/>
+        <rect x="173" y="46" width="100" height="12" fill="#0e9090" rx="1"/>
+        <rect x="223" y="68" width="200" height="12" fill="#1a8a88" rx="1"/>
+        <rect x="273" y="90" width="250" height="12" fill="#2a7a78" rx="1"/>
+        <rect x="373" y="112" width="150" height="12" fill="#0e9090" rx="1"/>
+        <rect x="423" y="134" width="200" height="12" fill="#b8d435" rx="1"/>
+        <rect x="323" y="156" width="350" height="12" fill="#1a8a88" rx="1"/>
+        <rect x="623" y="178" width="50"  height="12" fill="#3a6a68" rx="1"/>
+        <line x1="173" y1="210" x2="723" y2="210" stroke="#dedbd2" stroke-width="1"/>
+        <circle cx="223" cy="210" r="4.5" fill="#b8d435"/>
+        <text x="223" y="222" fill="#6a6a6a" font-family="Space Mono,monospace" font-size="5.5" text-anchor="middle">M1</text>
+        <circle cx="273" cy="210" r="4.5" fill="#0e9090"/>
+        <text x="273" y="222" fill="#6a6a6a" font-family="Space Mono,monospace" font-size="5.5" text-anchor="middle">M2</text>
+        <circle cx="373" cy="210" r="4.5" fill="#1a8a88"/>
+        <text x="373" y="222" fill="#6a6a6a" font-family="Space Mono,monospace" font-size="5.5" text-anchor="middle">M3</text>
+        <circle cx="473" cy="210" r="4.5" fill="#2a7a78"/>
+        <text x="473" y="222" fill="#6a6a6a" font-family="Space Mono,monospace" font-size="5.5" text-anchor="middle">M4</text>
+        <circle cx="573" cy="210" r="4.5" fill="#3a6868"/>
+        <text x="573" y="222" fill="#6a6a6a" font-family="Space Mono,monospace" font-size="5.5" text-anchor="middle">M5</text>
+        <circle cx="673" cy="210" r="5.5" fill="#0a0a0a"/>
+        <text x="673" y="222" fill="#0a0a0a" font-family="Space Mono,monospace" font-size="5" font-weight="700" text-anchor="middle">LANCIO</text>
+      </svg>
+    </div>
+
+    <div class="ss-title" style="margin-top:3.5rem;" data-reveal="up">
+      <span class="ss-n">8.2</span>Milestone Principali
+    </div>
+    <div class="tl-wrap">
+      <div class="ms-item" data-reveal="left" data-delay="1">
+        <div class="ms-dot m1">M1</div>
+        <div class="ms-t">Analisi e Definizione Completata</div>
+        <div class="ms-w">Fine settimana 2</div>
+        <div class="ms-d">Documento di progetto — Prima consegna (questo documento). Requisiti funzionali approvati.</div>
+      </div>
+      <div class="ms-item" data-reveal="left" data-delay="2">
+        <div class="ms-dot m2">M2</div>
+        <div class="ms-t">Architettura e Prototipo UI Approvati</div>
+        <div class="ms-w">Fine settimana 5</div>
+        <div class="ms-d">Wireframe navigabili + schema database + documentazione stack tecnologico completa.</div>
+      </div>
+      <div class="ms-item" data-reveal="left" data-delay="3">
+        <div class="ms-dot m3">M3</div>
+        <div class="ms-t">Backend API Funzionanti e Documentate</div>
+        <div class="ms-w">Fine settimana 9</div>
+        <div class="ms-d">API RESTful testate, integrazione Stripe e Firebase FCM attive e verificate.</div>
+      </div>
+      <div class="ms-item" data-reveal="left" data-delay="4">
+        <div class="ms-dot m4">M4</div>
+        <div class="ms-t">App Mobile v0.9 — Build Interna Testabile</div>
+        <div class="ms-w">Fine settimana 13</div>
+        <div class="ms-d">APK e .ipa distribuibili internamente, tutti i flussi principali funzionanti end-to-end.</div>
+      </div>
+      <div class="ms-item" data-reveal="left" data-delay="5">
+        <div class="ms-dot m5">M5</div>
+        <div class="ms-t">Beta Test Completato e Report Feedback</div>
+        <div class="ms-w">Fine settimana 17</div>
+        <div class="ms-d">Report qualitativo e quantitativo dal gruppo pilota, versione corretta post-feedback pronta.</div>
+      </div>
+      <div class="ms-item" data-reveal="left" data-delay="6">
+        <div class="ms-dot go">GO</div>
+        <div class="ms-t">Lancio Ufficiale — App Store e Google Play</div>
+        <div class="ms-w">Fine settimana 20</div>
+        <div class="ms-d">App pubblicata sugli store, prime strutture onboarded, evento di lancio coordinato.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ OUTRO ══════════════ -->
+<section id="outro">
+  <div class="outro-ring" id="outro-ring"></div>
+  <div class="outro-ring-2" id="outro-ring-2"></div>
+  <div class="outro-tag" data-reveal="up">Team 6-3-14 · Sportly · Prima Consegna</div>
+  <h2 class="outro-h" data-reveal="up" data-delay="1">Il futuro<br>dello sport<br>è <em>digitale.</em></h2>
+  <p class="outro-sub" data-reveal="up" data-delay="2">Sportly è pronto a colmare il gap tra le strutture sportive italiane e il mondo digitale. Il mercato è validato, il problema è reale, la soluzione è costruibile.</p>
+  <div class="outro-meta" data-reveal="up" data-delay="3">
+    <span>Team 6-3-14</span>
+    <div class="outro-meta-dot"></div>
+    <span>Gestione Progetto e Organizzazione d'Impresa</span>
+    <div class="outro-meta-dot"></div>
+    <span>Classe 5I</span>
+    <div class="outro-meta-dot"></div>
+    <span>Aprile 2025</span>
+  </div>
+</section>
+
+<footer>
+  <img src="https://i.ibb.co/C3yKdHqw/asd.png" alt="Sportly" class="footer-logo">
+  <span class="footer-text">Sportly — Documento di Progetto — Prima Consegna · Classe 5I · Aprile 2025</span>
+</footer>
+
+<!-- ═══════════════════════════════════
+     SCRIPTS
+═══════════════════════════════════ -->
+<script src="https://unpkg.com/lenis@1.3.21/dist/lenis.min.js"></script>
+<script>
+/* ══════════════════════════════
+   1. INTRO CINEMATIC SEQUENCE
+══════════════════════════════ */
+const introEl   = document.getElementById('intro');
+const logoImg   = document.getElementById('intro-logo-img');
+const introLbl  = document.getElementById('intro-label');
+const lineT     = document.getElementById('intro-line-t');
+const lineB     = document.getElementById('intro-line-b');
+const curtainL  = document.getElementById('curtain-l');
+const curtainR  = document.getElementById('curtain-r');
+
+document.body.style.overflow = 'hidden';
+
+function runIntro() {
+  // Lines sweep in
+  setTimeout(() => {
+    lineT.style.transition = 'transform .6s cubic-bezier(.16,1,.3,1)';
+    lineB.style.transition = 'transform .6s cubic-bezier(.16,1,.3,1)';
+    lineT.style.transform = 'scaleX(1)';
+    lineB.style.transform = 'scaleX(1)';
+  }, 50);
+
+  // Logo appears
+  setTimeout(() => {
+    logoImg.style.transition = 'opacity .7s ease, transform .9s cubic-bezier(.16,1,.3,1)';
+    logoImg.style.opacity = '1';
+    logoImg.style.transform = 'scale(1)';
+  }, 50);
+
+  // Label appears
+  setTimeout(() => {
+    introLbl.style.transition = 'opacity .5s ease, transform .5s ease';
+    introLbl.style.opacity = '1';
+    introLbl.style.transform = 'translateY(0)';
+  }, 140);
+
+  // Curtains open
+  setTimeout(() => {
+    curtainL.style.transition = 'transform .9s cubic-bezier(.77,0,.175,1)';
+    curtainR.style.transition = 'transform .9s cubic-bezier(.77,0,.175,1)';
+    curtainL.style.transform = 'translateX(-100%)';
+    curtainR.style.transform = 'translateX(100%)';
+    lineT.style.transition = 'transform .5s cubic-bezier(.77,0,.175,1)';
+    lineB.style.transition = 'transform .5s cubic-bezier(.77,0,.175,1)';
+    lineT.style.transform = 'scaleX(0)';
+    lineB.style.transform = 'scaleX(0)';
+  }, 100);
+
+  // Logo fades
+  setTimeout(() => {
+    introLbl.style.transition = 'opacity .3s';
+    introLbl.style.opacity = '0';
+    logoImg.style.transition = 'opacity .5s ease';
+    logoImg.style.opacity = '0';
+  }, 1800);
+
+  // Hide intro, show page
+  setTimeout(() => {
+    introEl.style.transition = 'opacity .3s';
+    introEl.style.opacity = '0';
+    setTimeout(() => {
+      introEl.style.display = 'none';
+      document.body.style.overflow = '';
+    }, 300);
+    triggerHero();
+    setTimeout(() => {
+      document.getElementById('main-nav').classList.add('visible');
+    }, 150);
+  }, 950);
+}
+
+runIntro();
+
+/* ══════════════════════════════
+   2. HERO REVEAL
+══════════════════════════════ */
+function triggerHero() {
+  const eyebrow = document.getElementById('hero-eyebrow');
+  const hw1 = document.getElementById('hw1');
+  const hwSep1 = document.getElementById('hw-sep1');
+  const hw2 = document.getElementById('hw2');
+  const hwSep2 = document.getElementById('hw-sep2');
+  const hw3 = document.getElementById('hw3');
+  const heroDesc = document.getElementById('hero-desc');
+  const heroKpi = document.getElementById('hero-kpi');
+  const heroScroll = document.getElementById('hero-scroll');
+
+  setTimeout(() => { if(eyebrow) eyebrow.classList.add('in'); }, 100);
+  setTimeout(() => { if(hw1) hw1.classList.add('in'); }, 250);
+  setTimeout(() => { if(hwSep1) hwSep1.classList.add('in'); }, 330);
+  setTimeout(() => { if(hw2) hw2.classList.add('in'); }, 380);
+  setTimeout(() => { if(hwSep2) hwSep2.classList.add('in'); }, 460);
+  setTimeout(() => { if(hw3) hw3.classList.add('in'); }, 510);
+  setTimeout(() => { if(heroDesc) heroDesc.classList.add('in'); }, 650);
+  setTimeout(() => { if(heroKpi) heroKpi.classList.add('in'); }, 800);
+  setTimeout(() => { if(heroScroll) heroScroll.classList.add('in'); }, 1100);
+}
+
+/* ══════════════════════════════
+   3. LENIS INIT
+══════════════════════════════ */
+const lenis = new Lenis({
+  duration: 1.4,
+  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  smoothWheel: true,
+  wheelMultiplier: 0.9,
+  touchMultiplier: 1.8,
+  anchors: true,
+  autoResize: true,
+});
+
+function raf(time) {
+  lenis.raf(time);
+  requestAnimationFrame(raf);
+}
+requestAnimationFrame(raf);
+
+/* ══════════════════════════════
+   4. LENIS SCROLL — drives ALL page effects
+══════════════════════════════ */
+const progEl       = document.getElementById('prog');
+const heroBgText   = document.getElementById('hero-bg-text');
+const outroRing    = document.getElementById('outro-ring');
+const outroRing2   = document.getElementById('outro-ring-2');
+const stickyBgNum  = document.getElementById('sticky-bg-num');
+
+let outroRot1 = 0, outroRot2 = 0;
+
+// Watermark parallax elements
+const parallaxEls = document.querySelectorAll('.lenis-parallax[data-parallax-speed]');
+
+// Value strip — auto-scroll driven by lenis
+const valueStrip = document.getElementById('value-strip');
+let stripOffset = 0;
+
+lenis.on('scroll', ({ scroll, progress, velocity, limit }) => {
+
+  /* — Progress bar — */
+  progEl.style.width = (progress * 100) + '%';
+
+  /* — Hero BG text parallax — */
+  if (heroBgText && scroll < window.innerHeight * 1.5) {
+    const p = scroll / (window.innerHeight * 1.5);
+    const yShift = scroll * 0.28;
+    heroBgText.style.transform = `translate(-50%, calc(-50% + ${yShift}px))`;
+    heroBgText.style.opacity = Math.max(0, 1 - p * 1.8);
+  }
+
+  /* — Watermark parallax per section — */
+  parallaxEls.forEach(el => {
+    const speed = parseFloat(el.dataset.parallaxSpeed) || 0.05;
+    const rect = el.parentElement.getBoundingClientRect();
+    const center = rect.top + rect.height * 0.5;
+    const viewCenter = window.innerHeight * 0.5;
+    const dist = (center - viewCenter) * speed;
+    el.style.transform = `translateY(${dist}px)`;
+  });
+
+  /* — Value strip scroll offset — */
+  if (valueStrip) {
+    stripOffset = -scroll * 0.08;
+    // Keep in bounds
+    const maxOffset = valueStrip.scrollWidth - valueStrip.clientWidth;
+    stripOffset = Math.max(-maxOffset, Math.min(0, stripOffset));
+    valueStrip.style.transform = `translateX(${stripOffset}px)`;
+  }
+
+  /* — Outro rings — driven by lenis velocity — */
+  outroRot1 += velocity * 0.06;
+  outroRot2 -= velocity * 0.03;
+  if (outroRing)  outroRing.style.transform  = `translate(-50%,-50%) rotate(${outroRot1}deg)`;
+  if (outroRing2) outroRing2.style.transform = `translate(-50%,-50%) rotate(${outroRot2}deg)`;
+
+  /* — Nav shadow depth — velocity driven — */
+  const av = Math.abs(velocity);
+  const nav = document.getElementById('main-nav');
+  if (nav && nav.classList.contains('visible')) {
+    nav.style.boxShadow = `0 ${1 + av * 0.12}px ${6 + av * 0.6}px rgba(0,0,0,${0.025 + av * 0.001})`;
+  }
+});
+
+/* ══════════════════════════════
+   5. STICKY SCROLLYTELLING
+══════════════════════════════ */
+const steps   = document.querySelectorAll('.story-step');
+const ssbVal  = document.getElementById('ssb-val');
+const ssbLbl  = document.getElementById('ssb-lbl');
+const ssbDesc = document.getElementById('ssb-desc');
+const bgNum   = document.getElementById('sticky-bg-num');
+
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+if (steps.length && !reduced) {
+  const stepIO = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        steps.forEach(s => s.classList.remove('active'));
+        e.target.classList.add('active');
+
+        const v = e.target.dataset.psv;
+        const l = e.target.dataset.psl;
+        const d = e.target.dataset.psd;
+        const n = e.target.dataset.bgn;
+
+        if (ssbVal) {
+          ssbVal.style.opacity = '0';
+          ssbVal.style.transform = 'translateY(12px)';
+          setTimeout(() => {
+            ssbVal.textContent  = v;
+            ssbLbl.textContent  = l;
+            ssbDesc.textContent = d;
+            if (bgNum) bgNum.textContent = n;
+            ssbVal.style.transition = 'opacity .3s ease, transform .35s cubic-bezier(.16,1,.3,1)';
+            ssbVal.style.opacity = '1';
+            ssbVal.style.transform = 'translateY(0)';
+          }, 200);
+        }
+      }
+    });
+  }, { threshold: 0.5 });
+
+  steps.forEach(s => stepIO.observe(s));
+}
+
+/* ══════════════════════════════
+   6. REVEAL OBSERVER
+   Each section element reveals as it enters
+   with its own directional animation
+══════════════════════════════ */
+if (!reduced) {
+  const revEls = document.querySelectorAll('[data-reveal]');
+  const revIO  = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('revealed');
+        revIO.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.07, rootMargin: '-20px 0px' });
+
+  revEls.forEach(el => revIO.observe(el));
+} else {
+  document.querySelectorAll('[data-reveal]').forEach(el => el.classList.add('revealed'));
+}
+
+/* ══════════════════════════════
+   7. BAR FILLS — animate width on enter
+══════════════════════════════ */
+const allBars = document.querySelectorAll('.bar-fill[data-w], .cov-fill[data-w]');
+
+if (!reduced) {
+  const barIO = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.width = e.target.dataset.w + '%';
+        barIO.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  allBars.forEach(b => barIO.observe(b));
+} else {
+  allBars.forEach(b => {
+    b.style.width = b.dataset.w + '%';
+    b.style.transition = 'none';
+  });
+}
+
+/* ══════════════════════════════
+   8. CUSTOM CURSOR
+══════════════════════════════ */
+const cursor     = document.getElementById('cursor');
+const cursorRing = document.getElementById('cursor-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top  = my + 'px';
+});
+
+(function animateRing() {
+  rx += (mx - rx) * 0.11;
+  ry += (my - ry) * 0.11;
+  cursorRing.style.left = rx + 'px';
+  cursorRing.style.top  = ry + 'px';
+  requestAnimationFrame(animateRing);
+})();
+
+// Velocity reacts on cursor scale
+lenis.on('scroll', ({ velocity }) => {
+  const av = Math.min(Math.abs(velocity), 60);
+  cursor.style.transform = `translate(-50%,-50%) scale(${1 + av * 0.035})`;
+  cursorRing.style.width  = (36 + av * 0.5) + 'px';
+  cursorRing.style.height = (36 + av * 0.5) + 'px';
+});
+
+const hoverEls = document.querySelectorAll('a, button, .stat-tile, .mod, .seg-card, .price-card, .diff-card, .bm-card, .arch-block');
+hoverEls.forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.width = '14px';
+    cursor.style.height = '14px';
+    cursor.style.background = 'var(--lime)';
+    cursorRing.style.opacity = '.7';
+    cursorRing.style.borderColor = 'var(--teal)';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.width = '8px';
+    cursor.style.height = '8px';
+    cursor.style.background = 'var(--k)';
+    cursorRing.style.opacity = '.3';
+    cursorRing.style.borderColor = 'var(--k)';
+  });
+});
+
+/* ══════════════════════════════
+   9. NAV LINK SCROLL (Lenis)
+══════════════════════════════ */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) lenis.scrollTo(t, { offset: -56, duration: 1.8 });
+  });
+});
+
+/* ══════════════════════════════
+   10. HERO MOUSEMOVE — bg text subtle
+══════════════════════════════ */
+const heroSec = document.getElementById('hero');
+if (heroSec && !reduced) {
+  heroSec.addEventListener('mousemove', e => {
+    if (window.scrollY > window.innerHeight * 0.5) return;
+    const r = heroSec.getBoundingClientRect();
+    const cx = (e.clientX - r.left) / r.width - 0.5;
+    const cy = (e.clientY - r.top)  / r.height - 0.5;
+    if (heroBgText) {
+      heroBgText.style.transform = `translate(calc(-50% + ${cx * 18}px), calc(-50% + ${cy * 10}px))`;
+    }
+  });
+}
+</script>
+</body>
+</html>
