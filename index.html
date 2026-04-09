@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sportly — Prima Consegna</title>
+<title>Sportly — Hub Documenti</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -31,126 +31,95 @@
   --accent:    var(--c1);
   --accent-2:  var(--c2);
 
-  /* ═══ TYPE SYSTEM ═══ */
   --type-display: 'Outfit', system-ui, sans-serif;
-  --type-heading:'Instrument Serif', Georgia, serif;
+  --type-heading: 'Instrument Serif', Georgia, serif;
   --sans:  'DM Sans', system-ui, sans-serif;
   --mono:  'JetBrains Mono', 'DM Mono', monospace;
-
-  /* legacy aliases */
   --serif: var(--type-heading);
-
-  --page-w: 210mm;
-  --page-h: 297mm;
-  --page-pad-x: 20mm;
-  --page-pad-y: 18mm;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { font-size: 10pt; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+html { font-size: 10pt; }
 
 body {
   font-family: var(--sans);
   background: #d8d8d2;
   color: var(--ink);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 32px 24px;
   line-height: 1.6;
 }
 
-/* ═══════════════════════════════════════════
-   PAGE SYSTEM
-═══════════════════════════════════════════ */
-.page {
-  width: var(--page-w);
-  min-height: var(--page-h);
+/* ── HUB CARD ── */
+.hub-card {
+  width: 148mm;
   background: var(--surface);
-  margin: 0 auto 16px;
-  padding: var(--page-pad-y) var(--page-pad-x);
   box-shadow:
     0 1px 2px rgba(0,0,0,.04),
     0 4px 16px rgba(0,0,0,.06),
-    0 24px 64px rgba(0,0,0,.08);
+    0 24px 64px rgba(0,0,0,.10);
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: hidden;
 }
 
-/* Accent strip left edge */
-.page::before {
+/* accent strip */
+.hub-card::before {
   content: '';
   position: absolute;
   left: 0; top: 0; bottom: 0;
   width: 3px;
-  background: linear-gradient(180deg, var(--c1) 0%, var(--c2) 50%, transparent 100%);
+  background: linear-gradient(180deg, var(--c1) 0%, var(--c2) 60%, transparent 100%);
+  z-index: 1;
 }
 
-/* ═══════════════════════════════════════════
-   COVER — FULL WHITE THEME
-═══════════════════════════════════════════ */
-.cover {
-  padding: 0;
-  overflow: hidden;
+/* ── HEADER ── */
+.hub-header {
   background: #ffffff;
-}
-
-.cover::before {
-  background: linear-gradient(180deg, var(--c1) 0%, var(--c2) 100%);
-}
-
-/* Cover top — white theme */
-.cover-top {
-  background: #ffffff;
-  padding: 14mm 20mm 12mm;
+  padding: 10mm 12mm 8mm;
+  border-bottom: 1px solid var(--border);
   position: relative;
   overflow: hidden;
-  border-bottom: 1px solid var(--border);
 }
 
-.cover-top::after {
+.hub-header::after {
   content: '';
   position: absolute;
-  right: -40mm;
-  top: -40mm;
-  width: 160mm;
-  height: 160mm;
+  right: -30mm;
+  top: -30mm;
+  width: 100mm;
+  height: 100mm;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(163,198,57,.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(163,198,57,.07) 0%, transparent 70%);
   pointer-events: none;
 }
 
-.cover-top::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 3px;
-  background: linear-gradient(180deg, var(--c1) 0%, var(--c2) 100%);
-}
-
-/* ═══ COVER HEADER (logo) ═══ */
-.cover-header {
+.hub-logo-row {
   display: flex;
   align-items: center;
   gap: 3mm;
   padding-bottom: 5mm;
-  margin-bottom: 6mm;
+  margin-bottom: 5mm;
   border-bottom: 1px solid var(--border);
 }
 
-.cover-header .rh-logo {
-  height: 24px;
+.hub-logo-row img {
+  height: 22px;
   width: auto;
-  display: block;
 }
 
-.cover-header .rh-divider {
+.hub-logo-divider {
   width: 1px;
-  height: 14px;
+  height: 13px;
   background: var(--border-2);
 }
 
-.cover-header .rh-type {
+.hub-logo-type {
   font-family: var(--mono);
   font-size: 6pt;
   letter-spacing: 1.2px;
@@ -158,14 +127,14 @@ body {
   color: var(--ink-4);
 }
 
-.cover-meta-line {
+.hub-meta-row {
   display: flex;
   align-items: center;
   gap: 3mm;
-  margin-bottom: 10mm;
+  margin-bottom: 6mm;
 }
 
-.cover-badge {
+.hub-badge {
   font-family: var(--mono);
   font-size: 6.5pt;
   letter-spacing: 1.5px;
@@ -175,24 +144,24 @@ body {
   padding: 1.5mm 3mm;
 }
 
-.cover-date {
+.hub-date {
   font-family: var(--mono);
   font-size: 6.5pt;
   color: var(--ink-3);
   letter-spacing: .5px;
 }
 
-.cover-h1 {
+.hub-title {
   font-family: var(--type-display);
-  font-size: 58pt;
+  font-size: 36pt;
   font-weight: 700;
-  line-height: .85;
-  letter-spacing: -3px;
+  line-height: .88;
+  letter-spacing: -2px;
   color: var(--ink);
-  margin-bottom: 6mm;
+  margin-bottom: 4mm;
 }
 
-.cover-h1 em {
+.hub-title em {
   font-weight: 300;
   font-style: italic;
   font-family: var(--type-heading);
@@ -200,314 +169,164 @@ body {
   letter-spacing: 0;
 }
 
-.cover-sub {
-  font-size: 9.5pt;
+.hub-sub {
+  font-size: 8.5pt;
   font-weight: 300;
   color: var(--ink-3);
-  max-width: 58ch;
   line-height: 1.65;
-  margin-bottom: 10mm;
+  max-width: 55ch;
 }
 
-.cover-divider {
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, var(--border) 0%, transparent 100%);
-  margin-bottom: 7mm;
+/* ── BODY ── */
+.hub-body {
+  padding: 8mm 12mm 10mm;
+  display: flex;
+  flex-direction: column;
+  gap: 4mm;
+  background: #ffffff;
 }
 
-.cover-kpis {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0;
-}
-
-.cover-kpi {
-  padding: 5mm 0;
-  border-right: 1px solid var(--border);
-  padding-right: 6mm;
-}
-
-.cover-kpi:first-child { padding-left: 0; }
-.cover-kpi:last-child { border-right: none; padding-right: 0; padding-left: 6mm; }
-.cover-kpi:nth-child(2) { padding-left: 6mm; }
-
-.cover-kpi-val {
-  font-family: var(--type-display);
-  font-size: 26pt;
-  font-weight: 700;
-  line-height: 1;
-  color: var(--c2);
-  letter-spacing: -1.5px;
-  margin-bottom: 1.5mm;
-}
-
-.cover-kpi-label {
+.hub-section-label {
   font-family: var(--mono);
   font-size: 6pt;
-  letter-spacing: 1.2px;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c2);
   margin-bottom: 1mm;
 }
 
-.cover-kpi-desc {
+/* ── DOC CARDS ── */
+.doc-card {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .2s, box-shadow .2s, transform .15s;
+  cursor: pointer;
+}
+
+.doc-card:hover {
+  border-color: var(--c2);
+  box-shadow: 0 4px 20px rgba(13,140,140,.10);
+  transform: translateY(-1px);
+}
+
+.doc-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--c1), var(--c2));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .25s ease;
+}
+
+.doc-card:hover::before {
+  transform: scaleX(1);
+}
+
+/* icon column */
+.doc-icon-col {
+  width: 14mm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--surface-3);
+  border-right: 1px solid var(--border);
+  padding: 4mm;
+}
+
+.doc-icon {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.doc-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* content */
+.doc-content {
+  padding: 4mm 4.5mm;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1mm;
+}
+
+.doc-type-tag {
+  font-family: var(--mono);
+  font-size: 5.5pt;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.doc-type-tag.pres { color: var(--c1); }
+.doc-type-tag.docx { color: var(--c2); }
+
+.doc-name {
+  font-family: var(--type-display);
+  font-size: 11pt;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.2;
+  letter-spacing: -.3px;
+}
+
+.doc-desc {
   font-size: 7.5pt;
   font-weight: 300;
   color: var(--ink-3);
   line-height: 1.5;
 }
 
-/* Cover bottom half — white theme */
-.cover-bottom-half {
-  padding: 8mm 20mm 12mm;
-  flex: 1;
+/* arrow */
+.doc-arrow-col {
+  width: 10mm;
   display: flex;
-  flex-direction: column;
-  gap: 6mm;
-  background: #ffffff;
-}
-
-.cover-info-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4mm;
-  margin-top: 2mm;
-}
-
-.cover-info-card {
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  padding: 4.5mm 5mm;
-  position: relative;
-}
-
-.cover-info-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--c1), var(--c2));
-}
-
-.cover-info-label {
-  font-family: var(--mono);
-  font-size: 6pt;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  margin-bottom: 2mm;
-}
-
-.cover-info-val {
-  font-family: var(--type-heading);
-  font-size: 11pt;
-  color: var(--ink);
-  line-height: 1.3;
-}
-
-.cover-info-sub {
-  font-size: 7.5pt;
-  font-weight: 300;
-  color: var(--ink-3);
-  margin-top: 1mm;
-}
-
-/* Team strip — white theme */
-.cover-team-strip {
-  border: 1px solid var(--border);
-  display: flex;
-  align-items: stretch;
-}
-
-.cover-team-label {
-  background: var(--c2);
-  color: #fff;
-  font-family: var(--mono);
-  font-size: 6.5pt;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  padding: 4mm 3mm;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
-}
-
-.cover-team-content {
-  padding: 4mm 5mm;
-  flex: 1;
-}
-
-.cover-team-name {
-  font-family: var(--type-display);
-  font-size: 13pt;
-  font-weight: 600;
-  color: var(--ink);
-  margin-bottom: 1.5mm;
-}
-
-.cover-team-details {
-  font-family: var(--mono);
-  font-size: 7pt;
-  color: var(--ink-3);
-  letter-spacing: .3px;
-}
-
-/* Donut chart on cover — white theme */
-.cover-chart-row {
-  display: flex;
-  align-items: center;
-  gap: 6mm;
-}
-
-.cover-donut-wrap {
-  flex-shrink: 0;
-}
-
-.cover-donut-legend {
-  flex: 1;
-}
-
-.donut-legend-item {
-  display: flex;
-  align-items: center;
-  gap: 2.5mm;
-  margin-bottom: 2.5mm;
-  font-size: 7.8pt;
-  color: var(--ink-2);
-  font-weight: 300;
-}
-
-.donut-legend-item strong {
-  font-weight: 500;
-  color: var(--ink);
-}
-
-.dl-swatch {
-  width: 8px;
-  height: 8px;
-  border-radius: 2px;
-  flex-shrink: 0;
-}
-
-/* ═══════════════════════════════════════════
-   RUNNING HEADER (all content pages)
-═══════════════════════════════════════════ */
-.rh {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 5mm;
-  margin-bottom: 8mm;
-  border-bottom: 1px solid var(--border);
-}
-
-.rh-left {
-  display: flex;
-  align-items: center;
-  gap: 3mm;
-}
-
-.rh-logo {
-  height: 22px;
-  width: auto;
-  display: block;
-}
-
-.rh-divider {
-  width: 1px;
-  height: 12px;
-  background: var(--border-2);
-}
-
-.rh-section {
-  font-family: var(--mono);
-  font-size: 6.5pt;
-  color: var(--ink-3);
-  letter-spacing: .8px;
-  text-transform: uppercase;
-}
-
-.rh-page {
-  font-family: var(--mono);
-  font-size: 7pt;
+  padding: 4mm 2mm;
   color: var(--ink-4);
+  transition: color .2s, transform .2s;
 }
 
-/* ═══════════════════════════════════════════
-   SECTION HEADINGS
-═══════════════════════════════════════════ */
-.s-eyebrow {
-  font-family: var(--mono);
-  font-size: 6.5pt;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+.doc-card:hover .doc-arrow-col {
   color: var(--c2);
-  margin-bottom: 2.5mm;
+  transform: translateX(2px);
 }
 
-.s-title {
-  font-family: var(--type-display);
-  font-size: 28pt;
-  font-weight: 700;
-  line-height: .92;
-  letter-spacing: -1.5px;
-  color: var(--ink);
-  margin-bottom: 6mm;
+.doc-arrow-col svg {
+  width: 14px;
+  height: 14px;
 }
 
-.s-title em {
-  font-style: italic;
-  font-family: var(--type-heading);
-  color: var(--c2);
-  font-weight: 400;
-  letter-spacing: 0;
+/* ── DIVIDER ── */
+.hub-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border) 0%, transparent 100%);
+  margin: 1mm 0;
 }
 
-.ss-title {
-  font-family: var(--type-heading);
-  font-size: 14pt;
-  color: var(--ink);
-  margin-top: 7mm;
-  margin-bottom: 3.5mm;
-  padding-bottom: 2.5mm;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: baseline;
-  gap: 3mm;
-}
-
-.ss-title-num {
-  font-family: var(--mono);
-  font-size: 8pt;
-  color: var(--c2);
-  flex-shrink: 0;
-}
-
-/* ═══════════════════════════════════════════
-   TYPOGRAPHY
-═══════════════════════════════════════════ */
-p {
-  font-size: 8.8pt;
-  color: var(--ink-2);
-  line-height: 1.7;
-  margin-bottom: 3mm;
-  max-width: 72ch;
-  font-weight: 300;
-}
-
-p strong {
-  color: var(--ink);
-  font-weight: 500;
-}
-
-/* ═══════════════════════════════════════════
-   PAGE FOOTER
-═══════════════════════════════════════════ */
-.pf {
+/* ── FOOTER ── */
+.hub-footer {
   margin-top: auto;
-  padding-top: 4mm;
+  padding: 4mm 12mm;
   border-top: 1px solid var(--border);
+  background: var(--surface);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -523,2494 +342,111 @@ p strong {
   background: var(--c1);
   flex-shrink: 0;
 }
-
-/* ═══════════════════════════════════════════
-   STAT CARDS
-═══════════════════════════════════════════ */
-.stat-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 3.5mm;
-  margin: 3.5mm 0 5mm;
-}
-
-.stat-row-2 { grid-template-columns: 1fr 1fr; }
-
-.stat-card {
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  padding: 4.5mm 5mm;
-  position: relative;
-  overflow: hidden;
-}
-
-.stat-card-accent {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--c1), var(--c2));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform .3s ease;
-}
-
-.stat-card:hover .stat-card-accent { transform: scaleX(1); }
-
-.sc-label {
-  font-family: var(--mono);
-  font-size: 6pt;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  margin-bottom: 2mm;
-}
-
-.sc-val {
-  font-family: var(--type-display);
-  font-size: 26pt;
-  font-weight: 700;
-  line-height: 1;
-  color: var(--c2);
-  letter-spacing: -1.5px;
-  margin-bottom: 1.5mm;
-}
-
-.sc-val.green { color: var(--c4); }
-.sc-val.lime  { color: var(--c1); }
-
-.sc-desc {
-  font-size: 7.5pt;
-  font-weight: 300;
-  color: var(--ink-3);
-  line-height: 1.55;
-}
-
-/* ═══════════════════════════════════════════
-   TABLES
-═══════════════════════════════════════════ */
-.tbl {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 3.5mm 0 5mm;
-  font-size: 8pt;
-}
-
-.tbl thead tr {
-  background: var(--ink);
-  color: #fff;
-}
-
-.tbl thead th {
-  text-align: left;
-  padding: 4px 8px;
-  font-family: var(--mono);
-  font-size: 6.5pt;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  font-weight: 400;
-}
-
-.tbl tbody tr {
-  border-bottom: 1px solid var(--border);
-  transition: background .15s;
-}
-
-.tbl tbody tr:hover {
-  background: var(--surface-2);
-}
-
-.tbl tbody td {
-  padding: 5px 8px;
-  color: var(--ink-2);
-  vertical-align: top;
-  line-height: 1.5;
-  font-weight: 300;
-}
-
-.tbl tbody td:first-child {
-  font-weight: 500;
-  color: var(--ink);
-  width: 40%;
-}
-
-/* ═══════════════════════════════════════════
-   BAR CHARTS
-═══════════════════════════════════════════ */
-.bar-chart {
-  display: flex;
-  flex-direction: column;
-  gap: 3mm;
-  margin: 3mm 0 4.5mm;
-}
-
-.bar-row {
-  display: grid;
-  grid-template-columns: 28mm 1fr 16mm;
-  align-items: center;
-  gap: 3mm;
-}
-
-.bar-label {
-  font-size: 7.5pt;
-  font-weight: 300;
-  color: var(--ink-2);
-  text-align: right;
-  line-height: 1.3;
-}
-
-.bar-track {
-  height: 10px;
-  background: var(--surface-3);
-  border-radius: 1px;
-  overflow: hidden;
-  position: relative;
-}
-
-.bar-fill {
-  height: 100%;
-  border-radius: 1px;
-  position: relative;
-}
-
-.bar-fill.c1 { background: var(--c1); }
-.bar-fill.c2 { background: var(--c2); }
-.bar-fill.c4 { background: var(--c4); }
-.bar-fill.c6 { background: var(--c6); }
-.bar-fill.c7 { background: var(--c7); }
-.bar-fill.muted { background: var(--surface-3); border: 1px solid var(--border-2); }
-
-.bar-val {
-  font-family: var(--mono);
-  font-size: 7.5pt;
-  color: var(--ink);
-  font-weight: 500;
-}
-
-/* ═══════════════════════════════════════════
-   CALLOUT / QUOTE
-═══════════════════════════════════════════ */
-.callout {
-  border-left: 2px solid var(--c1);
-  background: linear-gradient(90deg, rgba(163,198,57,.06) 0%, transparent 100%);
-  padding: 4mm 5mm;
-  margin: 4mm 0;
-}
-
-.callout p {
-  font-style: italic;
-  font-size: 9pt;
-  color: var(--ink-2);
-  line-height: 1.65;
-  max-width: 100%;
-  margin: 0;
-}
-
-.callout p strong {
-  font-style: normal;
-}
-
-/* ═══════════════════════════════════════════
-   PROBLEM–SOLUTION FLOW
-═══════════════════════════════════════════ */
-.ps-grid {
-  display: grid;
-  grid-template-columns: 1fr 10mm 1fr;
-  gap: 0;
-  margin: 4mm 0;
-}
-
-.ps-col { display: flex; flex-direction: column; gap: 2.5mm; }
-
-.ps-card {
-  padding: 3.5mm 4mm;
-  border-left: 2px solid transparent;
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  position: relative;
-}
-
-.ps-card.problem {
-  border-left: 2px solid #e05252;
-  background: rgba(224,82,82,.04);
-  border-top: none;
-  border-right: none;
-  border-bottom: 1px solid rgba(224,82,82,.1);
-}
-
-.ps-card.solution {
-  border-left: 2px solid var(--c6);
-  background: rgba(58,158,122,.04);
-  border-top: none;
-  border-right: none;
-  border-bottom: 1px solid rgba(58,158,122,.1);
-}
-
-.ps-card-label {
-  font-family: var(--mono);
-  font-size: 5.5pt;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-  margin-bottom: 1.5mm;
-}
-
-.problem .ps-card-label { color: #e05252; }
-.solution .ps-card-label { color: var(--c6); }
-
-.ps-card-title {
-  font-size: 8pt;
-  font-weight: 500;
-  color: var(--ink);
-  margin-bottom: 1mm;
-  line-height: 1.3;
-}
-
-.ps-card-text {
-  font-size: 7.5pt;
-  font-weight: 300;
-  color: var(--ink-3);
-  line-height: 1.5;
-}
-
-.ps-connector-col {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  padding: 0 2mm;
-}
-
-/* ═══════════════════════════════════════════
-   VALUE CANVAS
-═══════════════════════════════════════════ */
-.value-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4mm;
-  margin: 3.5mm 0 5mm;
-}
-
-.value-section {
-  border: 1px solid var(--border);
-  padding: 5mm;
-  background: var(--surface-2);
-  position: relative;
-}
-
-.value-section-label {
-  font-family: var(--mono);
-  font-size: 6pt;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--c2);
-  margin-bottom: 3.5mm;
-  padding-bottom: 2.5mm;
-  border-bottom: 1px solid var(--border);
-}
-
-.value-item {
-  display: flex;
-  gap: 2.5mm;
-  align-items: flex-start;
-  margin-bottom: 3mm;
-  padding-bottom: 3mm;
-  border-bottom: 1px dotted var(--border);
-}
-
-.value-item:last-child {
-  margin-bottom: 0;
-  padding-bottom: 0;
-  border-bottom: none;
-}
-
-.value-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--c1);
-  flex-shrink: 0;
-  margin-top: 3px;
-}
-
-.value-dot.teal { background: var(--c2); }
-
-.vi-title {
-  font-size: 8pt;
-  font-weight: 500;
-  color: var(--ink);
-  margin-bottom: .8mm;
-  line-height: 1.3;
-}
-
-.vi-text {
-  font-size: 7.5pt;
-  font-weight: 300;
-  color: var(--ink-3);
-  line-height: 1.5;
-}
-
-/* ═══════════════════════════════════════════
-   TARGET SEGMENTS
-═══════════════════════════════════════════ */
-.segments-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 3.5mm;
-  margin: 3.5mm 0 5mm;
-}
-
-.segment-card {
-  border: 1px solid var(--border);
-  padding: 5mm;
-  background: var(--surface-2);
-  position: relative;
-  overflow: hidden;
-}
-
-.segment-card::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-}
-
-.segment-card.s1::after { background: var(--c1); }
-.segment-card.s2::after { background: var(--c2); }
-.segment-card.s3::after { background: var(--c6); }
-
-.seg-tag {
-  font-family: var(--mono);
-  font-size: 6pt;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-  margin-bottom: 2mm;
-}
-
-.s1 .seg-tag { color: var(--c1); }
-.s2 .seg-tag { color: var(--c2); }
-.s3 .seg-tag { color: var(--c6); }
-
-.seg-title {
-  font-family: var(--type-heading);
-  font-size: 13pt;
-  color: var(--ink);
-  margin-bottom: 2.5mm;
-  line-height: 1.2;
-}
-
-.seg-desc {
-  font-size: 7.8pt;
-  font-weight: 300;
-  color: var(--ink-3);
-  line-height: 1.55;
-  margin-bottom: 3mm;
-}
-
-.seg-traits {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5mm;
-}
-
-.seg-trait {
-  font-family: var(--mono);
-  font-size: 7pt;
-  color: var(--ink-2);
-  padding-left: 3mm;
-  position: relative;
-}
-
-.seg-trait::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 4px;
-  height: 1px;
-  background: var(--border-2);
-}
-
-/* ═══════════════════════════════════════════
-   COMPETITION TABLE
-═══════════════════════════════════════════ */
-.comp-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 3.5mm 0 5mm;
-  font-size: 7.8pt;
-}
-
-.comp-table thead tr {
-  background: var(--ink);
-  color: #fff;
-}
-
-.comp-table thead th {
-  padding: 4px 6px;
-  text-align: center;
-  font-family: var(--mono);
-  font-size: 6pt;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  font-weight: 400;
-}
-
-.comp-table thead th:first-child {
-  text-align: left;
-}
-
-.comp-table tbody tr {
-  border-bottom: 1px solid var(--border);
-}
-
-.comp-table tbody tr.our-row {
-  background: rgba(163,198,57,.07);
-}
-
-.comp-table tbody td {
-  padding: 4.5px 6px;
-  text-align: center;
-  color: var(--ink-2);
-  font-weight: 300;
-}
-
-.comp-table tbody td:first-child {
-  text-align: left;
-  font-weight: 500;
-  color: var(--ink);
-}
-
-.comp-check {
-  display: inline-block;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  line-height: 14px;
-  font-size: 7pt;
-  text-align: center;
-}
-
-.cc-yes  { background: rgba(58,158,122,.2); color: var(--c6); }
-.cc-part { background: rgba(163,198,57,.2); color: #7a9820; }
-.cc-no   { background: rgba(113,113,113,.1); color: var(--ink-4); }
-
-/* ═══════════════════════════════════════════
-   BUSINESS MODEL
-═══════════════════════════════════════════ */
-.bm-streams {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 3.5mm;
-  margin: 3.5mm 0 4mm;
-}
-
-.bm-card {
-  border: 1px solid var(--border);
-  background: var(--surface-2);
-  padding: 5mm;
-  position: relative;
-}
-
-.bm-num {
-  font-family: var(--type-display);
-  font-size: 28pt;
-  font-weight: 300;
-  line-height: 1;
-  color: var(--border-2);
-  letter-spacing: -1.5px;
-  margin-bottom: 2mm;
-}
-
-.bm-stream-label {
-  font-family: var(--mono);
-  font-size: 6pt;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-  color: var(--c2);
-  margin-bottom: 1.5mm;
-}
-
-.bm-stream-title {
-  font-size: 9pt;
-  font-weight: 500;
-  color: var(--ink);
-  margin-bottom: 2mm;
-  line-height: 1.3;
-}
-
-.bm-stream-desc {
-  font-size: 7.5pt;
-  font-weight: 300;
-  color: var(--ink-3);
-  line-height: 1.55;
-}
-
-.bm-est {
-  font-family: var(--mono);
-  font-size: 7pt;
-  color: var(--c1);
-  margin-top: 2.5mm;
-  padding-top: 2.5mm;
-  border-top: 1px solid var(--border);
-}
-
-/* Pricing */
-.pricing-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 3.5mm;
-  margin: 3.5mm 0 4.5mm;
-}
-
-.price-card {
-  border: 1px solid var(--border);
-  background: var(--surface-2);
-  padding: 5mm;
-  text-align: center;
-  position: relative;
-}
-
-.price-card.featured {
-  border-color: var(--c2);
-  background: rgba(13,140,140,.04);
-}
-
-.pc-badge {
-  position: absolute;
-  top: 0; right: 0;
-  background: var(--c2);
-  color: #fff;
-  font-family: var(--mono);
-  font-size: 5.5pt;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  padding: 1.5mm 2.5mm;
-}
-
-.pc-tier {
-  font-family: var(--mono);
-  font-size: 6.5pt;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  margin-bottom: 2mm;
-}
-
-.pc-price {
-  font-family: var(--type-display);
-  font-size: 28pt;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -1.5px;
-  color: var(--ink);
-  margin-bottom: .5mm;
-}
-
-.pc-period {
-  font-family: var(--mono);
-  font-size: 7pt;
-  color: var(--ink-4);
-  margin-bottom: 3mm;
-}
-
-.pc-features {
-  font-size: 7.5pt;
-  font-weight: 300;
-  color: var(--ink-2);
-  line-height: 1.8;
-  text-align: left;
-}
-
-.pc-feat-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 2mm;
-  margin-bottom: 1.5mm;
-}
-
-.pc-feat-item::before {
-  content: '';
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--c1);
-  flex-shrink: 0;
-  margin-top: 3px;
-}
-
-/* Revenue projection */
-.rev-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 3mm 0 4mm;
-  font-size: 8pt;
-}
-
-.rev-table thead tr { background: var(--ink); }
-
-.rev-table thead th {
-  padding: 4px 8px;
-  color: #fff;
-  font-family: var(--mono);
-  font-size: 6.5pt;
-  letter-spacing: .8px;
-  text-transform: uppercase;
-  font-weight: 400;
-  text-align: left;
-}
-
-.rev-table thead th:not(:first-child) { text-align: right; }
-
-.rev-table tbody tr { border-bottom: 1px solid var(--border); }
-.rev-table tbody tr:hover { background: var(--surface-2); }
-.rev-table tbody tr.total-row {
-  border-top: 2px solid var(--ink);
-  background: var(--surface-2);
-}
-
-.rev-table tbody td {
-  padding: 4.5px 8px;
-  color: var(--ink-2);
-  font-weight: 300;
-}
-
-.rev-table tbody td:first-child { font-weight: 500; color: var(--ink); }
-.rev-table tbody td:not(:first-child) { text-align: right; font-family: var(--mono); font-size: 7.5pt; }
-
-.rev-table .total-row td {
-  font-weight: 600;
-  color: var(--ink);
-}
-
-.highlight-cell { color: var(--c6); font-weight: 600; }
-.highlight-cell-lime { color: var(--c1); font-weight: 600; }
-
-/* ═══════════════════════════════════════════
-   WBS
-═══════════════════════════════════════════ */
-.wbs-container { margin: 4mm 0 5mm; }
-
-.wbs-root-node {
-  background: var(--ink);
-  color: #fff;
-  padding: 4mm 5mm;
-  display: flex;
-  align-items: center;
-  gap: 3mm;
-  margin-bottom: 0;
-  position: relative;
-}
-
-.wbs-root-node::after {
-  content: '';
-  position: absolute;
-  bottom: -4mm;
-  left: 50%;
-  width: 1px;
-  height: 4mm;
-  background: var(--c1);
-}
-
-.wbs-root-title {
-  font-family: var(--type-display);
-  font-size: 13pt;
-  font-weight: 600;
-  line-height: 1;
-}
-
-.wbs-root-sub {
-  font-family: var(--mono);
-  font-size: 6.5pt;
-  color: rgba(255,255,255,.45);
-  letter-spacing: .8px;
-}
-
-.wbs-h-line {
-  width: 100%;
-  height: 1px;
-  background: var(--c1);
-  margin-top: 4mm;
-  margin-bottom: 0;
-}
-
-.wbs-phases {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0;
-}
-
-.wbs-phase-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-}
-
-.wbs-phase-col::before {
-  content: '';
-  width: 1px;
-  height: 4mm;
-  background: var(--c1);
-  flex-shrink: 0;
-}
-
-.wbs-phase-header {
-  width: calc(100% - 4mm);
-  padding: 3mm;
-  text-align: center;
-  background: var(--surface-3);
-  border: 1px solid var(--border);
-  border-top: 2px solid var(--c1);
-  margin-bottom: 0;
-}
-
-.wbs-phase-num {
-  font-family: var(--mono);
-  font-size: 7.5pt;
-  color: var(--c2);
-  margin-bottom: 1mm;
-}
-
-.wbs-phase-title {
-  font-size: 8pt;
-  font-weight: 500;
-  color: var(--ink);
-  line-height: 1.3;
-}
-
-.wbs-v-line {
-  width: 1px;
-  height: 3mm;
-  background: var(--border-2);
-  flex-shrink: 0;
-}
-
-.wbs-items {
-  width: calc(100% - 4mm);
-  border: 1px solid var(--border);
-  border-top: none;
-}
-
-.wbs-item {
-  padding: 2.5mm 3mm;
-  border-bottom: 1px dotted var(--border);
-  display: flex;
-  gap: 2mm;
-  align-items: flex-start;
-}
-
-.wbs-item:last-child { border-bottom: none; }
-
-.wbs-item-num {
-  font-family: var(--mono);
-  font-size: 6pt;
-  color: var(--c2);
-  flex-shrink: 0;
-  margin-top: 1px;
-}
-
-.wbs-item-text {
-  font-size: 7.5pt;
-  font-weight: 300;
-  color: var(--ink-2);
-  line-height: 1.4;
-}
-
-/* WBS phase color variants */
-.wbs-phase-col.p1 .wbs-phase-header { border-top-color: var(--c1); }
-.wbs-phase-col.p2 .wbs-phase-header { border-top-color: var(--c2); }
-.wbs-phase-col.p3 .wbs-phase-header { border-top-color: var(--c6); }
-.wbs-phase-col.p4 .wbs-phase-header { border-top-color: var(--c7); }
-.wbs-phase-col.p5 .wbs-phase-header { border-top-color: var(--c4); }
-.wbs-phase-col.p6 .wbs-phase-header { border-top-color: var(--c5); }
-.wbs-phase-col.p7 .wbs-phase-header { border-top-color: var(--c8); }
-.wbs-phase-col.p8 .wbs-phase-header { border-top-color: var(--c3); }
-
-.wbs-phase-col.p1 .wbs-phase-num { color: var(--c1); }
-.wbs-phase-col.p2 .wbs-phase-num { color: var(--c2); }
-.wbs-phase-col.p3 .wbs-phase-num { color: var(--c6); }
-.wbs-phase-col.p4 .wbs-phase-num { color: var(--c7); }
-.wbs-phase-col.p5 .wbs-phase-num { color: var(--c4); }
-.wbs-phase-col.p6 .wbs-phase-num { color: var(--c5); }
-.wbs-phase-col.p7 .wbs-phase-num { color: var(--c8); }
-.wbs-phase-col.p8 .wbs-phase-num { color: var(--c3); }
-
-/* ═══════════════════════════════════════════
-   MILESTONE / TIMELINE
-═══════════════════════════════════════════ */
-.timeline-wrap {
-  position: relative;
-  margin: 4mm 0;
-  padding-left: 12mm;
-}
-
-.timeline-wrap::before {
-  content: '';
-  position: absolute;
-  left: 4mm;
-  top: 3mm;
-  bottom: 3mm;
-  width: 1px;
-  background: linear-gradient(180deg, var(--c1) 0%, var(--c2) 100%);
-}
-
-.ms-item {
-  position: relative;
-  margin-bottom: 4.5mm;
-}
-
-.ms-dot {
-  position: absolute;
-  left: -12mm;
-  top: 1mm;
-  width: 8mm;
-  height: 8mm;
-  border-radius: 50%;
-  background: var(--c1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--mono);
-  font-size: 6pt;
-  font-weight: 500;
-  color: var(--ink);
-}
-
-.ms-dot.m2 { background: var(--c2); color: #fff; }
-.ms-dot.m3 { background: var(--c6); color: #fff; }
-.ms-dot.m4 { background: var(--c7); color: #fff; }
-.ms-dot.m5 { background: var(--c4); color: #fff; }
-.ms-dot.launch { background: var(--ink); color: var(--c1); }
-
-.ms-title {
-  font-size: 9pt;
-  font-weight: 500;
-  color: var(--ink);
-  margin-bottom: .8mm;
-}
-
-.ms-meta {
-  display: flex;
-  align-items: center;
-  gap: 3mm;
-  margin-bottom: 1mm;
-}
-
-.ms-week {
-  font-family: var(--mono);
-  font-size: 6.5pt;
-  color: var(--c2);
-}
-
-.ms-deliverable {
-  font-size: 7.5pt;
-  font-weight: 300;
-  color: var(--ink-3);
-  line-height: 1.5;
-}
-
-/* Gantt chart */
-.gantt-outer {
-  margin: 4mm 0 5mm;
-  border: 1px solid var(--border);
-  overflow: hidden;
-}
-
-/* ═══════════════════════════════════════════
-   ARCHITECTURE DIAGRAM (tech stack)
-═══════════════════════════════════════════ */
-.arch-layers {
-  border: 1px solid var(--border);
-  margin: 3.5mm 0 5mm;
-  overflow: hidden;
-}
-
-.arch-layer {
-  display: grid;
-  grid-template-columns: 20mm 1fr;
-  min-height: 14mm;
-  border-bottom: 1px solid var(--border);
-}
-
-.arch-layer:last-child { border-bottom: none; }
-
-.arch-layer-label {
-  background: var(--ink);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2.5mm;
-  text-align: center;
-}
-
-.arch-layer-label-text {
-  font-family: var(--mono);
-  font-size: 6pt;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.5);
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-}
-
-.arch-layer-content {
-  display: flex;
-  align-items: stretch;
-}
-
-.arch-tech-block {
-  flex: 1;
-  padding: 3mm 3.5mm;
-  border-right: 1px solid var(--border);
-  background: var(--surface-2);
-}
-
-.arch-tech-block:last-child { border-right: none; }
-
-.atb-name {
-  font-size: 8pt;
-  font-weight: 500;
-  color: var(--ink);
-  margin-bottom: .8mm;
-}
-
-.atb-desc {
-  font-size: 7pt;
-  font-weight: 300;
-  color: var(--ink-3);
-  line-height: 1.45;
-}
-
-.arch-layer.l1 .arch-layer-label { background: var(--c2); }
-.arch-layer.l2 .arch-layer-label { background: var(--c7); }
-.arch-layer.l3 .arch-layer-label { background: var(--c6); }
-.arch-layer.l4 .arch-layer-label { background: var(--c4); }
-
-/* ═══════════════════════════════════════════
-   CONCLUSION GRID
-═══════════════════════════════════════════ */
-.conclusion-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3.5mm;
-  margin: 3.5mm 0 5mm;
-}
-
-.concl-card {
-  border: 1px solid var(--border);
-  padding: 5mm;
-  background: var(--surface-2);
-  display: flex;
-  gap: 3mm;
-  align-items: flex-start;
-  transition: border-color .2s;
-}
-
-.concl-card:hover { border-color: var(--c1); }
-
-.concl-num {
-  font-family: var(--type-display);
-  font-size: 22pt;
-  font-weight: 300;
-  line-height: 1;
-  color: var(--border-2);
-  flex-shrink: 0;
-  letter-spacing: -1.5px;
-}
-
-.concl-title {
-  font-size: 8.5pt;
-  font-weight: 500;
-  color: var(--ink);
-  margin-bottom: 1.5mm;
-  line-height: 1.3;
-}
-
-.concl-desc {
-  font-size: 7.5pt;
-  font-weight: 300;
-  color: var(--ink-3);
-  line-height: 1.55;
-}
-
-/* ═══════════════════════════════════════════
-   TWO COLUMN LAYOUT
-═══════════════════════════════════════════ */
-.two-col {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5mm;
-}
-
-/* ═══════════════════════════════════════════
-   COST ROWS
-═══════════════════════════════════════════ */
-.cost-block {
-  border: 1px solid var(--border);
-  margin: 2mm 0 3mm;
-}
-
-.cost-block-header {
-  background: var(--surface-3);
-  padding: 3mm 4mm;
-  font-family: var(--mono);
-  font-size: 6.5pt;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  border-bottom: 1px solid var(--border);
-}
-
-.cost-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 3mm 4mm;
-  border-bottom: 1px solid var(--border);
-  font-size: 8pt;
-}
-
-.cost-row:last-child { border-bottom: none; }
-
-.cost-label { font-weight: 300; color: var(--ink-2); }
-.cost-value { font-family: var(--mono); font-size: 8.5pt; font-weight: 500; color: var(--ink); }
-
-.cost-row.total {
-  background: var(--surface-2);
-  border-top: 2px solid var(--ink);
-}
-
-.cost-row.total .cost-label { font-weight: 600; color: var(--ink); }
-.cost-row.total .cost-value { color: var(--c6); font-size: 10pt; }
-
-/* ═══════════════════════════════════════════
-   PRINT
-═══════════════════════════════════════════ */
-@media print {
-  body { background: #fff; padding: 0; }
-  .page { margin: 0; box-shadow: none; width: 100%; page-break-after: always; }
-}
 </style>
 </head>
 <body>
 
-<!-- ╔════════════════════════════════════════╗
-     ║           COPERTINA  (tema bianco)     ║
-     ╚════════════════════════════════════════╝ -->
-<div class="page cover">
+<div class="hub-card">
 
-  <div class="cover-top">
+  <!-- ══ HEADER ══ -->
+  <div class="hub-header">
 
-    <!-- ═══ LOGO HEADER — COVER ═══ -->
-    <div class="cover-header">
-      <img src="https://drive.google.com/u/0/drive-viewer/AKGpihb3GKm2raLRvUpB7-rEeU0b3Aefgp4D-3LiwfEB2LB7PQhnKVEOWJHRpUVVbcol1vMrjCaXiUB5Je0hM6N0rMjzYE2OkmRaxq4=s1600-rw-v1?auditContext=forDisplay" alt="Logo" class="rh-logo">
-      <div class="rh-divider"></div>
-      <span class="rh-type">Sportly — Documento di Progetto</span>
+    <div class="hub-logo-row">
+      <img src="https://drive.google.com/u/0/drive-viewer/AKGpihb3GKm2raLRvUpB7-rEeU0b3Aefgp4D-3LiwfEB2LB7PQhnKVEOWJHRpUVVbcol1vMrjCaXiUB5Je0hM6N0rMjzYE2OkmRaxq4=s1600-rw-v1?auditContext=forDisplay" alt="Sportly Logo">
+      <div class="hub-logo-divider"></div>
+      <span class="hub-logo-type">Sportly — Hub Documenti</span>
     </div>
 
-    <div class="cover-meta-line">
-      <span class="cover-badge">Prima Consegna</span>
-      <span class="cover-date">Classe 5I — Aprile 2025</span>
+    <div class="hub-meta-row">
+      <span class="hub-badge">Prima Consegna</span>
+      <span class="hub-date">Classe 5I — Aprile 2025</span>
     </div>
 
-    <div class="cover-h1">
-      Book<br>
-      Play<br>
-      <em>Connect.</em>
+    <div class="hub-title">
+      Accedi ai<br>
+      <em>Documenti.</em>
     </div>
 
-    <div class="cover-sub">
-      Piattaforma digitale per la prenotazione di attività sportive e ricreative — dal campo da padel alla lezione di yoga, tutto in un ecosistema integrato che trasforma le associazioni sportive locali in realtà digitali competitive.
-    </div>
+    <p class="hub-sub" style="margin-top:3mm;">
+      Seleziona un documento per visualizzare la presentazione del progetto o accedere alla revisione completa del documento di testo.
+    </p>
 
-    <div class="cover-divider"></div>
-
-    <div class="cover-kpis">
-      <div class="cover-kpi">
-        <div class="cover-kpi-label">Mercato Non Digitale</div>
-        <div class="cover-kpi-val">65%</div>
-        <div class="cover-kpi-desc">ASD italiane ancora su sistemi analogici</div>
-      </div>
-      <div class="cover-kpi">
-        <div class="cover-kpi-label">Target Primario</div>
-        <div class="cover-kpi-val">18–45</div>
-        <div class="cover-kpi-desc">Sportivi attivi con smartphone connesso</div>
-      </div>
-      <div class="cover-kpi">
-        <div class="cover-kpi-label">Proiezione Mese 12</div>
-        <div class="cover-kpi-val">15K€</div>
-        <div class="cover-kpi-desc">Ricavo mensile stimato a regime</div>
-      </div>
-    </div>
   </div>
 
-  <div class="cover-bottom-half">
+  <!-- ══ BODY ══ -->
+  <div class="hub-body">
 
-    <div class="cover-chart-row">
-      <div class="cover-donut-wrap">
-        <svg width="80" height="80" viewBox="0 0 80 80">
-          <circle cx="40" cy="40" r="28" fill="none" stroke="#e2e2da" stroke-width="12"/>
-          <circle cx="40" cy="40" r="28" fill="none" stroke="#a3c639" stroke-width="12"
-                  stroke-dasharray="113.7 175.9" stroke-dashoffset="43.98"
-                  stroke-linecap="butt"/>
-          <circle cx="40" cy="40" r="28" fill="none" stroke="#0d8c8c" stroke-width="12"
-                  stroke-dasharray="62.2 175.9" stroke-dashoffset="-69.72"
-                  stroke-linecap="butt"/>
-          <text x="40" y="44" text-anchor="middle" font-size="11" font-family="Space Grotesk, sans-serif" font-weight="700" fill="#0c0c0c">65%</text>
+    <div class="hub-section-label">Documenti disponibili</div>
+
+    <!-- Card 1 — Presentazione -->
+    <a class="doc-card" href="/index.html" target="_blank" rel="noopener">
+
+      <div class="doc-icon-col">
+        <div class="doc-icon">
+          <!-- Slides / Presentation icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--c1);">
+            <rect x="2" y="3" width="20" height="14" rx="2"/>
+            <path d="M8 21h8M12 17v4"/>
+            <path d="M8 10l2.5 2.5L14 8" stroke="var(--c1)" stroke-width="1.8"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="doc-content">
+        <span class="doc-type-tag pres">Presentazione — HTML</span>
+        <div class="doc-name">Presentazione</div>
+        <div class="doc-desc">Visualizza la presentazione interattiva del progetto Sportly nel browser.</div>
+      </div>
+
+      <div class="doc-arrow-col">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M13 6l6 6-6 6"/>
         </svg>
       </div>
-      <div class="cover-donut-legend">
-        <div class="donut-legend-item">
-          <div class="dl-swatch" style="background:var(--c1);"></div>
-          <span><strong>65%</strong> strutture non digitalizzate — opportunità primaria</span>
+
+    </a>
+
+    <div class="hub-divider"></div>
+
+    <!-- Card 2 — Documento DOCX -->
+    <a class="doc-card" href="https://docs.google.com/document/d/1QK_LY65kCKhUsPKooxEUisWuo9cbIzFuJpsTLa88HpM/edit?usp=sharing" target="_blank" rel="noopener">
+
+      <div class="doc-icon-col">
+        <div class="doc-icon">
+          <!-- Document / DOCX icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--c2);">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="8" y1="13" x2="16" y2="13"/>
+            <line x1="8" y1="17" x2="16" y2="17"/>
+            <line x1="8" y1="9"  x2="10" y2="9"/>
+          </svg>
         </div>
-        <div class="donut-legend-item">
-          <div class="dl-swatch" style="background:var(--c2);"></div>
-          <span><strong>35%</strong> già digitalizzate — mercato concorrenziale</span>
-        </div>
-        <div style="font-family:var(--mono);font-size:6pt;color:var(--ink-4);margin-top:2mm;">Stima su ASD dilettantistiche italiane — CONI / ISTAT 2024</div>
       </div>
-    </div>
 
-    <div class="cover-info-grid">
-      <div class="cover-info-card">
-        <div class="cover-info-label">Tipologia di Progetto</div>
-        <div class="cover-info-val">Startup Digitale</div>
-        <div class="cover-info-sub">App Mobile (iOS + Android) + Portale Web</div>
+      <div class="doc-content">
+        <span class="doc-type-tag docx">Documento — Google Docs</span>
+        <div class="doc-name">Documento per la Revisione</div>
+        <div class="doc-desc">Accedi al documento completo su Google Docs per la revisione e i commenti.</div>
       </div>
-      <div class="cover-info-card">
-        <div class="cover-info-label">Modello di Business</div>
-        <div class="cover-info-val">Multi-Revenue</div>
-        <div class="cover-info-sub">SaaS B2B + Commissioni + Freemium</div>
+
+      <div class="doc-arrow-col">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M13 6l6 6-6 6"/>
+        </svg>
       </div>
-    </div>
 
-    <div class="cover-team-strip">
-      <div class="cover-team-label">Team</div>
-      <div class="cover-team-content">
-        <div class="cover-team-name">Team 6-3-14</div>
-        <div class="cover-team-details">Gestione Progetto e Organizzazione di Impresa — Classe 5I &nbsp;&middot;&nbsp; Consegna: 10 Aprile 2025</div>
-      </div>
-    </div>
+    </a>
 
   </div>
 
-</div>
-
-<!-- ╔════════════════════════════════════════╗
-     ║   1 — SCELTA DEL PROGETTO             ║
-     ╚════════════════════════════════════════╝ -->
-<div class="page">
-  <div class="rh">
-    <div class="rh-left">
-      <img src="https://drive.google.com/u/0/drive-viewer/AKGpihb3GKm2raLRvUpB7-rEeU0b3Aefgp4D-3LiwfEB2LB7PQhnKVEOWJHRpUVVbcol1vMrjCaXiUB5Je0hM6N0rMjzYE2OkmRaxq4=s1600-rw-v1?auditContext=forDisplay" alt="Logo" class="rh-logo">
-      <div class="rh-divider"></div>
-      <span class="rh-section"> 01 — Scelta del Progetto</span>
-    </div>
-    <span class="rh-page">02 / 09</span>
-  </div>
-
-  <div class="s-eyebrow">Sezione 01</div>
-  <div class="s-title">Scelta del<br><em>Progetto</em></div>
-
-  <p>Il team ha selezionato lo sviluppo di <strong>Sportly</strong>, applicazione mobile e web per la prenotazione di attività sportive e ricreative. La scelta nasce dall'intersezione di due dinamiche reali nel panorama sportivo italiano: la <strong>crescente domanda di servizi digitali</strong> da parte degli sportivi e la <strong>cronica arretratezza tecnologica</strong> della maggior parte delle strutture dilettantistiche locali.</p>
-
-  <p>La validità del mercato è confermata dall'esistenza di concorrenti già attivi — Playtomic, Wansport, PrenotaWeb — ma la loro copertura funzionale frammentata e la loro focalizzazione su nicchie specifiche lasciano aperto uno spazio significativo per un operatore integrato.</p>
-
-  <div class="ss-title">
-    <span class="ss-title-num">1.1</span>
-    Validazione Preliminare del Mercato
-  </div>
-
-  <div class="stat-row">
-    <div class="stat-card">
-      <div class="stat-card-accent"></div>
-      <div class="sc-label">Gap di Mercato</div>
-      <div class="sc-val">65%</div>
-      <div class="sc-desc">ASD italiane prive di sistemi digitali di prenotazione — opportunità diretta per Sportly</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-card-accent"></div>
-      <div class="sc-label">Sportivi Attivi</div>
-      <div class="sc-val lime">36%</div>
-      <div class="sc-desc">Praticano sport regolarmente (ISTAT 2024). Utenti abituati all'uso di app per i servizi quotidiani</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-card-accent"></div>
-      <div class="sc-label">Penetrazione Smartphone</div>
-      <div class="sc-val green">&gt;50%</div>
-      <div class="sc-desc">Adulti italiani connessi. Il canale digitale mobile è già pronto ad accogliere la domanda</div>
-    </div>
-  </div>
-
-  <table class="tbl">
-    <thead>
-      <tr>
-        <th>Indicatore di Mercato</th>
-        <th>Dato / Stima</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>Strutture sportive in Italia</td><td>Decine di migliaia (palestre, piscine, campi, centri ricreativi)</td></tr>
-      <tr><td>ASD non digitalizzate</td><td>~60–70% delle associazioni dilettantistiche attive</td></tr>
-      <tr><td>Popolazione che pratica sport con continuità</td><td>~36% degli italiani — Fonte: ISTAT 2024</td></tr>
-      <tr><td>Adulti con smartphone connesso a internet</td><td>Oltre il 50% della popolazione adulta italiana</td></tr>
-      <tr><td>Principali concorrenti rilevati</td><td>Playtomic, Wansport, PrenotaWeb, Squby</td></tr>
-      <tr><td>Differenziazione rispetto ai concorrenti</td><td>Copertura multi-sport + community integrata + dashboard gestori</td></tr>
-    </tbody>
-  </table>
-
-  <div class="ss-title">
-    <span class="ss-title-num">1.2</span>
-    Penetrazione Digitale — Analisi Visiva
-  </div>
-
-  <div class="bar-chart">
-    <div class="bar-row">
-      <div class="bar-label">Strutture non digitalizzate</div>
-      <div class="bar-track"><div class="bar-fill c1" style="width:65%"></div></div>
-      <div class="bar-val">65%</div>
-    </div>
-    <div class="bar-row">
-      <div class="bar-label">Sportivi attivi (ISTAT)</div>
-      <div class="bar-track"><div class="bar-fill c2" style="width:36%"></div></div>
-      <div class="bar-val">36%</div>
-    </div>
-    <div class="bar-row">
-      <div class="bar-label">Adulti con smartphone</div>
-      <div class="bar-track"><div class="bar-fill c6" style="width:52%"></div></div>
-      <div class="bar-val">&gt;50%</div>
-    </div>
-    <div class="bar-row">
-      <div class="bar-label">Copertura concorrenti</div>
-      <div class="bar-track"><div class="bar-fill c7" style="width:35%"></div></div>
-      <div class="bar-val">~35%</div>
-    </div>
-  </div>
-
-  <div class="callout">
-    <p>La coesistenza di concorrenti già operativi e di una quota di mercato analogica ancora maggioritaria delinea uno scenario ideale per l'ingresso di un nuovo operatore: <strong>la domanda esiste, il mercato è validato, la soluzione migliore non è ancora stata costruita.</strong></p>
-  </div>
-
-  <div class="pf">
-    <span>Sportly — Documento di Progetto — Prima Consegna</span>
+  <!-- ══ FOOTER ══ -->
+  <div class="hub-footer">
+    <span>Sportly — Team 6-3-14</span>
     <div class="pf-dot"></div>
-    <span> 01 Scelta del Progetto</span>
-    <div class="pf-dot"></div>
-    <span>Pagina 02 / 09</span>
-  </div>
-</div>
-
-<!-- ╔════════════════════════════════════════╗
-     ║   2 — DESCRIZIONE DETTAGLIATA         ║
-     ╚════════════════════════════════════════╝ -->
-<div class="page">
-  <div class="rh">
-    <div class="rh-left">
-      <img src="https://drive.google.com/u/0/drive-viewer/AKGpihb3GKm2raLRvUpB7-rEeU0b3Aefgp4D-3LiwfEB2LB7PQhnKVEOWJHRpUVVbcol1vMrjCaXiUB5Je0hM6N0rMjzYE2OkmRaxq4=s1600-rw-v1?auditContext=forDisplay" alt="Logo" class="rh-logo">
-      <div class="rh-divider"></div>
-      <span class="rh-section"> 02 — Descrizione Dettagliata</span>
-    </div>
-    <span class="rh-page">03 / 09</span>
+    <span>Classe 5I · Aprile 2025</span>
   </div>
 
-  <div class="s-eyebrow">Sezione 02</div>
-  <div class="s-title">Descrizione<br><em>dell'Idea</em></div>
-
-  <p>Sportly è un <strong>ecosistema digitale a due lati</strong>: da un lato semplifica l'accesso alle attività sportive per gli utenti finali, dall'altro digitalizza la gestione operativa delle strutture. La piattaforma copre campi sportivi, corsi fitness, eventi sportivi e attività ricreative — tutto in un'unica interfaccia progettata per la massima semplicità d'uso.</p>
-
-  <div class="ss-title">
-    <span class="ss-title-num">2.1</span>
-    Moduli Funzionali Principali
-  </div>
-
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:3mm;margin:3mm 0 5mm;">
-
-    <div style="border:1px solid var(--border);padding:4mm 4.5mm;background:var(--surface-2);border-top:2px solid var(--c1);">
-      <div style="font-family:var(--mono);font-size:6pt;letter-spacing:1.2px;text-transform:uppercase;color:var(--c1);margin-bottom:1.5mm;">Modulo 01</div>
-      <div style="font-size:9pt;font-weight:500;color:var(--ink);margin-bottom:1.5mm;">Ricerca Multi-Sport</div>
-      <div style="font-size:7.5pt;font-weight:300;color:var(--ink-3);line-height:1.5;">Filtri per sport, data, distanza e prezzo. Mappa integrata per trovare strutture nelle vicinanze.</div>
-    </div>
-
-    <div style="border:1px solid var(--border);padding:4mm 4.5mm;background:var(--surface-2);border-top:2px solid var(--c2);">
-      <div style="font-family:var(--mono);font-size:6pt;letter-spacing:1.2px;text-transform:uppercase;color:var(--c2);margin-bottom:1.5mm;">Modulo 02</div>
-      <div style="font-size:9pt;font-weight:500;color:var(--ink);margin-bottom:1.5mm;">Calendario Real-Time</div>
-      <div style="font-size:7.5pt;font-weight:300;color:var(--ink-3);line-height:1.5;">Slot disponibili in tempo reale. Prenotazione immediata, modifica e cancellazione autonome.</div>
-    </div>
-
-    <div style="border:1px solid var(--border);padding:4mm 4.5mm;background:var(--surface-2);border-top:2px solid var(--c6);">
-      <div style="font-family:var(--mono);font-size:6pt;letter-spacing:1.2px;text-transform:uppercase;color:var(--c6);margin-bottom:1.5mm;">Modulo 03</div>
-      <div style="font-size:9pt;font-weight:500;color:var(--ink);margin-bottom:1.5mm;">Pagamenti Integrati</div>
-      <div style="font-size:7.5pt;font-weight:300;color:var(--ink-3);line-height:1.5;">Stripe, Apple Pay, Google Pay. Abbonamenti digitali e ricevute automatiche per strutture e utenti.</div>
-    </div>
-
-    <div style="border:1px solid var(--border);padding:4mm 4.5mm;background:var(--surface-2);border-top:2px solid var(--c7);">
-      <div style="font-family:var(--mono);font-size:6pt;letter-spacing:1.2px;text-transform:uppercase;color:var(--c7);margin-bottom:1.5mm;">Modulo 04</div>
-      <div style="font-size:9pt;font-weight:500;color:var(--ink);margin-bottom:1.5mm;">Notifiche Smart</div>
-      <div style="font-size:7.5pt;font-weight:300;color:var(--ink-3);line-height:1.5;">Conferma prenotazione, reminder H-24 e H-2, avvisi slot liberi, promozioni personalizzate.</div>
-    </div>
-
-    <div style="border:1px solid var(--border);padding:4mm 4.5mm;background:var(--surface-2);border-top:2px solid var(--c4);">
-      <div style="font-family:var(--mono);font-size:6pt;letter-spacing:1.2px;text-transform:uppercase;color:var(--c4);margin-bottom:1.5mm;">Modulo 05</div>
-      <div style="font-size:9pt;font-weight:500;color:var(--ink);margin-bottom:1.5mm;">Community e Social</div>
-      <div style="font-size:7.5pt;font-weight:300;color:var(--ink-3);line-height:1.5;">Cerca compagno di gioco, gruppi sportivi locali, badge fedeltà, classifiche e sfide mensili.</div>
-    </div>
-
-    <div style="border:1px solid var(--border);padding:4mm 4.5mm;background:var(--surface-2);border-top:2px solid var(--c8);">
-      <div style="font-family:var(--mono);font-size:6pt;letter-spacing:1.2px;text-transform:uppercase;color:var(--c8);margin-bottom:1.5mm;">Modulo 06</div>
-      <div style="font-size:9pt;font-weight:500;color:var(--ink);margin-bottom:1.5mm;">Dashboard Gestori</div>
-      <div style="font-size:7.5pt;font-weight:300;color:var(--ink-3);line-height:1.5;">Analytics occupazione e ricavi, gestione slot, marketing diretto, widget booking integrabile.</div>
-    </div>
-
-  </div>
-
-  <div class="ss-title">
-    <span class="ss-title-num">2.2</span>
-    Architettura Tecnologica per Layer
-  </div>
-
-  <div class="arch-layers">
-
-    <div class="arch-layer l1">
-      <div class="arch-layer-label">
-        <div class="arch-layer-label-text">Frontend</div>
-      </div>
-      <div class="arch-layer-content">
-        <div class="arch-tech-block">
-          <div class="atb-name">React Native</div>
-          <div class="atb-desc">App mobile cross-platform iOS e Android con performance nativa e codebase unica</div>
-        </div>
-        <div class="arch-tech-block">
-          <div class="atb-name">React.js (Web)</div>
-          <div class="atb-desc">Portale web per gestori e utenti desktop, componenti condivisi con mobile</div>
-        </div>
-        <div class="arch-tech-block">
-          <div class="atb-name">Google Maps API</div>
-          <div class="atb-desc">Ricerca strutture per geolocalizzazione, navigazione integrata, mappe interattive</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="arch-layer l2">
-      <div class="arch-layer-label">
-        <div class="arch-layer-label-text">Backend</div>
-      </div>
-      <div class="arch-layer-content">
-        <div class="arch-tech-block">
-          <div class="atb-name">Node.js / Express</div>
-          <div class="atb-desc">API RESTful scalabili, architettura a microservizi su AWS Lambda</div>
-        </div>
-        <div class="arch-tech-block">
-          <div class="atb-name">Stripe API</div>
-          <div class="atb-desc">Gateway pagamenti PCI-compliant, Apple/Google Pay, abbonamenti ricorrenti</div>
-        </div>
-        <div class="arch-tech-block">
-          <div class="atb-name">Firebase FCM</div>
-          <div class="atb-desc">Cloud messaging push notifications cross-platform, alta affidabilità</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="arch-layer l3">
-      <div class="arch-layer-label">
-        <div class="arch-layer-label-text">Database</div>
-      </div>
-      <div class="arch-layer-content">
-        <div class="arch-tech-block">
-          <div class="atb-name">PostgreSQL</div>
-          <div class="atb-desc">Database relazionale principale per utenti, prenotazioni, strutture e transazioni</div>
-        </div>
-        <div class="arch-tech-block">
-          <div class="atb-name">Redis Cache</div>
-          <div class="atb-desc">Cache sessioni e slot disponibilità in real-time per performance ottimale</div>
-        </div>
-        <div class="arch-tech-block">
-          <div class="atb-name">AWS S3</div>
-          <div class="atb-desc">Storage immagini strutture, documenti e asset statici con CDN globale</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="arch-layer l4">
-      <div class="arch-layer-label">
-        <div class="arch-layer-label-text">DevOps</div>
-      </div>
-      <div class="arch-layer-content">
-        <div class="arch-tech-block">
-          <div class="atb-name">AWS / GCP</div>
-          <div class="atb-desc">Cloud hosting scalabile, autoscaling in base al carico, multi-region</div>
-        </div>
-        <div class="arch-tech-block">
-          <div class="atb-name">Docker + CI/CD</div>
-          <div class="atb-desc">Containerizzazione e pipeline di rilascio automatizzata per aggiornamenti rapidi</div>
-        </div>
-        <div class="arch-tech-block">
-          <div class="atb-name">Sentry / Datadog</div>
-          <div class="atb-desc">Monitoraggio errori, performance e uptime in produzione 24/7</div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="pf">
-    <span>Sportly — Documento di Progetto — Prima Consegna</span>
-    <div class="pf-dot"></div>
-    <span> 02 Descrizione dell'Idea</span>
-    <div class="pf-dot"></div>
-    <span>Pagina 03 / 09</span>
-  </div>
-</div>
-
-<!-- ╔════════════════════════════════════════╗
-     ║   3 — PROBLEMA                        ║
-     ╚════════════════════════════════════════╝ -->
-<div class="page">
-  <div class="rh">
-    <div class="rh-left">
-      <img src="https://drive.google.com/u/0/drive-viewer/AKGpihb3GKm2raLRvUpB7-rEeU0b3Aefgp4D-3LiwfEB2LB7PQhnKVEOWJHRpUVVbcol1vMrjCaXiUB5Je0hM6N0rMjzYE2OkmRaxq4=s1600-rw-v1?auditContext=forDisplay" alt="Logo" class="rh-logo">
-      <div class="rh-divider"></div>
-      <span class="rh-section"> 03 — Problema che si Vuole Risolvere</span>
-    </div>
-    <span class="rh-page">04 / 09</span>
-  </div>
-
-  <div class="s-eyebrow">Sezione 03</div>
-  <div class="s-title">Il <em>Problema</em></div>
-
-  <p>Il mercato sportivo dilettantistico italiano opera su infrastrutture obsolete. Per chi vuole prenotare un campo o un corso, il percorso tipico è: cercare il numero di telefono della struttura, chiamare negli orari di apertura, attendere conferma via WhatsApp, pagare in contanti all'arrivo. Per i gestori, ogni prenotazione richiede intervento manuale con elevato rischio di errore. <strong>Il problema non è culturale — è strutturale.</strong></p>
-
-  <div class="ss-title">
-    <span class="ss-title-num">3.1</span>
-    Mappa Pain Point — Soluzione
-  </div>
-
-  <div class="ps-grid">
-
-    <div class="ps-col">
-      <div class="ps-card problem">
-        <div class="ps-card-label">Problema 01</div>
-        <div class="ps-card-title">Prenotazioni ancora manuali</div>
-        <div class="ps-card-text">Telefonate, Excel, registri cartacei. Doppie prenotazioni, errori frequenti e sovraccarico del personale di front-office.</div>
-      </div>
-      <div class="ps-card problem">
-        <div class="ps-card-label">Problema 02</div>
-        <div class="ps-card-title">Nessuna visibilità real-time</div>
-        <div class="ps-card-text">Impossibile sapere se un campo è disponibile senza chiamare. Gli slot liberi si perdono per mancanza di visibilità digitale.</div>
-      </div>
-      <div class="ps-card problem">
-        <div class="ps-card-label">Problema 03</div>
-        <div class="ps-card-title">Community sportiva frammentata</div>
-        <div class="ps-card-text">Nessuno strumento per trovare compagni di gioco, organizzare tornei amatoriali o aggregare gruppi sportivi locali.</div>
-      </div>
-      <div class="ps-card problem">
-        <div class="ps-card-label">Problema 04</div>
-        <div class="ps-card-title">Piccole strutture invisibili online</div>
-        <div class="ps-card-text">Le ASD locali senza presenza digitale perdono clientela rispetto a palestre di catena già presenti su Google e App Store.</div>
-      </div>
-      <div class="ps-card problem">
-        <div class="ps-card-label">Problema 05</div>
-        <div class="ps-card-title">Pagamenti e contabilità disorganizzati</div>
-        <div class="ps-card-text">Incassi in contanti con rischio ammanchi, abbonamenti tracciati su carta, zero reportistica automatica per i gestori.</div>
-      </div>
-    </div>
-
-    <div class="ps-connector-col">
-      <div style="width:1px;flex:1;background:linear-gradient(180deg,var(--c1),var(--c2));"></div>
-      <div style="width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:7px solid var(--c2);"></div>
-    </div>
-
-    <div class="ps-col">
-      <div class="ps-card solution">
-        <div class="ps-card-label">Soluzione 01</div>
-        <div class="ps-card-title">Booking digitale 24/7</div>
-        <div class="ps-card-text">Calendario smart con disponibilità in tempo reale. Prenotazioni autonome in 30 secondi da smartphone, zero errori umani.</div>
-      </div>
-      <div class="ps-card solution">
-        <div class="ps-card-label">Soluzione 02</div>
-        <div class="ps-card-title">Accesso multi-dispositivo</div>
-        <div class="ps-card-text">App mobile + portale web. Disponibilità sempre visibile, prenotabile in qualsiasi momento, da qualsiasi dispositivo.</div>
-      </div>
-      <div class="ps-card solution">
-        <div class="ps-card-label">Soluzione 03</div>
-        <div class="ps-card-title">Social feature native</div>
-        <div class="ps-card-text">Cerca compagno, gruppi sportivi, notifiche tornei ed eventi locali. Gamification con badge e classifiche per fidelizzare.</div>
-      </div>
-      <div class="ps-card solution">
-        <div class="ps-card-label">Soluzione 04</div>
-        <div class="ps-card-title">Marketplace centralizzato</div>
-        <div class="ps-card-text">Visibilità uniforme per tutte le strutture indipendentemente dalle dimensioni. Ogni ASD locale diventa competitiva.</div>
-      </div>
-      <div class="ps-card solution">
-        <div class="ps-card-label">Soluzione 05</div>
-        <div class="ps-card-title">Pagamenti e analytics automatizzati</div>
-        <div class="ps-card-text">Gateway sicuri PCI-compliant, ricevute digitali, report occupazione e ricavi in tempo reale. Zero contante gestito a mano.</div>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="callout">
-    <p>Ogni pain point identificato ha una soluzione tecnologica concreta e misurabile in Sportly. Il valore non è teorico: è <strong>operativo, immediato e percepibile</strong> sia dagli sportivi che dai gestori delle strutture, dal primo giorno di utilizzo.</p>
-  </div>
-
-  <div class="pf">
-    <span>Sportly — Documento di Progetto — Prima Consegna</span>
-    <div class="pf-dot"></div>
-    <span> 03 Il Problema</span>
-    <div class="pf-dot"></div>
-    <span>Pagina 04 / 09</span>
-  </div>
-</div>
-
-<!-- ╔════════════════════════════════════════╗
-     ║   4 — VALORE PER IL CLIENTE           ║
-     ╚════════════════════════════════════════╝ -->
-<div class="page">
-  <div class="rh">
-    <div class="rh-left">
-      <img src="https://drive.google.com/u/0/drive-viewer/AKGpihb3GKm2raLRvUpB7-rEeU0b3Aefgp4D-3LiwfEB2LB7PQhnKVEOWJHRpUVVbcol1vMrjCaXiUB5Je0hM6N0rMjzYE2OkmRaxq4=s1600-rw-v1?auditContext=forDisplay" alt="Logo" class="rh-logo">
-      <div class="rh-divider"></div>
-      <span class="rh-section"> 04 — Valore per il Cliente</span>
-    </div>
-    <span class="rh-page">05 / 09</span>
-  </div>
-
-  <div class="s-eyebrow">Sezione 04</div>
-  <div class="s-title">Valore per<br><em>il Cliente</em></div>
-
-  <p>Sportly crea valore concreto e misurabile per entrambi i lati del marketplace. Per gli utenti sportivi: <strong>meno attrito, più sport</strong>. Per i gestori delle strutture: <strong>meno telefonate, più prenotazioni, meno errori</strong>. Il valore non è distribuito uniformemente — è moltiplicato dall'effetto rete: più strutture, più utenti. Più utenti, più strutture.</p>
-
-  <div class="ss-title">
-    <span class="ss-title-num">4.1</span>
-    Value Proposition per Segmento
-  </div>
-
-  <div class="value-grid">
-    <div class="value-section">
-      <div class="value-section-label">Utenti Sportivi (B2C)</div>
-
-      <div class="value-item">
-        <div class="value-dot"></div>
-        <div>
-          <div class="vi-title">Risparmio di tempo reale</div>
-          <div class="vi-text">Prenotazione in meno di 30 secondi da smartphone, senza telefonate o attese.</div>
-        </div>
-      </div>
-
-      <div class="value-item">
-        <div class="value-dot"></div>
-        <div>
-          <div class="vi-title">Disponibilità continua</div>
-          <div class="vi-text">Accesso al calendario 24/7, anche fuori dagli orari di apertura delle strutture.</div>
-        </div>
-      </div>
-
-      <div class="value-item">
-        <div class="value-dot"></div>
-        <div>
-          <div class="vi-title">Scelta e confronto trasparente</div>
-          <div class="vi-text">Confronto tra strutture per prezzo, distanza, recensioni e disponibilità oraria.</div>
-        </div>
-      </div>
-
-      <div class="value-item">
-        <div class="value-dot"></div>
-        <div>
-          <div class="vi-title">Flessibilità senza burocrazia</div>
-          <div class="vi-text">Cancellazioni e modifiche autonome, senza dover chiamare la struttura.</div>
-        </div>
-      </div>
-
-      <div class="value-item">
-        <div class="value-dot"></div>
-        <div>
-          <div class="vi-title">Community sportiva locale</div>
-          <div class="vi-text">Trova compagni di gioco, entra in gruppi sportivi locali, partecipa a tornei ed eventi.</div>
-        </div>
-      </div>
-
-      <div class="value-item">
-        <div class="value-dot"></div>
-        <div>
-          <div class="vi-title">Motivazione continuativa</div>
-          <div class="vi-text">Badge fedeltà, punti attività e sfide mensili per mantenere alta la frequenza sportiva.</div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="value-section">
-      <div class="value-section-label">Gestori Strutture (B2B)</div>
-
-      <div class="value-item">
-        <div class="value-dot teal"></div>
-        <div>
-          <div class="vi-title">Aumento tasso di occupazione</div>
-          <div class="vi-text">Visibilità su marketplace comune porta nuovi clienti automaticamente, 24/7.</div>
-        </div>
-      </div>
-
-      <div class="value-item">
-        <div class="value-dot teal"></div>
-        <div>
-          <div class="vi-title">Analytics e dati decisionali</div>
-          <div class="vi-text">Dashboard con occupazione, entrate per slot, trend di prenotazione per decisioni informate.</div>
-        </div>
-      </div>
-
-      <div class="value-item">
-        <div class="value-dot teal"></div>
-        <div>
-          <div class="vi-title">Automazione operativa</div>
-          <div class="vi-text">Prenotazioni gestite automaticamente. Zero telefonate, zero errori manuali, zero doppie prenotazioni.</div>
-        </div>
-      </div>
-
-      <div class="value-item">
-        <div class="value-dot teal"></div>
-        <div>
-          <div class="vi-title">Pagamenti certi e sicuri</div>
-          <div class="vi-text">Gateway PCI-compliant, incassi garantiti a prenotazione, contabilità automatica.</div>
-        </div>
-      </div>
-
-      <div class="value-item">
-        <div class="value-dot teal"></div>
-        <div>
-          <div class="vi-title">Marketing diretto integrato</div>
-          <div class="vi-text">Promozioni e notifiche push mirate agli utenti registrati, senza costi aggiuntivi di advertising.</div>
-        </div>
-      </div>
-
-      <div class="value-item">
-        <div class="value-dot teal"></div>
-        <div>
-          <div class="vi-title">Widget booking integrabile</div>
-          <div class="vi-text">Il sistema di prenotazione Sportly installabile sul sito della struttura in pochi minuti.</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="ss-title">
-    <span class="ss-title-num">4.2</span>
-    Copertura Funzionale — Confronto Competitivo
-  </div>
-
-  <div class="bar-chart">
-    <div class="bar-row">
-      <div class="bar-label">Sportly (target)</div>
-      <div class="bar-track"><div class="bar-fill c1" style="width:95%"></div></div>
-      <div class="bar-val">95%</div>
-    </div>
-    <div class="bar-row">
-      <div class="bar-label">Playtomic</div>
-      <div class="bar-track"><div class="bar-fill c6" style="width:60%"></div></div>
-      <div class="bar-val">60%</div>
-    </div>
-    <div class="bar-row">
-      <div class="bar-label">PrenotaWeb</div>
-      <div class="bar-track"><div class="bar-fill c7" style="width:45%"></div></div>
-      <div class="bar-val">45%</div>
-    </div>
-    <div class="bar-row">
-      <div class="bar-label">Squby</div>
-      <div class="bar-track"><div class="bar-fill c4" style="width:35%"></div></div>
-      <div class="bar-val">35%</div>
-    </div>
-    <div class="bar-row">
-      <div class="bar-label">Soluzioni analogiche</div>
-      <div class="bar-track"><div class="bar-fill muted" style="width:8%"></div></div>
-      <div class="bar-val">— %</div>
-    </div>
-  </div>
-
-  <div class="pf">
-    <span>Sportly — Documento di Progetto — Prima Consegna</span>
-    <div class="pf-dot"></div>
-    <span> 04 Valore per il Cliente</span>
-    <div class="pf-dot"></div>
-    <span>Pagina 05 / 09</span>
-  </div>
-</div>
-
-<!-- ╔════════════════════════════════════════╗
-     ║   5 — TARGET CLIENTI                  ║
-     ╚════════════════════════════════════════╝ -->
-<div class="page">
-  <div class="rh">
-    <div class="rh-left">
-      <img src="https://drive.google.com/u/0/drive-viewer/AKGpihb3GKm2raLRvUpB7-rEeU0b3Aefgp4D-3LiwfEB2LB7PQhnKVEOWJHRpUVVbcol1vMrjCaXiUB5Je0hM6N0rMjzYE2OkmRaxq4=s1600-rw-v1?auditContext=forDisplay" alt="Logo" class="rh-logo">
-      <div class="rh-divider"></div>
-      <span class="rh-section"> 05 — Analisi Target Clienti</span>
-    </div>
-    <span class="rh-page">06 / 09</span>
-  </div>
-
-  <div class="s-eyebrow">Sezione 05</div>
-  <div class="s-title">Target<br><em>Clienti</em></div>
-
-  <p>Sportly si rivolge a tre segmenti principali con esigenze e comportamenti distinti. La scelta di prioritizzare questi segmenti nasce dall'analisi della penetrazione degli smartphone, dalla propensione all'uso di app per servizi quotidiani e dalla frequenza di utilizzo delle strutture sportive.</p>
-
-  <div class="ss-title">
-    <span class="ss-title-num">5.1</span>
-    Segmentazione Principale
-  </div>
-
-  <div class="segments-grid">
-
-    <div class="segment-card s1">
-      <div class="seg-tag">Segmento A — Primario</div>
-      <div class="seg-title">Sportivi Digitali</div>
-      <div class="seg-desc">18–35 anni, praticano sport regolarmente, usano app per quasi tutto. Alta propensione alla prenotazione digitale e al pagamento contactless.</div>
-      <div class="seg-traits">
-        <div class="seg-trait">Smartphone-native</div>
-        <div class="seg-trait">Sport 2–4 volte/settimana</div>
-        <div class="seg-trait">Padel, fitness, running, calcetto</div>
-        <div class="seg-trait">Disposti a pagare per comodità</div>
-        <div class="seg-trait">Influencer nella cerchia sociale</div>
-      </div>
-    </div>
-
-    <div class="segment-card s2">
-      <div class="seg-tag">Segmento B — Secondario</div>
-      <div class="seg-title">Famiglie Attive</div>
-      <div class="seg-desc">35–50 anni con figli. Cercano corsi per bambini, attività ricreative, orari compatibili con il lavoro. Priorità: semplicità e affidabilità.</div>
-      <div class="seg-traits">
-        <div class="seg-trait">Utenti smartphone maturi</div>
-        <div class="seg-trait">Pianificazione settimanale</div>
-        <div class="seg-trait">Nuoto, tennis, ginnastica bimbi</div>
-        <div class="seg-trait">Sensibili a recensioni e sicurezza</div>
-        <div class="seg-trait">Alta fedeltà una volta acquisiti</div>
-      </div>
-    </div>
-
-    <div class="segment-card s3">
-      <div class="seg-tag">Segmento C — B2B</div>
-      <div class="seg-title">Gestori ASD</div>
-      <div class="seg-desc">Responsabili di palestre, campi sportivi, centri ricreativi. Cercano soluzioni low-cost per modernizzare la gestione senza investimenti IT significativi.</div>
-      <div class="seg-traits">
-        <div class="seg-trait">1–50 dipendenti</div>
-        <div class="seg-trait">Budget IT limitato</div>
-        <div class="seg-trait">Decisore diretto (titolare/direttore)</div>
-        <div class="seg-trait">Priorità: semplicità di onboarding</div>
-        <div class="seg-trait">Alta retention se onboarding ok</div>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="ss-title">
-    <span class="ss-title-num">5.2</span>
-    Comportamento Digitale per Segmento
-  </div>
-
-  <table class="tbl">
-    <thead>
-      <tr>
-        <th>Dimensione</th>
-        <th>Sportivi Digitali (A)</th>
-        <th>Famiglie Attive (B)</th>
-        <th>Gestori ASD (C)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Uso smartphone</td>
-        <td>Intensivo, quotidiano</td>
-        <td>Regolare, funzionale</td>
-        <td>Variabile, spesso limitato</td>
-      </tr>
-      <tr>
-        <td>Canale acquisizione</td>
-        <td>Social media, passaparola</td>
-        <td>Google, passaparola</td>
-        <td>Email B2B, fiere sport</td>
-      </tr>
-      <tr>
-        <td>Frequenza utilizzo app</td>
-        <td>2–4 volte/settimana</td>
-        <td>1–2 volte/settimana</td>
-        <td>Giornaliero (gestione)</td>
-      </tr>
-      <tr>
-        <td>Sensibilità al prezzo</td>
-        <td>Media — paga per convenienza</td>
-        <td>Alta — cerca valore</td>
-        <td>Alta — ROI deve essere chiaro</td>
-      </tr>
-      <tr>
-        <td>Feature più rilevante</td>
-        <td>Booking veloce + community</td>
-        <td>Affidabilità + semplicità</td>
-        <td>Dashboard analytics + automazione</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div class="ss-title">
-    <span class="ss-title-num">5.3</span>
-    Dimensionamento del Mercato Accessibile
-  </div>
-
-  <div class="bar-chart">
-    <div class="bar-row">
-      <div class="bar-label">Sportivi 18–35 attivi</div>
-      <div class="bar-track"><div class="bar-fill c1" style="width:85%"></div></div>
-      <div class="bar-val">~8M persone</div>
-    </div>
-    <div class="bar-row">
-      <div class="bar-label">Famiglie sportive 35–50</div>
-      <div class="bar-track"><div class="bar-fill c2" style="width:60%"></div></div>
-      <div class="bar-val">~5M persone</div>
-    </div>
-    <div class="bar-row">
-      <div class="bar-label">ASD target (non digitali)</div>
-      <div class="bar-track"><div class="bar-fill c6" style="width:45%"></div></div>
-      <div class="bar-val">~40K strutture</div>
-    </div>
-  </div>
-
-  <div class="callout">
-    <p>La strategia di acquisizione segue un approccio a <strong>effetto rete progressivo</strong>: si parte dall'onboarding di strutture partner in una o due città pilota (es. Milano, Bologna), costruendo una massa critica di offerta che poi attrae organicamente gli utenti sportivi della zona.</p>
-  </div>
-
-  <div class="pf">
-    <span>Sportly — Documento di Progetto — Prima Consegna</span>
-    <div class="pf-dot"></div>
-    <span> 05 Target Clienti</span>
-    <div class="pf-dot"></div>
-    <span>Pagina 06 / 09</span>
-  </div>
-</div>
-
-<!-- ╔════════════════════════════════════════╗
-     ║   6 — ANALISI CONCORRENZA             ║
-     ╚════════════════════════════════════════╝ -->
-<div class="page">
-  <div class="rh">
-    <div class="rh-left">
-      <img src="https://drive.google.com/u/0/drive-viewer/AKGpihb3GKm2raLRvUpB7-rEeU0b3Aefgp4D-3LiwfEB2LB7PQhnKVEOWJHRpUVVbcol1vMrjCaXiUB5Je0hM6N0rMjzYE2OkmRaxq4=s1600-rw-v1?auditContext=forDisplay" alt="Logo" class="rh-logo">
-      <div class="rh-divider"></div>
-      <span class="rh-section"> 06 — Analisi della Concorrenza</span>
-    </div>
-    <span class="rh-page">07 / 09</span>
-  </div>
-
-  <div class="s-eyebrow">Sezione 06</div>
-  <div class="s-title">Analisi della<br><em>Concorrenza</em></div>
-
-  <p>Il mercato presenta sia concorrenti diretti — piattaforme di prenotazione sportiva — sia concorrenti indiretti rappresentati dai metodi analogici ancora dominanti. Nessuno dei player esistenti copre in modo soddisfacente l'intero spettro di sport, la componente community e il supporto completo per i gestori di strutture piccole e medie.</p>
-
-  <div class="ss-title">
-    <span class="ss-title-num">6.1</span>
-    Matrice Competitiva — Feature Comparison
-  </div>
-
-  <table class="comp-table">
-    <thead>
-      <tr>
-        <th style="text-align:left;width:22%;">Piattaforma</th>
-        <th>Multi-Sport</th>
-        <th>Community</th>
-        <th>Dashboard<br>Gestori</th>
-        <th>Pagamento<br>Integrato</th>
-        <th>Notifiche<br>Smart</th>
-        <th>App<br>Mobile</th>
-        <th>Free Tier<br>Strutture</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="our-row">
-        <td><strong>Sportly</strong></td>
-        <td><span class="comp-check cc-yes">S</span></td>
-        <td><span class="comp-check cc-yes">S</span></td>
-        <td><span class="comp-check cc-yes">S</span></td>
-        <td><span class="comp-check cc-yes">S</span></td>
-        <td><span class="comp-check cc-yes">S</span></td>
-        <td><span class="comp-check cc-yes">S</span></td>
-        <td><span class="comp-check cc-yes">S</span></td>
-      </tr>
-      <tr>
-        <td>Playtomic</td>
-        <td><span class="comp-check cc-part">P</span></td>
-        <td><span class="comp-check cc-part">P</span></td>
-        <td><span class="comp-check cc-yes">S</span></td>
-        <td><span class="comp-check cc-yes">S</span></td>
-        <td><span class="comp-check cc-part">P</span></td>
-        <td><span class="comp-check cc-yes">S</span></td>
-        <td><span class="comp-check cc-no">N</span></td>
-      </tr>
-      <tr>
-        <td>Wansport</td>
-        <td><span class="comp-check cc-yes">S</span></td>
-        <td><span class="comp-check cc-no">N</span></td>
-        <td><span class="comp-check cc-part">P</span></td>
-        <td><span class="comp-check cc-part">P</span></td>
-        <td><span class="comp-check cc-no">N</span></td>
-        <td><span class="comp-check cc-part">P</span></td>
-        <td><span class="comp-check cc-part">P</span></td>
-      </tr>
-      <tr>
-        <td>PrenotaWeb</td>
-        <td><span class="comp-check cc-part">P</span></td>
-        <td><span class="comp-check cc-no">N</span></td>
-        <td><span class="comp-check cc-yes">S</span></td>
-        <td><span class="comp-check cc-no">N</span></td>
-        <td><span class="comp-check cc-no">N</span></td>
-        <td><span class="comp-check cc-no">N</span></td>
-        <td><span class="comp-check cc-yes">S</span></td>
-      </tr>
-      <tr>
-        <td>Squby</td>
-        <td><span class="comp-check cc-part">P</span></td>
-        <td><span class="comp-check cc-no">N</span></td>
-        <td><span class="comp-check cc-part">P</span></td>
-        <td><span class="comp-check cc-no">N</span></td>
-        <td><span class="comp-check cc-no">N</span></td>
-        <td><span class="comp-check cc-part">P</span></td>
-        <td><span class="comp-check cc-no">N</span></td>
-      </tr>
-      <tr>
-        <td>Soluzione analogica</td>
-        <td><span class="comp-check cc-no">N</span></td>
-        <td><span class="comp-check cc-no">N</span></td>
-        <td><span class="comp-check cc-no">N</span></td>
-        <td><span class="comp-check cc-no">N</span></td>
-        <td><span class="comp-check cc-no">N</span></td>
-        <td><span class="comp-check cc-no">N</span></td>
-        <td><span class="comp-check cc-no">N</span></td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div style="display:flex;gap:4mm;font-family:var(--mono);font-size:6.5pt;color:var(--ink-3);margin-bottom:5mm;">
-    <span><span class="comp-check cc-yes" style="display:inline-block;width:14px;height:14px;line-height:14px;font-size:7pt;text-align:center;border-radius:50%;background:rgba(58,158,122,.2);color:var(--c6);">S</span> Sì — completo</span>
-    <span><span class="comp-check cc-part" style="display:inline-block;width:14px;height:14px;line-height:14px;font-size:7pt;text-align:center;border-radius:50%;background:rgba(163,198,57,.2);color:#7a9820;">P</span> Parziale</span>
-    <span><span class="comp-check cc-no" style="display:inline-block;width:14px;height:14px;line-height:14px;font-size:7pt;text-align:center;border-radius:50%;background:rgba(113,113,113,.1);color:var(--ink-4);">N</span> Non presente</span>
-  </div>
-
-  <div class="ss-title">
-    <span class="ss-title-num">6.2</span>
-    Posizionamento Competitivo e Vantaggi Differenziali
-  </div>
-
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:3.5mm;margin:3mm 0 4mm;">
-
-    <div style="border:1px solid var(--border);border-top:2px solid var(--c1);padding:4.5mm;background:var(--surface-2);">
-      <div style="font-family:var(--mono);font-size:6pt;letter-spacing:1.2px;text-transform:uppercase;color:var(--c1);margin-bottom:2mm;">Vantaggio 01</div>
-      <div style="font-size:8.5pt;font-weight:500;color:var(--ink);margin-bottom:1.5mm;">Copertura Multi-Sport Completa</div>
-      <div style="font-size:7.5pt;font-weight:300;color:var(--ink-3);line-height:1.55;">Playtomic copre solo racket sports. Sportly supporta qualsiasi disciplina — dal nuoto alla yoga, dal calcetto al climbing.</div>
-    </div>
-
-    <div style="border:1px solid var(--border);border-top:2px solid var(--c2);padding:4.5mm;background:var(--surface-2);">
-      <div style="font-family:var(--mono);font-size:6pt;letter-spacing:1.2px;text-transform:uppercase;color:var(--c2);margin-bottom:2mm;">Vantaggio 02</div>
-      <div style="font-size:8.5pt;font-weight:500;color:var(--ink);margin-bottom:1.5mm;">Community Integrata Nativa</div>
-      <div style="font-size:7.5pt;font-weight:300;color:var(--ink-3);line-height:1.55;">Nessun concorrente offre funzionalità social native. Sportly costruisce network effect: più utenti, più valore per tutti.</div>
-    </div>
-
-    <div style="border:1px solid var(--border);border-top:2px solid var(--c6);padding:4.5mm;background:var(--surface-2);">
-      <div style="font-family:var(--mono);font-size:6pt;letter-spacing:1.2px;text-transform:uppercase;color:var(--c6);margin-bottom:2mm;">Vantaggio 03</div>
-      <div style="font-size:8.5pt;font-weight:500;color:var(--ink);margin-bottom:1.5mm;">Free Tier per ASD Piccole</div>
-      <div style="font-size:7.5pt;font-weight:300;color:var(--ink-3);line-height:1.55;">Piano gratuito abbassa la barriera all'adozione per le ASD minori. Riduce il rischio percepito e accelera la crescita dell'offerta.</div>
-    </div>
-
-    <div style="border:1px solid var(--border);border-top:2px solid var(--c7);padding:4.5mm;background:var(--surface-2);">
-      <div style="font-family:var(--mono);font-size:6pt;letter-spacing:1.2px;text-transform:uppercase;color:var(--c7);margin-bottom:2mm;">Vantaggio 04</div>
-      <div style="font-size:8.5pt;font-weight:500;color:var(--ink);margin-bottom:1.5mm;">Focus sul Mercato Locale Italiano</div>
-      <div style="font-size:7.5pt;font-weight:300;color:var(--ink-3);line-height:1.55;">Concorrenti internazionali (Playtomic) non coprono capillarmente il territorio italiano. Vantaggio di prossimità e conoscenza locale.</div>
-    </div>
-
-  </div>
-
-  <div class="pf">
-    <span>Sportly — Documento di Progetto — Prima Consegna</span>
-    <div class="pf-dot"></div>
-    <span> 06 Analisi Concorrenza</span>
-    <div class="pf-dot"></div>
-    <span>Pagina 07 / 09</span>
-  </div>
-</div>
-
-<!-- ╔════════════════════════════════════════╗
-     ║   7 — MODELLO DI BUSINESS             ║
-     ╚════════════════════════════════════════╝ -->
-<div class="page">
-  <div class="rh">
-    <div class="rh-left">
-      <img src="https://drive.google.com/u/0/drive-viewer/AKGpihb3GKm2raLRvUpB7-rEeU0b3Aefgp4D-3LiwfEB2LB7PQhnKVEOWJHRpUVVbcol1vMrjCaXiUB5Je0hM6N0rMjzYE2OkmRaxq4=s1600-rw-v1?auditContext=forDisplay" alt="Logo" class="rh-logo">
-      <div class="rh-divider"></div>
-      <span class="rh-section"> 07 — Modello di Business</span>
-    </div>
-    <span class="rh-page">08 / 09</span>
-  </div>
-
-  <div class="s-eyebrow">Sezione 07</div>
-  <div class="s-title">Modello di<br><em>Business</em></div>
-
-  <p>Sportly adotta un modello di business <strong>multi-revenue a tre pilastri</strong>: commissioni sulle prenotazioni (scala con il volume), abbonamenti SaaS per le strutture (ricorrente prevedibile) e un tier freemium per utenti premium (upsell progressivo). Il modello è progettato per essere sostenibile fin dal primo anno e scalabile senza costi marginali significativi.</p>
-
-  <div class="ss-title">
-    <span class="ss-title-num">7.1</span>
-    Flussi di Ricavo
-  </div>
-
-  <div class="bm-streams">
-
-    <div class="bm-card">
-      <div class="bm-num">01</div>
-      <div class="bm-stream-label">Revenue Stream A</div>
-      <div class="bm-stream-title">Commissioni Prenotazioni</div>
-      <div class="bm-stream-desc">Percentuale su ogni transazione completata tramite la piattaforma. Scala direttamente con il volume di prenotazioni.</div>
-      <div class="bm-est">1,5% per transazione completata</div>
-    </div>
-
-    <div class="bm-card">
-      <div class="bm-num">02</div>
-      <div class="bm-stream-label">Revenue Stream B</div>
-      <div class="bm-stream-title">SaaS Strutture (B2B)</div>
-      <div class="bm-stream-desc">Abbonamenti mensili ricorrenti per le strutture sportive. Ricavo prevedibile, bassa churn se onboarding efficace.</div>
-      <div class="bm-est">29€/mese (Standard) · 59€/mese (Premium)</div>
-    </div>
-
-    <div class="bm-card">
-      <div class="bm-num">03</div>
-      <div class="bm-stream-label">Revenue Stream C</div>
-      <div class="bm-stream-title">Pubblicità ed Eventi</div>
-      <div class="bm-stream-desc">Promozione di eventi sportivi, tornei e brand del settore fitness/sport direttamente sulla piattaforma agli utenti attivi.</div>
-      <div class="bm-est">Da 500€/mese (scala con utenti)</div>
-    </div>
-
-  </div>
-
-  <div class="ss-title">
-    <span class="ss-title-num">7.2</span>
-    Piani SaaS per Strutture
-  </div>
-
-  <div class="pricing-row">
-    <div class="price-card">
-      <div class="pc-tier">Base</div>
-      <div class="pc-price">0 €</div>
-      <div class="pc-period">gratuito per sempre</div>
-      <div class="pc-features">
-        <div class="pc-feat-item">Fino a 2 risorse/campi</div>
-        <div class="pc-feat-item">Calendario booking base</div>
-        <div class="pc-feat-item">Notifiche email automatiche</div>
-        <div class="pc-feat-item">Profilo struttura pubblico</div>
-      </div>
-    </div>
-    <div class="price-card featured">
-      <div class="pc-badge">Consigliato</div>
-      <div class="pc-tier">Standard</div>
-      <div class="pc-price">29 €</div>
-      <div class="pc-period">al mese</div>
-      <div class="pc-features">
-        <div class="pc-feat-item">Fino a 10 risorse</div>
-        <div class="pc-feat-item">Analytics base occupazione</div>
-        <div class="pc-feat-item">Notifiche push personalizzate</div>
-        <div class="pc-feat-item">QR code check-in</div>
-        <div class="pc-feat-item">Supporto email prioritario</div>
-      </div>
-    </div>
-    <div class="price-card">
-      <div class="pc-tier">Premium</div>
-      <div class="pc-price">59 €</div>
-      <div class="pc-period">al mese</div>
-      <div class="pc-features">
-        <div class="pc-feat-item">Risorse illimitate</div>
-        <div class="pc-feat-item">Analytics avanzate + export</div>
-        <div class="pc-feat-item">Marketing diretto push</div>
-        <div class="pc-feat-item">API + widget integrabile</div>
-        <div class="pc-feat-item">Supporto telefonico dedicato</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="ss-title">
-    <span class="ss-title-num">7.3</span>
-    Proiezione Ricavi — Anno 1 (Scenario Conservativo)
-  </div>
-
-  <table class="rev-table">
-    <thead>
-      <tr>
-        <th>Fonte di Ricavo</th>
-        <th>Ipotesi Mese 6</th>
-        <th>Stima €/mese M6</th>
-        <th>Ipotesi Mese 12</th>
-        <th>Stima €/mese M12</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Commissioni (1,5% × valore medio 15€)</td>
-        <td>1.000 prenotazioni</td>
-        <td class="highlight-cell-lime">1.500 €</td>
-        <td>5.000 prenotazioni</td>
-        <td class="highlight-cell">7.500 €</td>
-      </tr>
-      <tr>
-        <td>SaaS Standard (29€/mese)</td>
-        <td>30 strutture</td>
-        <td class="highlight-cell-lime">870 €</td>
-        <td>80 strutture</td>
-        <td class="highlight-cell">2.320 €</td>
-      </tr>
-      <tr>
-        <td>SaaS Premium (59€/mese)</td>
-        <td>10 strutture</td>
-        <td class="highlight-cell-lime">590 €</td>
-        <td>30 strutture</td>
-        <td class="highlight-cell">1.770 €</td>
-      </tr>
-      <tr>
-        <td>Pubblicità ed eventi sportivi</td>
-        <td>Limitata</td>
-        <td class="highlight-cell-lime">200 €</td>
-        <td>Attiva</td>
-        <td class="highlight-cell">1.000 €</td>
-      </tr>
-      <tr class="total-row">
-        <td>Totale Stimato</td>
-        <td colspan="1"></td>
-        <td class="highlight-cell-lime" style="font-size:10pt;">3.160 €</td>
-        <td colspan="1"></td>
-        <td class="highlight-cell" style="font-size:10pt;">12.590 €</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div class="ss-title">
-    <span class="ss-title-num">7.4</span>
-    Struttura dei Costi Principali
-  </div>
-
-  <table class="tbl">
-    <thead>
-      <tr><th>Voce di Costo</th><th>Stima</th></tr>
-    </thead>
-    <tbody>
-      <tr><td>Sviluppo app (iOS + Android + Web)</td><td>30.000 – 70.000 € (una tantum, stimabile con team esterno)</td></tr>
-      <tr><td>Infrastruttura cloud (AWS/GCP)</td><td>300 – 800 € / mese a regime</td></tr>
-      <tr><td>Commissioni gateway Stripe</td><td>~1,4% + 0,25 € per transazione completata</td></tr>
-      <tr><td>Marketing (social ads, evento lancio)</td><td>2.000 – 5.000 € / mese nella fase di avvio</td></tr>
-      <tr><td>Customer support e assistenza</td><td>1.000 – 2.000 € / mese</td></tr>
-    </tbody>
-  </table>
-
-  <div class="pf">
-    <span>Sportly — Documento di Progetto — Prima Consegna</span>
-    <div class="pf-dot"></div>
-    <span> 07 Modello di Business</span>
-    <div class="pf-dot"></div>
-    <span>Pagina 08 / 09</span>
-  </div>
-</div>
-
-<!-- ╔════════════════════════════════════════╗
-     ║   8 — WBS + TIMELINE                  ║
-     ╚════════════════════════════════════════╝ -->
-<div class="page">
-  <div class="rh">
-    <div class="rh-left">
-      <img src="https://drive.google.com/u/0/drive-viewer/AKGpihb3GKm2raLRvUpB7-rEeU0b3Aefgp4D-3LiwfEB2LB7PQhnKVEOWJHRpUVVbcol1vMrjCaXiUB5Je0hM6N0rMjzYE2OkmRaxq4=s1600-rw-v1?auditContext=forDisplay" alt="Logo" class="rh-logo">
-      <div class="rh-divider"></div>
-      <span class="rh-section"> 08 — WBS e Timeline</span>
-    </div>
-    <span class="rh-page">09 / 09</span>
-  </div>
-
-  <div class="s-eyebrow">Sezione 08</div>
-  <div class="s-title">WBS e<br><em>Timeline</em></div>
-
-  <div class="ss-title">
-    <span class="ss-title-num">8.1</span>
-    Work Breakdown Structure — 8 Fasi
-  </div>
-
-  <div class="wbs-container">
-
-    <div class="wbs-root-node">
-      <div>
-        <div class="wbs-root-title">Sportly — Progetto Completo</div>
-        <div style="font-family:var(--mono);font-size:6pt;color:rgba(255,255,255,.35);letter-spacing:.8px;margin-top:1mm;">8 FASI · 20 SETTIMANE · 40+ DELIVERABLE</div>
-      </div>
-    </div>
-
-    <div class="wbs-h-line"></div>
-
-    <div class="wbs-phases">
-
-      <div class="wbs-phase-col p1">
-        <div class="wbs-phase-header">
-          <div class="wbs-phase-num">01</div>
-          <div class="wbs-phase-title">Analisi e Pianificazione</div>
-        </div>
-        <div class="wbs-v-line"></div>
-        <div class="wbs-items">
-          <div class="wbs-item"><span class="wbs-item-num">1.1</span><span class="wbs-item-text">Ricerca di mercato</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">1.2</span><span class="wbs-item-text">Requisiti funzionali</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">1.3</span><span class="wbs-item-text">Studio GDPR / legale</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">1.4</span><span class="wbs-item-text">Analisi concorrenza</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">1.5</span><span class="wbs-item-text">Definizione KPI</span></div>
-        </div>
-      </div>
-
-      <div class="wbs-phase-col p2">
-        <div class="wbs-phase-header">
-          <div class="wbs-phase-num">02</div>
-          <div class="wbs-phase-title">Progettazione Architettura</div>
-        </div>
-        <div class="wbs-v-line"></div>
-        <div class="wbs-items">
-          <div class="wbs-item"><span class="wbs-item-num">2.1</span><span class="wbs-item-text">Scelta stack tecnologico</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">2.2</span><span class="wbs-item-text">Diagrammi UML / ER</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">2.3</span><span class="wbs-item-text">Architettura cloud</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">2.4</span><span class="wbs-item-text">Wireframe schermate</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">2.5</span><span class="wbs-item-text">Prototipo UI/UX</span></div>
-        </div>
-      </div>
-
-      <div class="wbs-phase-col p3">
-        <div class="wbs-phase-header">
-          <div class="wbs-phase-num">03</div>
-          <div class="wbs-phase-title">Sviluppo Backend</div>
-        </div>
-        <div class="wbs-v-line"></div>
-        <div class="wbs-items">
-          <div class="wbs-item"><span class="wbs-item-num">3.1</span><span class="wbs-item-text">Database PostgreSQL</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">3.2</span><span class="wbs-item-text">API RESTful</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">3.3</span><span class="wbs-item-text">Integrazione Stripe</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">3.4</span><span class="wbs-item-text">Notifiche Firebase</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">3.5</span><span class="wbs-item-text">QR code check-in</span></div>
-        </div>
-      </div>
-
-      <div class="wbs-phase-col p4">
-        <div class="wbs-phase-header">
-          <div class="wbs-phase-num">04</div>
-          <div class="wbs-phase-title">Sviluppo Frontend</div>
-        </div>
-        <div class="wbs-v-line"></div>
-        <div class="wbs-items">
-          <div class="wbs-item"><span class="wbs-item-num">4.1</span><span class="wbs-item-text">App React Native</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">4.2</span><span class="wbs-item-text">Portale web admin</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">4.3</span><span class="wbs-item-text">UI componenti</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">4.4</span><span class="wbs-item-text">Integrazione API</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">4.5</span><span class="wbs-item-text">Accessibilità / i18n</span></div>
-        </div>
-      </div>
-
-    </div>
-
-    <div style="height:3.5mm;"></div>
-
-    <div class="wbs-phases">
-
-      <div class="wbs-phase-col p5">
-        <div class="wbs-phase-header">
-          <div class="wbs-phase-num">05</div>
-          <div class="wbs-phase-title">Integrazione e Test</div>
-        </div>
-        <div class="wbs-v-line"></div>
-        <div class="wbs-items">
-          <div class="wbs-item"><span class="wbs-item-num">5.1</span><span class="wbs-item-text">Integrazione moduli</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">5.2</span><span class="wbs-item-text">Unit + integration test</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">5.3</span><span class="wbs-item-text">Test sicurezza GDPR</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">5.4</span><span class="wbs-item-text">Stress test performance</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">5.5</span><span class="wbs-item-text">Test UX utenti reali</span></div>
-        </div>
-      </div>
-
-      <div class="wbs-phase-col p6">
-        <div class="wbs-phase-header">
-          <div class="wbs-phase-num">06</div>
-          <div class="wbs-phase-title">Beta Testing</div>
-        </div>
-        <div class="wbs-v-line"></div>
-        <div class="wbs-items">
-          <div class="wbs-item"><span class="wbs-item-num">6.1</span><span class="wbs-item-text">Selezione gruppo pilota</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">6.2</span><span class="wbs-item-text">Rilascio beta chiusa</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">6.3</span><span class="wbs-item-text">Raccolta feedback</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">6.4</span><span class="wbs-item-text">Bug fixing iterativo</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">6.5</span><span class="wbs-item-text">Validazione metriche</span></div>
-        </div>
-      </div>
-
-      <div class="wbs-phase-col p7">
-        <div class="wbs-phase-header">
-          <div class="wbs-phase-num">07</div>
-          <div class="wbs-phase-title">Marketing e Lancio</div>
-        </div>
-        <div class="wbs-v-line"></div>
-        <div class="wbs-items">
-          <div class="wbs-item"><span class="wbs-item-num">7.1</span><span class="wbs-item-text">Sito promozionale</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">7.2</span><span class="wbs-item-text">Campagne social</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">7.3</span><span class="wbs-item-text">Onboarding strutture</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">7.4</span><span class="wbs-item-text">Materiali comunicazione</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">7.5</span><span class="wbs-item-text">Lancio App/Play Store</span></div>
-        </div>
-      </div>
-
-      <div class="wbs-phase-col p8">
-        <div class="wbs-phase-header">
-          <div class="wbs-phase-num">08</div>
-          <div class="wbs-phase-title">Monitoraggio Continuo</div>
-        </div>
-        <div class="wbs-v-line"></div>
-        <div class="wbs-items">
-          <div class="wbs-item"><span class="wbs-item-num">8.1</span><span class="wbs-item-text">KPI mensili analytics</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">8.2</span><span class="wbs-item-text">Customer support</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">8.3</span><span class="wbs-item-text">Pianificazione release</span></div>
-          <div class="wbs-item"><span class="wbs-item-num">8.4</span><span class="wbs-item-text">Manutenzione sicurezza</span></div>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-
-  <div class="ss-title">
-    <span class="ss-title-num">8.2</span>
-    Gantt Schematico — 20 Settimane
-  </div>
-
-  <div class="gantt-outer">
-    <svg width="100%" viewBox="0 0 560 220" font-family="DM Sans, sans-serif" font-size="7.5">
-      <rect width="560" height="220" fill="#f3f3ef"/>
-      <rect x="0" y="0" width="560" height="18" fill="#0c0c0c"/>
-      <text x="72" y="12" fill="rgba(255,255,255,.4)" font-family="JetBrains Mono,monospace" font-size="6" letter-spacing="0.5">FASE</text>
-      <text x="115" y="12" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W1-2</text>
-      <text x="160" y="12" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W3-4</text>
-      <text x="205" y="12" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W5-6</text>
-      <text x="250" y="12" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W7-8</text>
-      <text x="295" y="12" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W9-10</text>
-      <text x="340" y="12" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W11-12</text>
-      <text x="385" y="12" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W13-14</text>
-      <text x="430" y="12" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W15-16</text>
-      <text x="475" y="12" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W17-18</text>
-      <text x="520" y="12" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W19-20</text>
-      <g stroke="#e2e2da" stroke-width="0.5">
-        <line x1="92" y1="18" x2="92" y2="220"/>
-        <line x1="137" y1="18" x2="137" y2="220"/>
-        <line x1="182" y1="18" x2="182" y2="220"/>
-        <line x1="227" y1="18" x2="227" y2="220"/>
-        <line x1="272" y1="18" x2="272" y2="220"/>
-        <line x1="317" y1="18" x2="317" y2="220"/>
-        <line x1="362" y1="18" x2="362" y2="220"/>
-        <line x1="407" y1="18" x2="407" y2="220"/>
-        <line x1="452" y1="18" x2="452" y2="220"/>
-        <line x1="497" y1="18" x2="497" y2="220"/>
-      </g>
-      <rect x="0" y="18"  width="560" height="22" fill="rgba(255,255,255,.5)"/>
-      <rect x="0" y="62"  width="560" height="22" fill="rgba(255,255,255,.5)"/>
-      <rect x="0" y="106" width="560" height="22" fill="rgba(255,255,255,.5)"/>
-      <rect x="0" y="150" width="560" height="22" fill="rgba(255,255,255,.5)"/>
-      <rect x="0" y="194" width="560" height="22" fill="rgba(255,255,255,.5)"/>
-      <text x="88" y="33"  fill="#3a3a3a" font-weight="500" text-anchor="end">01 — Analisi</text>
-      <text x="88" y="55"  fill="#3a3a3a" font-weight="500" text-anchor="end">02 — Progett.</text>
-      <text x="88" y="77"  fill="#3a3a3a" font-weight="500" text-anchor="end">03 — Backend</text>
-      <text x="88" y="99"  fill="#3a3a3a" font-weight="500" text-anchor="end">04 — Frontend</text>
-      <text x="88" y="121" fill="#3a3a3a" font-weight="500" text-anchor="end">05 — Test</text>
-      <text x="88" y="143" fill="#3a3a3a" font-weight="500" text-anchor="end">06 — Beta</text>
-      <text x="88" y="165" fill="#3a3a3a" font-weight="500" text-anchor="end">07 — Lancio</text>
-      <text x="88" y="187" fill="#3a3a3a" font-weight="500" text-anchor="end">08 — Monitor.</text>
-      <rect x="92"  y="21" width="45"  height="14" fill="#a3c639" rx="2" opacity="0.9"/>
-      <rect x="92"  y="43" width="90"  height="14" fill="#0d8c8c" rx="2" opacity="0.9"/>
-      <rect x="137" y="65" width="180" height="14" fill="#3a9e7a" rx="2" opacity="0.9"/>
-      <rect x="182" y="87" width="180" height="14" fill="#2d9a90" rx="2" opacity="0.9"/>
-      <rect x="272" y="109" width="90" height="14" fill="#5daa60" rx="2" opacity="0.9"/>
-      <rect x="317" y="131" width="135" height="14" fill="#8cb85a" rx="2" opacity="0.9"/>
-      <rect x="227" y="153" width="270" height="14" fill="#38a898" rx="2" opacity="0.9"/>
-      <rect x="452" y="175" width="45"  height="14" fill="#0a7a7a" rx="2" opacity="0.9"/>
-      <circle cx="137"  cy="210" r="4" fill="#a3c639"/>
-      <text x="137"  y="219" fill="#717171" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">M1</text>
-      <circle cx="182"  cy="210" r="4" fill="#0d8c8c"/>
-      <text x="182"  y="219" fill="#717171" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">M2</text>
-      <circle cx="272"  cy="210" r="4" fill="#3a9e7a"/>
-      <text x="272"  y="219" fill="#717171" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">M3</text>
-      <circle cx="362"  cy="210" r="4" fill="#2d9a90"/>
-      <text x="362"  y="219" fill="#717171" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">M4</text>
-      <circle cx="452"  cy="210" r="4" fill="#5daa60"/>
-      <text x="452"  y="219" fill="#717171" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">M5</text>
-      <circle cx="542"  cy="210" r="5" fill="#0c0c0c"/>
-      <text x="542"  y="219" fill="#0c0c0c" font-family="JetBrains Mono,monospace" font-size="5.5" font-weight="500" text-anchor="middle">LANCIO</text>
-    </svg>
-  </div>
-
-  <div class="ss-title">
-    <span class="ss-title-num">8.3</span>
-    Milestone Principali
-  </div>
-
-  <div class="timeline-wrap">
-
-    <div class="ms-item">
-      <div class="ms-dot">M1</div>
-      <div class="ms-title">Analisi e Definizione Completata</div>
-      <div class="ms-meta">
-        <span class="ms-week">Fine settimana 2</span>
-      </div>
-      <div class="ms-deliverable">Documento di progetto — Prima consegna (questo documento)</div>
-    </div>
-
-    <div class="ms-item">
-      <div class="ms-dot m2">M2</div>
-      <div class="ms-title">Architettura e Prototipo UI Approvati</div>
-      <div class="ms-meta">
-        <span class="ms-week">Fine settimana 5</span>
-      </div>
-      <div class="ms-deliverable">Wireframe navigabili + schema database + documentazione stack tecnologico</div>
-    </div>
-
-    <div class="ms-item">
-      <div class="ms-dot m3">M3</div>
-      <div class="ms-title">Backend API Funzionanti e Documentate</div>
-      <div class="ms-meta">
-        <span class="ms-week">Fine settimana 9</span>
-      </div>
-      <div class="ms-deliverable">API RESTful testate con Postman, integrazione Stripe e Firebase FCM attive</div>
-    </div>
-
-    <div class="ms-item">
-      <div class="ms-dot m4">M4</div>
-      <div class="ms-title">App Mobile v0.9 — Build Interna Testabile</div>
-      <div class="ms-meta">
-        <span class="ms-week">Fine settimana 13</span>
-      </div>
-      <div class="ms-deliverable">APK e .ipa distribuibili internamente, tutti i flussi principali funzionanti</div>
-    </div>
-
-    <div class="ms-item">
-      <div class="ms-dot m5">M5</div>
-      <div class="ms-title">Beta Test Completato e Report Feedback</div>
-      <div class="ms-meta">
-        <span class="ms-week">Fine settimana 17</span>
-      </div>
-      <div class="ms-deliverable">Report qualitativo e quantitativo dal gruppo pilota, versione corretta post-feedback</div>
-    </div>
-
-    <div class="ms-item">
-      <div class="ms-dot launch">LANCIO</div>
-      <div class="ms-title">Lancio Ufficiale su App Store e Google Play</div>
-      <div class="ms-meta">
-        <span class="ms-week">Fine settimana 20</span>
-      </div>
-      <div class="ms-deliverable">App pubblicata sugli store, prime strutture onboarded, evento di lancio coordinato</div>
-    </div>
-
-  </div>
-
-  <div class="pf">
-    <span>Sportly — Documento di Progetto — Prima Consegna</span>
-    <div class="pf-dot"></div>
-    <span> 08 WBS e Timeline</span>
-    <div class="pf-dot"></div>
-    <span>Pagina 09 / 09</span>
-  </div>
 </div>
 
 </body>
