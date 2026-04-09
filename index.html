@@ -65,7 +65,6 @@ body {
   overflow: hidden;
 }
 
-/* accent strip */
 .hub-card::before {
   content: '';
   position: absolute;
@@ -172,6 +171,7 @@ body {
   color: var(--ink-3);
   line-height: 1.65;
   max-width: 55ch;
+  margin-top: 3mm;
 }
 
 /* ── BODY ── */
@@ -187,13 +187,11 @@ body {
 .delivery-group {
   display: flex;
   flex-direction: column;
-  gap: 0;
   border: 1px solid var(--border);
   overflow: hidden;
   position: relative;
 }
 
-/* coloured top bar per group */
 .delivery-group::before {
   content: '';
   position: absolute;
@@ -232,7 +230,7 @@ body {
   flex-direction: column;
 }
 
-/* ── DOC CARDS ── */
+/* ── DOC CARD (active) ── */
 .doc-card {
   display: flex;
   align-items: stretch;
@@ -241,7 +239,7 @@ body {
   color: inherit;
   position: relative;
   overflow: hidden;
-  transition: background .18s, box-shadow .18s, transform .15s;
+  transition: background .18s, box-shadow .18s;
   cursor: pointer;
   border-bottom: 1px solid var(--border);
 }
@@ -258,6 +256,27 @@ body {
 .doc-card:hover .doc-arrow-col {
   color: var(--c2);
   transform: translateX(2px);
+}
+
+/* ── DOC CARD (disabled) ── */
+.doc-card-disabled {
+  display: flex;
+  align-items: stretch;
+  background: var(--surface-2);
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  overflow: hidden;
+  cursor: not-allowed;
+  border-bottom: 1px solid var(--border);
+  opacity: .48;
+  filter: grayscale(.4);
+  pointer-events: none;
+  user-select: none;
+}
+
+.doc-card-disabled:last-child {
+  border-bottom: none;
 }
 
 /* icon column */
@@ -277,7 +296,7 @@ body {
   background: var(--surface-2);
 }
 
-.doc-icon svg {
+.doc-icon-col svg {
   width: 20px;
   height: 20px;
 }
@@ -302,6 +321,7 @@ body {
 .doc-type-tag.pres { color: var(--c1); }
 .doc-type-tag.docx { color: var(--c2); }
 .doc-type-tag.repo { color: var(--c6); }
+.doc-type-tag.soon { color: var(--ink-4); }
 
 .doc-name {
   font-family: var(--type-display);
@@ -319,7 +339,7 @@ body {
   line-height: 1.5;
 }
 
-/* arrow */
+/* arrow / lock col */
 .doc-arrow-col {
   width: 9mm;
   display: flex;
@@ -336,20 +356,49 @@ body {
   height: 13px;
 }
 
-/* ── REPO CARD (standalone) ── */
-.repo-card-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
+/* soon pill shown inside disabled card */
+.soon-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5mm;
+  font-family: var(--mono);
+  font-size: 5.5pt;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--ink-4);
+  border: 1px solid var(--border-2);
+  padding: 1mm 2.5mm;
+  margin-top: 1.5mm;
+  width: fit-content;
 }
 
-.repo-label {
+/* ── REPO STANDALONE SECTION ── */
+.repo-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2mm;
+}
+
+.repo-section-label {
   font-family: var(--mono);
   font-size: 6pt;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--c2);
-  margin-bottom: 2mm;
+}
+
+.repo-card-wrap {
+  border: 1px solid var(--border);
+  overflow: hidden;
+  position: relative;
+}
+
+.repo-card-wrap::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--border-2), var(--border));
 }
 
 /* ── FOOTER ── */
@@ -382,7 +431,7 @@ body {
   <div class="hub-header">
 
     <div class="hub-logo-row">
-      <img src="https://i.ibb.co/C3yKdHqw/asd.png" alt="Sportly Logo">
+      <img src="https://drive.google.com/u/0/drive-viewer/AKGpihb3GKm2raLRvUpB7-rEeU0b3Aefgp4D-3LiwfEB2LB7PQhnKVEOWJHRpUVVbcol1vMrjCaXiUB5Je0hM6N0rMjzYE2OkmRaxq4=s1600-rw-v1?auditContext=forDisplay" alt="Sportly Logo">
       <div class="hub-logo-divider"></div>
       <span class="hub-logo-type">Sportly — Hub Documenti</span>
     </div>
@@ -397,8 +446,8 @@ body {
       <em>Documenti.</em>
     </div>
 
-    <p class="hub-sub" style="margin-top:3mm;">
-      Seleziona una consegna per visualizzare la presentazione, accedere alla revisione del documento o esplorare il repository del progetto.
+    <p class="hub-sub">
+      Seleziona una consegna per visualizzare la presentazione o accedere alla revisione del documento. Il repository sarà disponibile a sviluppo avviato.
     </p>
 
   </div>
@@ -466,13 +515,18 @@ body {
           </div>
         </a>
 
-        <!-- Repository -->
-        <a class="doc-card"
-           href="https://github.com/sportly-project"
-           target="_blank" rel="noopener">
+      </div>
+    </div>
+    <!-- fine Consegna 1 -->
+
+    <!-- ── REPOSITORY (disabled) ── -->
+    <div class="repo-section">
+      <span class="repo-section-label">Repository</span>
+      <div class="repo-card-wrap">
+        <div class="doc-card-disabled">
           <div class="doc-icon-col">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-                 stroke-linecap="round" stroke-linejoin="round" style="color:var(--c6);">
+                 stroke-linecap="round" stroke-linejoin="round" style="color:var(--ink-4);">
               <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61
                        c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77
                        5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0
@@ -481,21 +535,30 @@ body {
             </svg>
           </div>
           <div class="doc-content">
-            <span class="doc-type-tag repo">Repository — GitHub</span>
+            <span class="doc-type-tag soon">Repository — GitHub</span>
             <div class="doc-name">Repo del Progetto</div>
-            <div class="doc-desc">Esplora il codice sorgente e la struttura tecnica del progetto su GitHub.</div>
+            <div class="doc-desc">Il codice sorgente sarà disponibile a sviluppo avviato.</div>
+            <div class="soon-pill">
+              <!-- lock icon -->
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              Sviluppo non ancora iniziato
+            </div>
           </div>
           <div class="doc-arrow-col">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                  stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 12h14M13 6l6 6-6 6"/>
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
             </svg>
           </div>
-        </a>
-
+        </div>
       </div>
     </div>
-    <!-- fine Consegna 1 -->
+    <!-- fine repo -->
 
   </div>
   <!-- fine hub-body -->
