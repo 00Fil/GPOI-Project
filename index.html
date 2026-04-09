@@ -28,9 +28,6 @@
   --border:    #e2e2da;
   --border-2:  #d0d0c6;
 
-  --accent:    var(--c1);
-  --accent-2:  var(--c2);
-
   --type-display: 'Outfit', system-ui, sans-serif;
   --type-heading: 'Instrument Serif', Georgia, serif;
   --sans:  'DM Sans', system-ui, sans-serif;
@@ -182,87 +179,117 @@ body {
   padding: 8mm 12mm 10mm;
   display: flex;
   flex-direction: column;
-  gap: 4mm;
+  gap: 5mm;
   background: #ffffff;
 }
 
-.hub-section-label {
+/* ── DELIVERY GROUP ── */
+.delivery-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  position: relative;
+}
+
+/* coloured top bar per group */
+.delivery-group::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--c1), var(--c2));
+}
+
+.delivery-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3.5mm 5mm 3mm;
+  background: var(--surface-3);
+  border-bottom: 1px solid var(--border);
+}
+
+.delivery-group-title {
+  font-family: var(--mono);
+  font-size: 6.5pt;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  font-weight: 500;
+}
+
+.delivery-group-date {
   font-family: var(--mono);
   font-size: 6pt;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--c2);
-  margin-bottom: 1mm;
+  color: var(--ink-4);
+  letter-spacing: .5px;
+}
+
+.delivery-cards {
+  display: flex;
+  flex-direction: column;
 }
 
 /* ── DOC CARDS ── */
 .doc-card {
   display: flex;
   align-items: stretch;
-  border: 1px solid var(--border);
   background: var(--surface-2);
   text-decoration: none;
   color: inherit;
   position: relative;
   overflow: hidden;
-  transition: border-color .2s, box-shadow .2s, transform .15s;
+  transition: background .18s, box-shadow .18s, transform .15s;
   cursor: pointer;
+  border-bottom: 1px solid var(--border);
+}
+
+.doc-card:last-child {
+  border-bottom: none;
 }
 
 .doc-card:hover {
-  border-color: var(--c2);
-  box-shadow: 0 4px 20px rgba(13,140,140,.10);
-  transform: translateY(-1px);
+  background: #ffffff;
+  box-shadow: inset 3px 0 0 var(--c2);
 }
 
-.doc-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--c1), var(--c2));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform .25s ease;
-}
-
-.doc-card:hover::before {
-  transform: scaleX(1);
+.doc-card:hover .doc-arrow-col {
+  color: var(--c2);
+  transform: translateX(2px);
 }
 
 /* icon column */
 .doc-icon-col {
-  width: 14mm;
+  width: 13mm;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   background: var(--surface-3);
   border-right: 1px solid var(--border);
-  padding: 4mm;
+  padding: 3.5mm;
+  transition: background .18s;
 }
 
-.doc-icon {
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.doc-card:hover .doc-icon-col {
+  background: var(--surface-2);
 }
 
 .doc-icon svg {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
 }
 
 /* content */
 .doc-content {
-  padding: 4mm 4.5mm;
+  padding: 3.5mm 4mm;
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 1mm;
+  gap: .8mm;
 }
 
 .doc-type-tag {
@@ -274,18 +301,19 @@ body {
 
 .doc-type-tag.pres { color: var(--c1); }
 .doc-type-tag.docx { color: var(--c2); }
+.doc-type-tag.repo { color: var(--c6); }
 
 .doc-name {
   font-family: var(--type-display);
-  font-size: 11pt;
+  font-size: 10pt;
   font-weight: 600;
   color: var(--ink);
   line-height: 1.2;
-  letter-spacing: -.3px;
+  letter-spacing: -.2px;
 }
 
 .doc-desc {
-  font-size: 7.5pt;
+  font-size: 7pt;
   font-weight: 300;
   color: var(--ink-3);
   line-height: 1.5;
@@ -293,37 +321,39 @@ body {
 
 /* arrow */
 .doc-arrow-col {
-  width: 10mm;
+  width: 9mm;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  padding: 4mm 2mm;
+  padding: 3.5mm 2mm;
   color: var(--ink-4);
-  transition: color .2s, transform .2s;
-}
-
-.doc-card:hover .doc-arrow-col {
-  color: var(--c2);
-  transform: translateX(2px);
+  transition: color .18s, transform .18s;
 }
 
 .doc-arrow-col svg {
-  width: 14px;
-  height: 14px;
+  width: 13px;
+  height: 13px;
 }
 
-/* ── DIVIDER ── */
-.hub-divider {
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, var(--border) 0%, transparent 100%);
-  margin: 1mm 0;
+/* ── REPO CARD (standalone) ── */
+.repo-card-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.repo-label {
+  font-family: var(--mono);
+  font-size: 6pt;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--c2);
+  margin-bottom: 2mm;
 }
 
 /* ── FOOTER ── */
 .hub-footer {
-  margin-top: auto;
   padding: 4mm 12mm;
   border-top: 1px solid var(--border);
   background: var(--surface);
@@ -358,8 +388,8 @@ body {
     </div>
 
     <div class="hub-meta-row">
-      <span class="hub-badge">Prima Consegna</span>
-      <span class="hub-date">Classe 5I — Aprile 2025</span>
+      <span class="hub-badge">Classe 5I</span>
+      <span class="hub-date">Anno Scolastico 2024 / 2025</span>
     </div>
 
     <div class="hub-title">
@@ -368,7 +398,7 @@ body {
     </div>
 
     <p class="hub-sub" style="margin-top:3mm;">
-      Seleziona un documento per visualizzare la presentazione del progetto o accedere alla revisione completa del documento di testo.
+      Seleziona una consegna per visualizzare la presentazione, accedere alla revisione del documento o esplorare il repository del progetto.
     </p>
 
   </div>
@@ -376,75 +406,105 @@ body {
   <!-- ══ BODY ══ -->
   <div class="hub-body">
 
-    <div class="hub-section-label">Documenti disponibili</div>
+    <!-- ── CONSEGNA 1 GROUP ── -->
+    <div class="delivery-group">
 
-    <!-- Card 1 — Presentazione -->
-    <a class="doc-card" href="/index.html" target="_blank" rel="noopener">
-
-      <div class="doc-icon-col">
-        <div class="doc-icon">
-          <!-- Slides / Presentation icon -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--c1);">
-            <rect x="2" y="3" width="20" height="14" rx="2"/>
-            <path d="M8 21h8M12 17v4"/>
-            <path d="M8 10l2.5 2.5L14 8" stroke="var(--c1)" stroke-width="1.8"/>
-          </svg>
-        </div>
+      <div class="delivery-group-header">
+        <span class="delivery-group-title">Consegna 1</span>
+        <span class="delivery-group-date">10 Aprile 2025</span>
       </div>
 
-      <div class="doc-content">
-        <span class="doc-type-tag pres">Presentazione — HTML</span>
-        <div class="doc-name">Presentazione</div>
-        <div class="doc-desc">Visualizza la presentazione interattiva del progetto Sportly nel browser.</div>
+      <div class="delivery-cards">
+
+        <!-- Presentazione -->
+        <a class="doc-card" href="/index.html" target="_blank" rel="noopener">
+          <div class="doc-icon-col">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                 stroke-linecap="round" stroke-linejoin="round" style="color:var(--c1);">
+              <rect x="2" y="3" width="20" height="14" rx="2"/>
+              <path d="M8 21h8M12 17v4"/>
+              <path d="M8 10l2.5 2.5L14 8" stroke="var(--c1)" stroke-width="1.8"/>
+            </svg>
+          </div>
+          <div class="doc-content">
+            <span class="doc-type-tag pres">Presentazione — HTML</span>
+            <div class="doc-name">Presentazione</div>
+            <div class="doc-desc">Visualizza la presentazione interattiva del progetto nel browser.</div>
+          </div>
+          <div class="doc-arrow-col">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </div>
+        </a>
+
+        <!-- Documento revisione -->
+        <a class="doc-card"
+           href="https://docs.google.com/document/d/1QK_LY65kCKhUsPKooxEUisWuo9cbIzFuJpsTLa88HpM/edit?usp=sharing"
+           target="_blank" rel="noopener">
+          <div class="doc-icon-col">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                 stroke-linecap="round" stroke-linejoin="round" style="color:var(--c2);">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="8" y1="13" x2="16" y2="13"/>
+              <line x1="8" y1="17" x2="16" y2="17"/>
+              <line x1="8" y1="9"  x2="10" y2="9"/>
+            </svg>
+          </div>
+          <div class="doc-content">
+            <span class="doc-type-tag docx">Documento — Google Docs</span>
+            <div class="doc-name">Documento per la Revisione</div>
+            <div class="doc-desc">Accedi al documento completo su Google Docs per la revisione e i commenti.</div>
+          </div>
+          <div class="doc-arrow-col">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </div>
+        </a>
+
+        <!-- Repository -->
+        <a class="doc-card"
+           href="https://github.com/sportly-project"
+           target="_blank" rel="noopener">
+          <div class="doc-icon-col">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                 stroke-linecap="round" stroke-linejoin="round" style="color:var(--c6);">
+              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61
+                       c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77
+                       5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0
+                       C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78
+                       c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+            </svg>
+          </div>
+          <div class="doc-content">
+            <span class="doc-type-tag repo">Repository — GitHub</span>
+            <div class="doc-name">Repo del Progetto</div>
+            <div class="doc-desc">Esplora il codice sorgente e la struttura tecnica del progetto su GitHub.</div>
+          </div>
+          <div class="doc-arrow-col">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </div>
+        </a>
+
       </div>
-
-      <div class="doc-arrow-col">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M5 12h14M13 6l6 6-6 6"/>
-        </svg>
-      </div>
-
-    </a>
-
-    <div class="hub-divider"></div>
-
-    <!-- Card 2 — Documento DOCX -->
-    <a class="doc-card" href="https://docs.google.com/document/d/1QK_LY65kCKhUsPKooxEUisWuo9cbIzFuJpsTLa88HpM/edit?usp=sharing" target="_blank" rel="noopener">
-
-      <div class="doc-icon-col">
-        <div class="doc-icon">
-          <!-- Document / DOCX icon -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--c2);">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-            <polyline points="14 2 14 8 20 8"/>
-            <line x1="8" y1="13" x2="16" y2="13"/>
-            <line x1="8" y1="17" x2="16" y2="17"/>
-            <line x1="8" y1="9"  x2="10" y2="9"/>
-          </svg>
-        </div>
-      </div>
-
-      <div class="doc-content">
-        <span class="doc-type-tag docx">Documento — Google Docs</span>
-        <div class="doc-name">Documento per la Revisione</div>
-        <div class="doc-desc">Accedi al documento completo su Google Docs per la revisione e i commenti.</div>
-      </div>
-
-      <div class="doc-arrow-col">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M5 12h14M13 6l6 6-6 6"/>
-        </svg>
-      </div>
-
-    </a>
+    </div>
+    <!-- fine Consegna 1 -->
 
   </div>
+  <!-- fine hub-body -->
 
   <!-- ══ FOOTER ══ -->
   <div class="hub-footer">
     <span>Sportly — Team 6-3-14</span>
     <div class="pf-dot"></div>
-    <span>Classe 5I · Aprile 2025</span>
+    <span>Classe 5I · 2024–2025</span>
   </div>
 
 </div>
