@@ -1,0 +1,2375 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sportly — Project Blueprint</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brand-1: #bfd85b;
+      --brand-2: #17a2a9;
+      --brand-3: #0da0aa;
+      --brand-4: #82c185;
+      --brand-5: #9cca74;
+      --brand-6: #5fb897;
+      --brand-7: #3cac9f;
+      --brand-8: #45b29f;
+      
+      --ink: #0f172a;
+      --ink-dark: #020617;
+      --ink-mid: #475569;
+      --ink-light: #94a3b8;
+      --ink-faint: #cbd5e1;
+      
+      --bg: #fafafa;
+      --bg-warm: #fefefe;
+      --bg-soft: #f1f5f9;
+      --bg-accent: #ecfdf5;
+      
+      --border: #e2e8f0;
+      --border-soft: #f1f5f9;
+      
+      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -1px rgba(15, 23, 42, 0.04);
+      --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -2px rgba(15, 23, 42, 0.05);
+      --shadow-xl: 0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 10px 10px -5px rgba(15, 23, 42, 0.04);
+      
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 16px;
+      
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+      --space-2xl: 48px;
+      --space-3xl: 64px;
+      
+      --transition-fast: 150ms ease;
+      --transition-base: 250ms ease;
+      --transition-slow: 350ms ease;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --ink: #f1f5f9;
+        --ink-dark: #f8fafc;
+        --ink-mid: #94a3b8;
+        --ink-light: #64748b;
+        --ink-faint: #475569;
+        
+        --bg: #0f172a;
+        --bg-warm: #1e293b;
+        --bg-soft: #1e293b;
+        --bg-accent: #064e3b;
+        
+        --border: #334155;
+        --border-soft: #1e293b;
+        
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Layout Container */
+    .document {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: var(--space-3xl) var(--space-xl);
+    }
+
+    @media (max-width: 768px) {
+      .document {
+        padding: var(--space-xl) var(--space-md);
+      }
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-display);
+      color: var(--ink-dark);
+      line-height: 1.2;
+      font-weight: 400;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      letter-spacing: -0.01em;
+    }
+
+    h3 {
+      font-size: clamp(1.25rem, 2vw, 1.5rem);
+    }
+
+    h4 {
+      font-size: 1.125rem;
+      font-weight: 600;
+    }
+
+    p {
+      margin-bottom: var(--space-md);
+      color: var(--ink-mid);
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    strong {
+      color: var(--ink-dark);
+      font-weight: 600;
+    }
+
+    a {
+      color: var(--brand-3);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+
+    a:hover {
+      color: var(--brand-2);
+    }
+
+    /* Page Sections */
+    .page {
+      margin-bottom: var(--space-3xl);
+      padding-bottom: var(--space-3xl);
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .page:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .page-header {
+      margin-bottom: var(--space-xl);
+    }
+
+    .page-number {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: var(--space-sm);
+    }
+
+    .page-title {
+      margin-bottom: var(--space-md);
+    }
+
+    .page-subtitle {
+      font-size: 1.125rem;
+      color: var(--ink-light);
+      max-width: 60ch;
+    }
+
+    /* Cover Page */
+    .cover {
+      text-align: center;
+      padding: var(--space-3xl) 0;
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg-soft) 100%);
+      margin: calc(-1 * var(--space-3xl)) calc(-1 * var(--space-xl)) var(--space-3xl);
+      border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+    }
+
+    @media (max-width: 768px) {
+      .cover {
+        margin: calc(-1 * var(--space-xl)) calc(-1 * var(--space-md)) var(--space-xl);
+      }
+    }
+
+    .cover-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-lg);
+    }
+
+    .cover-logo-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--brand-3) 0%, var(--brand-6) 100%);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cover-logo-icon svg {
+      width: 28px;
+      height: 28px;
+      stroke: white;
+      stroke-width: 2.5;
+    }
+
+    .cover-logo-text {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--ink-dark);
+    }
+
+    .cover-tagline {
+      display: inline-block;
+      padding: var(--space-xs) var(--space-md);
+      background: var(--bg-accent);
+      border-radius: 100px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--brand-7);
+      margin-bottom: var(--space-xl);
+    }
+
+    .cover-main-title {
+      margin-bottom: var(--space-lg);
+    }
+
+    .cover-description {
+      font-size: 1.25rem;
+      color: var(--ink-mid);
+      max-width: 700px;
+      margin: 0 auto var(--space-2xl);
+      line-height: 1.8;
+    }
+
+    .cover-meta {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-xl);
+      flex-wrap: wrap;
+      margin-top: var(--space-2xl);
+    }
+
+    .cover-meta-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .cover-meta-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+    }
+
+    .cover-meta-value {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--ink-dark);
+    }
+
+    /* Section Divider */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      margin: var(--space-2xl) 0;
+    }
+
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .section-divider span {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      white-space: nowrap;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-warm);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      transition: box-shadow var(--transition-base), border-color var(--transition-base);
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--border-soft);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-md);
+      margin-bottom: var(--space-md);
+    }
+
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--bg-accent);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .card-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--brand-6);
+      stroke-width: 2;
+    }
+
+    .card-title {
+      font-size: 1.125rem;
+      margin-bottom: var(--space-xs);
+    }
+
+    .card-subtitle {
+      font-size: 0.875rem;
+      color: var(--ink-light);
+    }
+
+    .card-content {
+      color: var(--ink-mid);
+      font-size: 0.9375rem;
+      line-height: 1.7;
+    }
+
+    /* Grid Layouts */
+    .grid {
+      display: grid;
+      gap: var(--space-lg);
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    @media (max-width: 900px) {
+      .grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .grid-2,
+      .grid-3,
+      .grid-4 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Stats */
+    .stat {
+      text-align: center;
+      padding: var(--space-md);
+    }
+
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--brand-6);
+      line-height: 1;
+      margin-bottom: var(--space-xs);
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: var(--ink-light);
+      font-weight: 500;
+    }
+
+    /* Tables */
+    .table-container {
+      overflow-x: auto;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9375rem;
+    }
+
+    thead {
+      background: var(--bg-soft);
+    }
+
+    th {
+      text-align: left;
+      padding: var(--space-md);
+      font-weight: 600;
+      color: var(--ink-dark);
+      border-bottom: 2px solid var(--border);
+      font-size: 0.875rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    td {
+      padding: var(--space-md);
+      border-bottom: 1px solid var(--border-soft);
+      color: var(--ink-mid);
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    tbody tr:hover {
+      background: var(--bg-accent);
+    }
+
+    /* Lists */
+    .list {
+      list-style: none;
+    }
+
+    .list-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-md);
+      padding: var(--space-md) 0;
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .list-item:last-child {
+      border-bottom: none;
+    }
+
+    .list-item:first-child {
+      padding-top: 0;
+    }
+
+    .list-bullet {
+      width: 24px;
+      height: 24px;
+      background: var(--bg-accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .list-bullet svg {
+      width: 12px;
+      height: 12px;
+      stroke: var(--brand-6);
+      stroke-width: 2.5;
+    }
+
+    .list-content {
+      flex: 1;
+    }
+
+    .list-content strong {
+      display: block;
+      margin-bottom: var(--space-xs);
+      color: var(--ink-dark);
+    }
+
+    .list-content p {
+      margin: 0;
+      font-size: 0.9375rem;
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      padding-left: var(--space-xl);
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 11px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: var(--space-xl);
+    }
+
+    .timeline-item:last-child {
+      padding-bottom: 0;
+    }
+
+    .timeline-marker {
+      position: absolute;
+      left: -30px;
+      top: 0;
+      width: 24px;
+      height: 24px;
+      background: var(--bg-warm);
+      border: 2px solid var(--brand-6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .timeline-marker::after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--brand-6);
+      border-radius: 50%;
+    }
+
+    .timeline-content {
+      background: var(--bg-warm);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+    }
+
+    .timeline-period {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--brand-6);
+      margin-bottom: var(--space-xs);
+    }
+
+    .timeline-title {
+      font-size: 1.125rem;
+      margin-bottom: var(--space-sm);
+    }
+
+    .timeline-description {
+      color: var(--ink-mid);
+      margin: 0;
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-block;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .badge-primary {
+      background: var(--bg-accent);
+      color: var(--brand-7);
+    }
+
+    .badge-success {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .badge-warning {
+      background: #fef9c3;
+      color: #854d0e;
+    }
+
+    .badge-info {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .badge-success {
+        background: #064e3b;
+        color: #6ee7b7;
+      }
+
+      .badge-warning {
+        background: #713f12;
+        color: #fcd34d;
+      }
+
+      .badge-info {
+        background: #1e3a5f;
+        color: #93c5fd;
+      }
+    }
+
+    /* Quote */
+    .quote {
+      border-left: 4px solid var(--brand-5);
+      padding-left: var(--space-lg);
+      margin: var(--space-xl) 0;
+      font-style: italic;
+      color: var(--ink-mid);
+      font-size: 1.0625rem;
+      line-height: 1.8;
+    }
+
+    .quote-author {
+      display: block;
+      margin-top: var(--space-md);
+      font-style: normal;
+      font-weight: 600;
+      color: var(--ink-dark);
+      font-size: 0.9375rem;
+    }
+
+    /* Progress Bar */
+    .progress-container {
+      margin-bottom: var(--space-md);
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-xs);
+    }
+
+    .progress-label {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--ink-dark);
+    }
+
+    .progress-value {
+      font-size: 0.875rem;
+      color: var(--ink-light);
+      font-weight: 500;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: var(--border-soft);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--brand-5) 0%, var(--brand-6) 100%);
+      border-radius: 4px;
+      transition: width 1s ease-out;
+    }
+
+    /* Comparison Cards */
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-md);
+    }
+
+    .comparison-card {
+      background: var(--bg-warm);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      text-align: center;
+      transition: transform var(--transition-base), box-shadow var(--transition-base);
+    }
+
+    .comparison-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .comparison-card.highlight {
+      border-color: var(--brand-5);
+      background: var(--bg-accent);
+    }
+
+    .comparison-name {
+      font-weight: 600;
+      color: var(--ink-dark);
+      margin-bottom: var(--space-sm);
+    }
+
+    .comparison-score {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      color: var(--brand-6);
+      line-height: 1;
+      margin-bottom: var(--space-xs);
+    }
+
+    .comparison-label {
+      font-size: 0.875rem;
+      color: var(--ink-light);
+    }
+
+    /* WBS Tree */
+    .wbs-container {
+      background: var(--bg-warm);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+    }
+
+    .wbs-level-1 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--ink-dark);
+      margin-bottom: var(--space-lg);
+      padding-bottom: var(--space-md);
+      border-bottom: 2px solid var(--border);
+    }
+
+    .wbs-level-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+
+    .wbs-phase {
+      background: var(--bg);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+    }
+
+    .wbs-phase-number {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      background: var(--brand-5);
+      color: var(--ink-dark);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.875rem;
+      margin-bottom: var(--space-sm);
+    }
+
+    .wbs-phase-title {
+      font-weight: 600;
+      color: var(--ink-dark);
+      margin-bottom: var(--space-sm);
+      font-size: 0.9375rem;
+    }
+
+    .wbs-deliverables {
+      list-style: none;
+      font-size: 0.875rem;
+      color: var(--ink-mid);
+    }
+
+    .wbs-deliverables li {
+      padding: var(--space-xs) 0;
+      padding-left: var(--space-md);
+      position: relative;
+    }
+
+    .wbs-deliverables li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--ink-light);
+    }
+
+    /* Footer */
+    .document-footer {
+      text-align: center;
+      padding-top: var(--space-2xl);
+      color: var(--ink-light);
+      font-size: 0.875rem;
+    }
+
+    .document-footer p {
+      margin: var(--space-xs) 0;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-in {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .delay-1 { animation-delay: 0.1s; opacity: 0; }
+    .delay-2 { animation-delay: 0.2s; opacity: 0; }
+    .delay-3 { animation-delay: 0.3s; opacity: 0; }
+    .delay-4 { animation-delay: 0.4s; opacity: 0; }
+    .delay-5 { animation-delay: 0.5s; opacity: 0; }
+
+    /* Print Styles */
+    @media print {
+      .document {
+        max-width: 100%;
+        padding: 0;
+      }
+
+      .page {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .cover {
+        background: white;
+      }
+
+      .card {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+    }
+
+    /* Focus States for Accessibility */
+    a:focus,
+    button:focus {
+      outline: 2px solid var(--brand-5);
+      outline-offset: 2px;
+    }
+
+    /* Selection Color */
+    ::selection {
+      background: var(--brand-5);
+      color: var(--ink-dark);
+    }
+  </style>
+</head>
+<body>
+  <div class="document">
+    
+    <!-- Cover Page -->
+    <div class="cover animate-in">
+      <div class="cover-logo">
+        <div class="cover-logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5"/>
+            <path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <span class="cover-logo-text">Sportly</span>
+      </div>
+      
+      <span class="cover-tagline">Project Blueprint — Prima Consegna</span>
+      
+      <h1 class="cover-main-title animate-in delay-1">Piattaforma Digitale per la Gestione Sportiva</h1>
+      
+      <p class="cover-description animate-in delay-2">
+        Un ecosistema integrato che connette sportivi, strutture e comunità locali attraverso una soluzione tecnologica moderna, scalabile e user-centric. Sportly trasforma la prenotazione di attività sportive da processo analogico a esperienza digitale fluida.
+      </p>
+      
+      <div class="cover-meta animate-in delay-3">
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Team</span>
+          <span class="cover-meta-value">6-3-14</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Classe</span>
+          <span class="cover-meta-value">5I</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Consegna</span>
+          <span class="cover-meta-value">10 Aprile 2025</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Versione</span>
+          <span class="cover-meta-value">1.0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 1: Scelta del Progetto -->
+    <div class="page animate-in delay-1">
+      <div class="page-header">
+        <span class="page-number">Sezione 1</span>
+        <h2 class="page-title">Scelta del Progetto</h2>
+        <p class="page-subtitle">Analisi preliminare e validazione dell'idea imprenditoriale</p>
+      </div>
+
+      <div class="section-divider"><span>Contesto</span></div>
+
+      <p>
+        Il settore sportivo dilettantistico italiano rappresenta un mercato vasto e frammentato, caratterizzato da una significativa presenza di associazioni sportive (ASD) che operano ancora con modalità gestionali tradizionali. L'osservazione di questo contesto ha evidenziato un'opportunità concreta di digitalizzazione.
+      </p>
+
+      <div class="section-divider"><span>L'Idea</span></div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 6v6l4 2"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="card-title">Sportly — Piattaforma di Prenotazione Sportiva</h3>
+            <p class="card-subtitle">Applicazione mobile e web per la gestione integrata di attività sportive</p>
+          </div>
+        </div>
+        <div class="card-content">
+          <p>
+            Sportly è una soluzione digitale completa che permette agli utenti di <strong>scoprire, prenotare e gestire</strong> attività sportive presso strutture locali, offrendo al contempo agli operatori strumenti avanzati per la gestione operativa e la promozione dei propri servizi.
+          </p>
+          <p style="margin-top: var(--space-md);">
+            La piattaforma si articola su due interfacce principali: un'<strong>app utente</strong> per sportivi e famiglie, e una <strong>dashboard gestore</strong> per strutture e associazioni, creando un ecosistema a due lati che genera valore per entrambi gli attori.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-divider"><span>Validazione di Mercato</span></div>
+
+      <div class="grid grid-3" style="margin-bottom: var(--space-xl);">
+        <div class="stat">
+          <div class="stat-value">65%</div>
+          <div class="stat-label">ASD non digitalizzate</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">36%</div>
+          <div class="stat-label">Praticanti sportivi</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">50%+</div>
+          <div class="stat-label">Smartphone penetration</div>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Indicatore</th>
+              <th>Valore</th>
+              <th>Fonte</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Associazioni sportive dilettantistiche in Italia</td>
+              <td>~80.000</td>
+              <td>Registro CONI</td>
+            </tr>
+            <tr>
+              <td>Strutture con gestione analogica</td>
+              <td>60-70%</td>
+              <td>Analisi di settore</td>
+            </tr>
+            <tr>
+              <td>Popolazione che pratica sport regolarmente</td>
+              <td>36% (21+ milioni)</td>
+              <td>ISTAT 2024</td>
+            </tr>
+            <tr>
+              <td>Adulti con smartphone connesso</td>
+              <td>>50%</td>
+              <td>Audiweb 2024</td>
+            </tr>
+            <tr>
+              <td>Spesa media mensile per attività sportive</td>
+              <td>45-80 €</td>
+              <td>Osservatorio Sport</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="quote">
+        "L'esistenza di competitor conferma la validità del mercato; la loro incompletezza funzionale lascia spazio a un operatore integrato che risolva i problemi reali di utenti e gestori."
+      </div>
+    </div>
+
+    <!-- Page 2: Descrizione Dettagliata -->
+    <div class="page animate-in delay-2">
+      <div class="page-header">
+        <span class="page-number">Sezione 2</span>
+        <h2 class="page-title">Descrizione Dettagliata dell'Idea</h2>
+        <p class="page-subtitle">Architettura funzionale e caratteristiche principali</p>
+      </div>
+
+      <div class="section-divider"><span>Obiettivo Generale</span></div>
+
+      <p>
+        Sportly mira a <strong>digitalizzare completamente il processo di prenotazione</strong> nelle strutture sportive dilettantistiche italiane, eliminando le inefficienze dei sistemi analogici e creando un'esperienza utente fluida, accessibile 24/7 da qualsiasi dispositivo.
+      </p>
+
+      <div class="section-divider"><span>Funzionalità Core</span></div>
+
+      <div class="list">
+        <div class="list-item">
+          <div class="list-bullet">
+            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="M21 21l-4.35-4.35"/>
+            </svg>
+          </div>
+          <div class="list-content">
+            <strong>Ricerca Multi-Criterio</strong>
+            <p>Filtraggio avanzato per sport, località, data, fascia oraria e prezzo. Integrazione con mappe interattive per la visualizzazione geografica delle strutture.</p>
+          </div>
+        </div>
+        <div class="list-item">
+          <div class="list-bullet">
+            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2"/>
+              <path d="M16 2v4M8 2v4M3 10h18"/>
+            </svg>
+          </div>
+          <div class="list-content">
+            <strong>Calendario Real-Time</strong>
+            <p>Visualizzazione immediata della disponibilità, prenotazione istantanea con conferma automatica, gestione autonoma di modifiche e cancellazioni.</p>
+          </div>
+        </div>
+        <div class="list-item">
+          <div class="list-bullet">
+            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="1" y="4" width="22" height="16" rx="2"/>
+              <path d="M1 10h22M17 15a2 2 0 1 1-4 0"/>
+            </svg>
+          </div>
+          <div class="list-content">
+            <strong>Pagamenti Integrati</strong>
+            <p>Gateway sicuro (Stripe) con supporto per carte, Apple Pay, Google Pay. Gestione abbonamenti digitali e pagamenti ricorrenti.</p>
+          </div>
+        </div>
+        <div class="list-item">
+          <div class="list-bullet">
+            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+          </div>
+          <div class="list-content">
+            <strong>Sistema Notifiche</strong>
+            <p>Conferme prenotazione, reminder automatici (24h e 2h prima), alert disponibilità, comunicazioni strutture.</p>
+          </div>
+        </div>
+        <div class="list-item">
+          <div class="list-bullet">
+            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            </svg>
+          </div>
+          <div class="list-content">
+            <strong>Community Features</strong>
+            <p>"Cerca compagno" per trovare partner di gioco, gruppi sportivi locali, organizzazione tornei, sistema badge e gamification.</p>
+          </div>
+        </div>
+        <div class="list-item">
+          <div class="list-bullet">
+            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24M15.78 15.78l4.24 4.24M1 12h6m6 0h6M4.22 19.78l4.24-4.24M15.78 8.22l4.24-4.24"/>
+            </svg>
+          </div>
+          <div class="list-content">
+            <strong>Dashboard Gestori</strong>
+            <p>Analytics in tempo reale, gestione risorse, strumenti marketing, widget booking integrabile, reportistica avanzata.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-divider"><span>Stack Tecnologico</span></div>
+
+      <div class="grid grid-3">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="16 18 22 12 16 6"/>
+                <polyline points="8 6 2 12 8 18"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Frontend Mobile</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            <strong>React Native</strong> per sviluppo cross-platform iOS/Android con performance native e interfaccia utente fluida.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3"/>
+                <polyline points="12 12 20 7.5"/>
+                <polyline points="12 12 12 21"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Backend API</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            <strong>Node.js + Express</strong> su architettura serverless AWS Lambda per scalabilità automatica e costi ottimizzati.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                <path d="M3 5v14a9 3 0 0 0 18 0V5"/>
+                <path d="M3 12a9 3 0 0 0 18 0"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Database</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            <strong>PostgreSQL</strong> per dati relazionali + Redis per cache e gestione sessioni real-time.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Geolocalizzazione</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            <strong>Google Maps API</strong> per ricerca strutture, navigazione integrata e calcolo distanze.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Notifiche Push</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            <strong>Firebase FCM</strong> per messaggistica cross-platform affidabile e tempestiva.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="1" y="4" width="22" height="16" rx="2"/>
+                <path d="M1 10h22M17 15a2 2 0 1 1-4 0"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Pagamenti</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            <strong>Stripe API</strong> gateway PCI-compliant con supporto completo per marketplace.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 3: Problema che si Vuole Risolvere -->
+    <div class="page animate-in delay-3">
+      <div class="page-header">
+        <span class="page-number">Sezione 3</span>
+        <h2 class="page-title">Problema che si Vuole Risolvere</h2>
+        <p class="page-subtitle">Analisi dei pain point e soluzioni proposte</p>
+      </div>
+
+      <div class="section-divider"><span>Pain Points Identificati</span></div>
+
+      <div class="grid grid-2">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background: #fef2f2;">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" style="stroke: #ef4444;">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 8v4M12 16h.01"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Gestione Manuale</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            Le strutture si affidano a registri cartacei, telefonate ed Excel. Questo genera errori frequenti, doppie prenotazioni e sovraccarico amministrativo per il personale.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background: #fef2f2;">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" style="stroke: #ef4444;">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 8v4M12 16h.01"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Accessibilità Limitata</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            Impossibile prenotare fuori orario di apertura. Gli utenti devono chiamare durante gli orari d'ufficio, creando frizione e abbandoni.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background: #fef2f2;">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" style="stroke: #ef4444;">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 8v4M12 16h.01"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Visibilità Frammentata</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            Le piccole ASD non hanno canali digitali efficaci. Perdono clientela rispetto a grandi catene già presenti online con sistemi proprietari.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background: #fef2f2;">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" style="stroke: #ef4444;">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 8v4M12 16h.01"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Community Assente</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            Mancano strumenti digitali per aggregare giocatori, organizzare tornei amatoriali o creare gruppi sportivi locali duraturi.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background: #fef2f2;">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" style="stroke: #ef4444;">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 8v4M12 16h.01"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Rischi Operativi</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            Pagamenti in contante con ammanchi, abbonamenti gestiti manualmente, contabilità disorganizzata e difficile tracciabilità.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background: #fef2f2;">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" style="stroke: #ef4444;">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 8v4M12 16h.01"/>
+              </svg>
+            </div>
+          </div>
+          <div class="card-content">
+            <strong>Mancanza Dati</strong><br>
+            Assenza di analytics su utilizzo, preferenze utenti, trend stagionali. Decisioni basate su intuizione piuttosto che dati.
+          </div>
+        </div>
+      </div>
+
+      <div class="section-divider"><span>Mapping Problema-Soluzione</span></div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Problema Attuale</th>
+              <th>Impatto</th>
+              <th>Soluzione Sportly</th>
+              <th>Beneficio</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Prenotazioni telefoniche/manuali</td>
+              <td>Errori, tempi lunghi, disponibilità limitata</td>
+              <td>Booking online 24/7 con conferma istantanea</td>
+              <td>Zero errori, accesso continuo, UX fluida</td>
+            </tr>
+            <tr>
+              <td>Visibilità limitata strutture</td>
+              <td>Perdita clientela, competizione impari</td>
+              <td>Marketplace centralizzato con SEO integrato</td>
+              <td>Visibilità uniforme, nuovi clienti automatici</td>
+            </tr>
+            <tr>
+              <td>Gestione amministrativa manuale</td>
+              <td>Sovraccarico staff, costi operativi alti</td>
+              <td>Automazione processi, dashboard integrata</td>
+              <td>Riduzione workload, focus su core business</td>
+            </tr>
+            <tr>
+              <td>Pagamenti cash non tracciati</td>
+              <td>Ammanchi, contabilità complessa</td>
+              <td>Pagamenti digitali con reportistica</td>
+              <td>Incassi certi, contabilità automatizzata</td>
+            </tr>
+            <tr>
+              <td>Assenza community digitale</td>
+              <td>Bassa fidelizzazione, passaparola limitato</td>
+              <td>Feature social, gruppi, gamification</td>
+              <td>Engagement alto, crescita organica</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Page 4: Valore per il Cliente -->
+    <div class="page animate-in delay-4">
+      <div class="page-header">
+        <span class="page-number">Sezione 4</span>
+        <h2 class="page-title">Valore per il Cliente</h2>
+        <p class="page-subtitle">Value Proposition e benefici per utenti e gestori</p>
+      </div>
+
+      <div class="section-divider"><span>Utenti Sportivi</span></div>
+
+      <div class="grid grid-2">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Risparmio di Tempo</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            Prenotazione in <strong>30 secondi</strong> da smartphone, eliminando telefonate, attese e scambi email. Processo completamente self-service.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Disponibilità 24/7</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            Accesso al calendario e prenotazioni in qualsiasi momento, anche fuori orario di apertura delle strutture. Nessuna attesa.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"/>
+                <polyline points="18 9 21 12 18 15"/>
+                <polyline points="6 9 3 12 6 15"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Flessibilità Totale</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            Cancellazioni e modifiche autonome fino a 2 ore prima, senza penali né necessità di contattare la struttura.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="M21 21l-4.35-4.35"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Scelta Informata</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            Confronto trasparente tra strutture per prezzo, recensioni, foto, servizi disponibili e distanza dalla posizione utente.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Community Attiva</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            Funzione "Cerca compagno" per trovare partner di gioco, gruppi sportivi locali, organizzazione tornei amatoriali.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <circle cx="12" cy="12" r="6"/>
+                <circle cx="12" cy="12" r="2"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Gamification</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            Sistema badge fedeltà, punti attività, sfide mensili e classifiche per motivare la pratica sportiva continuativa.
+          </div>
+        </div>
+      </div>
+
+      <div class="section-divider"><span>Gestori Strutture</span></div>
+
+      <div class="grid grid-2">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 17"/>
+                <polyline points="17 6 23 6 23 12"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Incremento Prenotazioni</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            Visibilità su marketplace comune porta <strong>nuovi clienti automaticamente</strong>. Stima incremento 15-25% prenotazioni nel primo anno.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"/>
+                <rect x="14" y="3" width="7" height="7"/>
+                <rect x="14" y="14" width="7" height="7"/>
+                <rect x="3" y="14" width="7" height="7"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Analytics Real-Time</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            Dashboard con occupazione campi, entrate, trend stagionali, profili clienti. Decisioni data-driven per ottimizzare ricavi.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24M15.78 15.78l4.24 4.24M1 12h6m6 0h6M4.22 19.78l4.24-4.24M15.78 8.22l4.24-4.24"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Automazione Operativa</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            Riduzione tempo al telefono del 70%. Prenotazioni gestite automaticamente 24/7 senza intervento manuale del personale.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="1" y="4" width="22" height="16" rx="2"/>
+                <line x1="1" y1="10" x2="23" y2="10"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Pagamenti Sicuri</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            Gateway PCI-compliant, incassi certi e tracciati, ricevute digitali automatiche, gestione rimborsi semplificata.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 13c0-1 .5-2 1.5-2.5S8 10 8 9c0-3-2-4-6-4s-4 1-4 4"/>
+                <path d="M3 13v5c0 1.5 1 2 2 2h14c1 0 2-.5 2-2v-5"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Marketing Diretto</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            Promozioni mirate via push notification agli utenti iscritti, campagne stagionali, recupero clienti inattivi.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Integrazione Web</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            Widget booking integrabile nel sito web della struttura senza sviluppo, mantenendo brand identity e UX coerente.
+          </div>
+        </div>
+      </div>
+
+      <div class="section-divider"><span>Copertura Funzionale vs Competitor</span></div>
+
+      <div class="comparison-grid">
+        <div class="comparison-card highlight">
+          <div class="comparison-name">Sportly</div>
+          <div class="comparison-score">95%</div>
+          <div class="comparison-label">Copertura funzionale completa</div>
+        </div>
+        <div class="comparison-card">
+          <div class="comparison-name">Playtomic</div>
+          <div class="comparison-score">60%</div>
+          <div class="comparison-label">Focus padel/tennis</div>
+        </div>
+        <div class="comparison-card">
+          <div class="comparison-name">PrenotaWeb</div>
+          <div class="comparison-score">45%</div>
+          <div class="comparison-label">Funzionalità base</div>
+        </div>
+        <div class="comparison-card">
+          <div class="comparison-name">Squby</div>
+          <div class="comparison-score">35%</div>
+          <div class="comparison-label">Limitato a calcio</div>
+        </div>
+        <div class="comparison-card">
+          <div class="comparison-name">Soluzioni analogiche</div>
+          <div class="comparison-score">10%</div>
+          <div class="comparison-label">Processi manuali</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 5: Analisi Target Clienti -->
+    <div class="page animate-in delay-5">
+      <div class="page-header">
+        <span class="page-number">Sezione 5</span>
+        <h2 class="page-title">Analisi Target Clienti</h2>
+        <p class="page-subtitle">Segmentazione e profilazione degli utenti</p>
+      </div>
+
+      <div class="section-divider"><span>Segmenti Primari</span></div>
+
+      <div class="grid grid-2">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background: var(--bg-accent);">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Sportivi Amatoriali</h3>
+              <span class="badge badge-primary">B2C</span>
+            </div>
+          </div>
+          <div class="card-content">
+            <p><strong>Profilo:</strong> Età 18-45 anni, pratica sportiva regolare (1-3 volte/settimana), digitale nativo, ricerca convenienza e flessibilità.</p>
+            <p style="margin-top: var(--space-md);"><strong>Bisogni:</strong> Prenotazione rapida, confronto prezzi, trovare compagni di gioco, gestione abbonamenti.</p>
+            <p style="margin-top: var(--space-md);"><strong>Dimensione:</strong> ~12 milioni di potenziali utenti in Italia.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background: #dbeafe;">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" style="stroke: #3b82f6;">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Famiglie</h3>
+              <span class="badge badge-info">B2C</span>
+            </div>
+          </div>
+          <div class="card-content">
+            <p><strong>Profilo:</strong> Genitori con figli 6-14 anni, organizzano attività pomeridiane, cercano sicurezza e qualità, budget consapevole.</p>
+            <p style="margin-top: var(--space-md);"><strong>Bisogni:</strong> Corsi strutturati, orari compatibili scuola, pagamenti rateizzati, recensioni affidabili.</p>
+            <p style="margin-top: var(--space-md);"><strong>Dimensione:</strong> ~8 milioni di nuclei familiari con figli in età scolare.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background: #f0fdf4;">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" style="stroke: #22c55e;">
+                <rect x="2" y="3" width="20" height="14" rx="2"/>
+                <path d="M8 21h8M12 17v4"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Associazioni Sportive (ASD)</h3>
+              <span class="badge badge-success">B2B</span>
+            </div>
+          </div>
+          <div class="card-content">
+            <p><strong>Profilo:</strong> Strutture dilettantistiche, 1-10 campi, gestione volontaria o semi-professionale, budget limitato per tecnologia.</p>
+            <p style="margin-top: var(--space-md);"><strong>Bisogni:</strong> Digitalizzazione low-cost, visibilità online, automazione admin, pagamenti tracciati.</p>
+            <p style="margin-top: var(--space-md);"><strong>Dimensione:</strong> ~50.000 ASD target (65% non digitalizzate).</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background: #fef3c7;">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" style="stroke: #f59e0b;">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                <path d="M2 17l10 5 10-5"/>
+                <path d="M2 12l10 5 10-5"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Centri Sportivi Commerciali</h3>
+              <span class="badge badge-warning">B2B</span>
+            </div>
+          </div>
+          <div class="card-content">
+            <p><strong>Profilo:</strong> Strutture private, palestre, piscine, multi-sport, gestione professionale, focus su redditività.</p>
+            <p style="margin-top: var(--space-md);"><strong>Bisogni:</strong> Analytics avanzati, marketing automation, integrazione gestionali, API.</p>
+            <p style="margin-top: var(--space-md);"><strong>Dimensione:</strong> ~5.000 strutture commerciali medio-grandi.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-divider"><span>User Personas</span></div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Persona</th>
+              <th>Demografia</th>
+              <th>Comportamento</th>
+              <th>Pain Point</th>
+              <th>Obiettivo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Marco, 28 anni</strong><br>Giocatore calcetto</td>
+              <td>Lavoratore, Milano, smartphone always-on</td>
+              <td>Prenota settimanalmente, cerca compagni, usa app fitness</td>
+              <td>Difficile trovare campi liberi, organizzazione gruppi complessa</td>
+              <td>Prenotare in 1 click, trovare giocatori, gestire squadra</td>
+            </tr>
+            <tr>
+              <td><strong>Laura, 35 anni</strong><br>Mamma organizzatrice</td>
+              <td>Part-time, Torino, gestisce agenda familiare</td>
+              <td>Prenota corsi figli, confronta prezzi, legge recensioni</td>
+              <td>Orari limitati, pagamenti complicati, info frammentate</td>
+              <td>Trovare corsi qualità, pagare rate, organizzare agenda</td>
+            </tr>
+            <tr>
+              <td><strong>Giuseppe, 52 anni</strong><br>Presidente ASD</td>
+              <td>Volontario, Bologna, gestisce circolo tennis</td>
+              <td>Gestisce prenotazioni telefono, Excel, contabilità manuale</td>
+              <td>Errori prenotazioni, tempo admin, poca visibilità</td>
+              <td>Digitalizzare gestione, aumentare iscritti, risparmiare tempo</td>
+            </tr>
+            <tr>
+              <td><strong>Elena, 30 anni</strong><br>Manager palestra</td>
+              <td>Direttrice, Roma, catena fitness 3 sedi</td>
+              <td>Analizza KPI, ottimizza occupazione, lancia promo</td>
+              <td>Dati frammentati, marketing costoso, churn alto</td>
+              <td>Analytics centralizzati, automazione marketing, fidelizzare</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Page 6: Analisi Concorrenza -->
+    <div class="page">
+      <div class="page-header">
+        <span class="page-number">Sezione 6</span>
+        <h2 class="page-title">Analisi Concorrenza</h2>
+        <p class="page-subtitle">Panorama competitivo e posizionamento</p>
+      </div>
+
+      <div class="section-divider"><span>Competitor Diretti</span></div>
+
+      <div class="grid grid-2">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                <path d="M9 9h.01M15 9h.01"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Playtomic</h3>
+              <span class="badge badge-info">Leader di mercato</span>
+            </div>
+          </div>
+          <div class="card-content">
+            <p><strong>Focus:</strong> Padel e tennis. Presenza forte in Spagna e Italia.</p>
+            <p style="margin-top: var(--space-md);"><strong>Punti di forza:</strong> Brand recognition, community attiva, feature social avanzate.</p>
+            <p style="margin-top: var(--space-md);"><strong>Limitazioni:</strong> Solo sport racchetta, costi alti per gestori, UX complessa per principianti.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                <path d="M9 9h.01M15 9h.01"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">PrenotaWeb</h3>
+              <span class="badge badge-warning">Player storico</span>
+            </div>
+          </div>
+          <div class="card-content">
+            <p><strong>Focus:</strong> Prenotazioni generiche, multi-settore.</p>
+            <p style="margin-top: var(--space-md);"><strong>Punti di forza:</strong> Anzianità mercato, base installata, integrazioni gestionali.</p>
+            <p style="margin-top: var(--space-md);"><strong>Limitazioni:</strong> UI datata, mobile experience debole, feature community assenti.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                <path d="M9 9h.01M15 9h.01"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Squby</h3>
+              <span class="badge badge-primary">Niche player</span>
+            </div>
+          </div>
+          <div class="card-content">
+            <p><strong>Focus:</strong> Calcio e calcetto, gestione tornei.</p>
+            <p style="margin-top: var(--space-md);"><strong>Punti di forza:</strong> Specializzazione calcio, strumenti tornei, prezzi competitivi.</p>
+            <p style="margin-top: var(--space-md);"><strong>Limitazioni:</strong> Solo calcio, scalabilità limitata, brand awareness bassa.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                <path d="M9 9h.01M15 9h.01"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Decathlon Coach</h3>
+              <span class="badge badge-info">Ecosistema retail</span>
+            </div>
+          </div>
+          <div class="card-content">
+            <p><strong>Focus:</strong> Corsi fitness, attività Decathlon.</p>
+            <p style="margin-top: var(--space-md);"><strong>Punti di forza:</strong> Integrazione retail, brand trust, offerta corsi proprietaria.</p>
+            <p style="margin-top: var(--space-md);"><strong>Limitazioni:</strong> Solo ecosistema Decathlon, no marketplace aperto, sport limitati.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-divider"><span>Matrice Competitiva</span></div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Criterio</th>
+              <th>Sportly</th>
+              <th>Playtomic</th>
+              <th>PrenotaWeb</th>
+              <th>Squby</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Multi-sport</strong></td>
+              <td style="color: var(--brand-6); font-weight: 600;">✓ Completo</td>
+              <td style="color: #ef4444;">✗ Solo racchetta</td>
+              <td style="color: var(--brand-6);">✓ Base</td>
+              <td style="color: #ef4444;">✗ Solo calcio</td>
+            </tr>
+            <tr>
+              <td><strong>Mobile UX</strong></td>
+              <td style="color: var(--brand-6); font-weight: 600;">✓ Nativo</td>
+              <td style="color: var(--brand-6);">✓ Buono</td>
+              <td style="color: #f59e0b;">⚠ Migliorabile</td>
+              <td style="color: var(--brand-6);">✓ Buono</td>
+            </tr>
+            <tr>
+              <td><strong>Community Features</strong></td>
+              <td style="color: var(--brand-6); font-weight: 600;">✓ Integrato</td>
+              <td style="color: var(--brand-6);">✓ Forte</td>
+              <td style="color: #ef4444;">✗ Assente</td>
+              <td style="color: #f59e0b;">⚠ Base</td>
+            </tr>
+            <tr>
+              <td><strong>Dashboard Gestori</strong></td>
+              <td style="color: var(--brand-6); font-weight: 600;">✓ Completa</td>
+              <td style="color: var(--brand-6);">✓ Buona</td>
+              <td style="color: var(--brand-6);">✓ Base</td>
+              <td style="color: #f59e0b;">⚠ Limitata</td>
+            </tr>
+            <tr>
+              <td><strong>Pagamenti Integrati</strong></td>
+              <td style="color: var(--brand-6); font-weight: 600;">✓ Completo</td>
+              <td style="color: var(--brand-6);">✓ Sì</td>
+              <td style="color: #f59e0b;">⚠ Parziale</td>
+              <td style="color: var(--brand-6);">✓ Sì</td>
+            </tr>
+            <tr>
+              <td><strong>Prezzi Gestori</strong></td>
+              <td style="color: var(--brand-6); font-weight: 600;">Freemium</td>
+              <td style="color: #ef4444;">Alto</td>
+              <td style="color: #f59e0b;">Medio</td>
+              <td style="color: var(--brand-6);">Basso</td>
+            </tr>
+            <tr>
+              <td><strong>Target ASD</strong></td>
+              <td style="color: var(--brand-6); font-weight: 600;">Primario</td>
+              <td style="color: #f59e0b;">Secondario</td>
+              <td style="color: var(--brand-6);">Primario</td>
+              <td style="color: #f59e0b;">Secondario</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section-divider"><span>Posizionamento Strategico</span></div>
+
+      <div class="card" style="background: var(--bg-accent); border-color: var(--brand-5);">
+        <div class="card-content">
+          <p style="margin: 0;">
+            <strong>Sportly si posiziona come l'unica soluzione "all-in-one" per lo sport dilettantistico italiano.</strong> A differenza dei competitor verticalizzati (Playtomic per padel, Squby per calcio) o generalisti datati (PrenotaWeb), Sportly combina:
+          </p>
+          <ul style="margin: var(--space-md) 0 0 var(--space-lg);">
+            <li style="margin-bottom: var(--space-sm);"><strong>Ampiezza sportiva:</strong> Tutti gli sport dilettantistici in un'unica piattaforma</li>
+            <li style="margin-bottom: var(--space-sm);"><strong>Focus ASD:</strong> Progettato specificamente per le esigenze delle associazioni dilettantistiche</li>
+            <li style="margin-bottom: var(--space-sm);"><strong>Community-first:</strong> Feature social integrate per fidelizzazione organica</li>
+            <li style="margin-bottom: var(--space-sm);"><strong>Modello freemium:</strong> Accessibile a strutture di ogni dimensione</li>
+            <li><strong>Tech stack moderno:</strong> UX mobile-native, architettura scalabile</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 7: Modello di Business -->
+    <div class="page">
+      <div class="page-header">
+        <span class="page-number">Sezione 7</span>
+        <h2 class="page-title">Ipotesi Modello di Business</h2>
+        <p class="page-subtitle">Strategia di monetizzazione e proiezioni economiche</p>
+      </div>
+
+      <div class="section-divider"><span>Fonti di Ricavo</span></div>
+
+      <div class="grid grid-2">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="1" x2="12" y2="23"/>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Commissioni Prenotazioni</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            <p><strong>Modello:</strong> 5-10% sul valore di ogni prenotazione completata tramite piattaforma.</p>
+            <p style="margin-top: var(--space-md);"><strong>Target:</strong> Tutte le prenotazioni B2C.</p>
+            <p style="margin-top: var(--space-md);"><strong>Stima:</strong> 15€ media prenotazione × 5.000/mese = 3.750-7.500€/mese (mese 12).</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2"/>
+                <path d="M8 21h8M12 17v4"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Abbonamenti SaaS (B2B)</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            <p><strong>Modello:</strong> Piani mensili per strutture con funzionalità avanzate.</p>
+            <p style="margin-top: var(--space-md);"><strong>Target:</strong> Gestori strutture sportive.</p>
+            <p style="margin-top: var(--space-md);"><strong>Stima:</strong> 80 strutture × 29€ + 30 × 59€ = 4.090€/mese (mese 12).</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Abbonamenti Utenti Premium</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            <p><strong>Modello:</strong> Piano "Sportly Plus" 4,99€/mese per utenti con benefici esclusivi.</p>
+            <p style="margin-top: var(--space-md);"><strong>Target:</strong> Sportivi frequenti (10% base utenti).</p>
+            <p style="margin-top: var(--space-md);"><strong>Stima:</strong> 500 utenti × 4,99€ = 2.495€/mese (mese 12).</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Pubblicità e Sponsorizzazioni</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            <p><strong>Modello:</strong> Spazi promozionali per brand sportivi, eventi sponsorizzati, featured listing.</p>
+            <p style="margin-top: var(--space-md);"><strong>Target:</strong> Brand sportivi, organizzatori eventi.</p>
+            <p style="margin-top: var(--space-md);"><strong>Stima:</strong> 1.000€/mese (mese 12, crescita progressiva).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-divider"><span>Piani Abbonamento Strutture</span></div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Piano</th>
+              <th>Prezzo</th>
+              <th>Caratteristiche</th>
+              <th>Target</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Free</strong></td>
+              <td>0 €/mese</td>
+              <td>Max 2 risorse, booking base, commissione 10%, supporto community</td>
+              <td>ASD piccole, test iniziale</td>
+            </tr>
+            <tr>
+              <td><strong>Standard</strong></td>
+              <td>29 €/mese</td>
+              <td>Fino a 10 risorse, analytics base, notifiche personalizzate, QR check-in, commissione 7%</td>
+              <td>ASD medie, centri locali</td>
+            </tr>
+            <tr>
+              <td><strong>Premium</strong></td>
+              <td>59 €/mese</td>
+              <td>Risorse illimitate, analytics avanzate, marketing automation, API, widget web, commissione 5%, supporto prioritario</td>
+              <td>Centri commerciali, catene</td>
+            </tr>
+            <tr>
+              <td><strong>Enterprise</strong></td>
+              <td>Custom</td>
+              <td>Integrazioni custom, SLA garantito, account manager, formazione staff, white-label</td>
+              <td>Grandi catene, federazioni</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section-divider"><span>Proiezione Ricavi Anno 1</span></div>
+
+      <div class="grid grid-2">
+        <div class="card">
+          <h3 class="card-title" style="margin-bottom: var(--space-md);">Scenario Conservativo</h3>
+          <div style="margin-bottom: var(--space-lg);">
+            <div class="progress-container">
+              <div class="progress-header">
+                <span class="progress-label">Mese 6</span>
+                <span class="progress-value">3.459 €</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 23%;"></div>
+              </div>
+            </div>
+            <div class="progress-container">
+              <div class="progress-header">
+                <span class="progress-label">Mese 12</span>
+                <span class="progress-value">15.085 €</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 100%;"></div>
+              </div>
+            </div>
+          </div>
+          <div class="list" style="font-size: 0.875rem;">
+            <div class="list-item" style="padding: var(--space-xs) 0; border: none;">
+              <div class="list-content">
+                <strong>Commissioni</strong> (1.000 prenotazioni/mese)
+              </div>
+              <div style="color: var(--brand-6); font-weight: 600;">7.500 €</div>
+            </div>
+            <div class="list-item" style="padding: var(--space-xs) 0; border: none;">
+              <div class="list-content">
+                <strong>SaaS Standard</strong> (80 strutture)
+              </div>
+              <div style="color: var(--brand-6); font-weight: 600;">2.320 €</div>
+            </div>
+            <div class="list-item" style="padding: var(--space-xs) 0; border: none;">
+              <div class="list-content">
+                <strong>SaaS Premium</strong> (30 strutture)
+              </div>
+              <div style="color: var(--brand-6); font-weight: 600;">1.770 €</div>
+            </div>
+            <div class="list-item" style="padding: var(--space-xs) 0; border: none;">
+              <div class="list-content">
+                <strong>Utenti Plus</strong> (500 utenti)
+              </div>
+              <div style="color: var(--brand-6); font-weight: 600;">2.495 €</div>
+            </div>
+            <div class="list-item" style="padding: var(--space-xs) 0; border: none;">
+              <div class="list-content">
+                <strong>Pubblicità</strong>
+              </div>
+              <div style="color: var(--brand-6); font-weight: 600;">1.000 €</div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <h3 class="card-title" style="margin-bottom: var(--space-md);">Struttura Costi Principali</h3>
+          <div class="list" style="font-size: 0.875rem;">
+            <div class="list-item" style="padding: var(--space-xs) 0; border: none;">
+              <div class="list-content">
+                <strong>Sviluppo iniziale</strong> (app + backend + design)
+              </div>
+              <div style="color: #ef4444; font-weight: 600;">45.000 €</div>
+            </div>
+            <div class="list-item" style="padding: var(--space-xs) 0; border: none;">
+              <div class="list-content">
+                <strong>Infrastruttura cloud</strong> (AWS/GCP)
+              </div>
+              <div style="color: #ef4444; font-weight: 600;">500 €/mese</div>
+            </div>
+            <div class="list-item" style="padding: var(--space-xs) 0; border: none;">
+              <div class="list-content">
+                <strong>Commissioni gateway</strong> (Stripe ~1,4% + 0,25€)
+              </div>
+              <div style="color: #ef4444; font-weight: 600;">Variabile</div>
+            </div>
+            <div class="list-item" style="padding: var(--space-xs) 0; border: none;">
+              <div class="list-content">
+                <strong>Marketing acquisizione</strong> (social, eventi, partnership)
+              </div>
+              <div style="color: #ef4444; font-weight: 600;">3.000 €/mese</div>
+            </div>
+            <div class="list-item" style="padding: var(--space-xs) 0; border: none;">
+              <div class="list-content">
+                <strong>Customer support</strong> (helpdesk, moderazione)
+              </div>
+              <div style="color: #ef4444; font-weight: 600;">1.500 €/mese</div>
+            </div>
+          </div>
+          <div style="margin-top: var(--space-lg); padding-top: var(--space-lg); border-top: 1px solid var(--border);">
+            <p style="margin: 0; font-weight: 600;">
+              Break-even stimato: <span style="color: var(--brand-6);">Mese 14-16</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 8: WBS Preliminare -->
+    <div class="page">
+      <div class="page-header">
+        <span class="page-number">Sezione 8</span>
+        <h2 class="page-title">Work Breakdown Structure</h2>
+        <p class="page-subtitle">Struttura analitica del progetto e pianificazione</p>
+      </div>
+
+      <div class="section-divider"><span>WBS - Fasi Principali</span></div>
+
+      <div class="wbs-container">
+        <div class="wbs-level-1">Sportly — Progetto Completo</div>
+        
+        <div class="wbs-level-2">
+          <div class="wbs-phase">
+            <div class="wbs-phase-number">1</div>
+            <div class="wbs-phase-title">Analisi e Pianificazione</div>
+            <ul class="wbs-deliverables">
+              <li>Ricerca di mercato e validazione</li>
+              <li>Definizione requisiti funzionali</li>
+              <li>Studio normativo GDPR e privacy</li>
+              <li>Analisi competitiva dettagliata</li>
+              <li>Definizione KPI e metriche</li>
+            </ul>
+          </div>
+          <div class="wbs-phase">
+            <div class="wbs-phase-number">2</div>
+            <div class="wbs-phase-title">Progettazione</div>
+            <ul class="wbs-deliverables">
+              <li>Architettura tecnica e stack</li>
+              <li>Database design (ER diagram)</li>
+              <li>API specification (OpenAPI)</li>
+              <li>Wireframe e user flow</li>
+              <li>UI design system e prototipo</li>
+            </ul>
+          </div>
+          <div class="wbs-phase">
+            <div class="wbs-phase-number">3</div>
+            <div class="wbs-phase-title">Sviluppo Backend</div>
+            <ul class="wbs-deliverables">
+              <li>Setup infrastruttura cloud</li>
+              <li>Database implementation</li>
+              <li>API core development</li>
+              <li>Integrazione pagamenti (Stripe)</li>
+              <li>Sistema notifiche (Firebase)</li>
+              <li>Autenticazione e sicurezza</li>
+            </ul>
+          </div>
+          <div class="wbs-phase">
+            <div class="wbs-phase-number">4</div>
+            <div class="wbs-phase-title">Sviluppo Frontend</div>
+            <ul class="wbs-deliverables">
+              <li>App mobile React Native</li>
+              <li>Dashboard web gestori</li>
+              <li>Component library UI</li>
+              <li>Integrazione API</li>
+              <li>Testing cross-device</li>
+              <li>Accessibilità e i18n</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-divider"><span>Timeline e Milestone</span></div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-period">Settimane 1-2</div>
+            <h3 class="timeline-title">Milestone 1: Analisi Completata</h3>
+            <p class="timeline-description">Documento di progetto approvato, requisiti definiti, team allineato. <strong>Deliverable:</strong> Prima consegna completa.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-period">Settimane 3-5</div>
+            <h3 class="timeline-title">Milestone 2: Design Completo</h3>
+            <p class="timeline-description">Architettura tecnica definita, wireframe approvati, prototipo UI navigabile. <strong>Deliverable:</strong> Specifiche tecniche e design system.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-period">Settimane 6-9</div>
+            <h3 class="timeline-title">Milestone 3: Backend Operativo</h3>
+            <p class="timeline-description">API documentate e testate, database popolato, integrazioni attive. <strong>Deliverable:</strong> Backend v1.0 deployato su staging.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-period">Settimane 10-13</div>
+            <h3 class="timeline-title">Milestone 4: App Mobile v0.9</h3>
+            <p class="timeline-description">Applicazione mobile completa, dashboard gestori funzionante, test interni. <strong>Deliverable:</strong> Build TestFlight/Play Console interna.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-period">Settimane 14-16</div>
+            <h3 class="timeline-title">Milestone 5: Beta Testing</h3>
+            <p class="timeline-description">Gruppo pilota 50 utenti + 10 strutture, raccolta feedback, bug fixing. <strong>Deliverable:</strong> Report beta e versione corretta.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-period">Settimane 17-20</div>
+            <h3 class="timeline-title">Milestone 6: Lancio Ufficiale</h3>
+            <p class="timeline-description">Pubblicazione App Store/Play Store, onboarding strutture, campagna marketing, evento lancio. <strong>Deliverable:</strong> Prodotto live e operativo.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-divider"><span>Risorse Necessarie</span></div>
+
+      <div class="grid grid-3">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Team Sviluppo</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            <ul style="margin: 0; padding-left: var(--space-md); font-size: 0.875rem;">
+              <li>2 Developer Full-stack</li>
+              <li>1 Mobile Developer</li>
+              <li>1 UI/UX Designer</li>
+              <li>1 Project Manager</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2"/>
+                <path d="M8 21h8M12 17v4"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Infrastruttura</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            <ul style="margin: 0; padding-left: var(--space-md); font-size: 0.875rem;">
+              <li>AWS/GCP Account</li>
+              <li>Database PostgreSQL</li>
+              <li>CDN e Storage</li>
+              <li>Monitoring tools</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 6v6l4 2"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Servizi Terzi</h3>
+            </div>
+          </div>
+          <div class="card-content">
+            <ul style="margin: 0; padding-left: var(--space-md); font-size: 0.875rem;">
+              <li>Stripe (pagamenti)</li>
+              <li>Firebase (notifiche)</li>
+              <li>Google Maps API</li>
+              <li>SendGrid (email)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="document-footer">
+      <p><strong>Sportly — Project Blueprint v1.0</strong></p>
+      <p>Documento redatto per la Prima Consegna — Progetto di Gestione Progetto e Organizzazione di Impresa</p>
+      <p>Classe 5I — Team 6-3-14 — Data: 10 Aprile 2025</p>
+      <p style="margin-top: var(--space-lg); color: var(--ink-faint); font-size: 0.75rem;">
+        Questo documento contiene informazioni riservate e proprietarie. La riproduzione o distribuzione non autorizzata è proibita.
+      </p>
+    </div>
+
+  </div>
+</body>
+</html>

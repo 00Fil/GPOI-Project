@@ -1,0 +1,2809 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sportly — Prima Consegna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --brand-1: #bfd85b;
+  --brand-2: #17a2a9;
+  --brand-3: #0da0aa;
+  --brand-4: #82c185;
+  --brand-5: #9cca74;
+  --brand-6: #5fb897;
+  --brand-7: #3cac9f;
+  --brand-8: #45b29f;
+
+  --ink:       #0c1017;
+  --ink-mid:   #3d4a5c;
+  --ink-soft:  #6b7a8d;
+  --ink-faint: #a0aab5;
+  --bg:        #f8f9fb;
+  --surface:   #ffffff;
+  --border:    #e2e7ed;
+  --border-mid:#c8d0da;
+
+  --accent:    var(--brand-2);
+  --accent-alt:var(--brand-1);
+  --accent-gr: var(--brand-4);
+
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans:  'DM Sans', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 10pt; }
+
+body {
+  font-family: var(--sans);
+  background: #dde3ea;
+  color: var(--ink);
+  padding: 32px;
+  line-height: 1.6;
+}
+
+/* ─── PAGE ─── */
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  background: var(--surface);
+  margin: 0 auto 24px;
+  padding: 18mm 20mm 16mm;
+  box-shadow: 0 4px 6px rgba(0,0,0,.04), 0 20px 60px rgba(0,0,0,.08);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ─── PAGE CORNER DECORATION ─── */
+.page::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 40mm;
+  height: 40mm;
+  background: linear-gradient(225deg, rgba(23,162,169,.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ─── RUNNING HEADER ─── */
+.rh {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 3.5mm;
+  margin-bottom: 8mm;
+  border-bottom: 1.5px solid var(--ink);
+}
+.rh-brand {
+  font-family: var(--serif);
+  font-size: 10.5pt;
+  color: var(--ink);
+  letter-spacing: -.3px;
+}
+.rh-brand span {
+  color: var(--accent);
+}
+.rh-section {
+  font-size: 6.5pt;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* ─── SECTION NUMBERS ─── */
+.sec-num {
+  font-family: var(--serif);
+  font-size: 72pt;
+  line-height: 1;
+  color: var(--border);
+  margin-bottom: -14mm;
+  margin-left: -1mm;
+  user-select: none;
+  letter-spacing: -3px;
+}
+.sec-title {
+  font-family: var(--serif);
+  font-size: 19pt;
+  color: var(--ink);
+  border-bottom: 1.5px solid var(--ink);
+  padding-bottom: 3mm;
+  margin-bottom: 6mm;
+  letter-spacing: -.3px;
+  line-height: 1.1;
+}
+.sub-title {
+  font-family: var(--sans);
+  font-size: 7pt;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: 6mm;
+  margin-bottom: 3.5mm;
+  display: flex;
+  align-items: center;
+  gap: 2.5mm;
+}
+.sub-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ─── TYPOGRAPHY ─── */
+p {
+  font-size: 8.8pt;
+  color: var(--ink-mid);
+  margin-bottom: 3mm;
+  line-height: 1.7;
+  max-width: 70ch;
+}
+strong { color: var(--ink); font-weight: 600; }
+
+/* ─── PAGE FOOTER ─── */
+.pf {
+  border-top: 1px solid var(--border);
+  padding-top: 3mm;
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 6.5pt;
+  color: var(--ink-faint);
+}
+.pf-dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+/* ════════════════════════════════
+   COVER
+════════════════════════════════ */
+.cover-eyebrow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16mm;
+  border-bottom: 1.5px solid var(--ink);
+  padding-bottom: 4mm;
+}
+.cover-brand {
+  font-family: var(--serif);
+  font-size: 14pt;
+  color: var(--ink);
+  letter-spacing: -.5px;
+}
+.cover-brand-accent { color: var(--accent); }
+.cover-meta-top {
+  text-align: right;
+  font-size: 6.5pt;
+  font-weight: 600;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  line-height: 1.8;
+}
+
+.cover-kicker {
+  font-size: 6.5pt;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 3.5mm;
+  display: flex;
+  align-items: center;
+  gap: 2mm;
+}
+.cover-kicker::before {
+  content: '';
+  width: 16px;
+  height: 1.5px;
+  background: var(--accent);
+}
+
+.cover-title {
+  font-family: var(--serif);
+  font-size: 38pt;
+  line-height: .95;
+  color: var(--ink);
+  letter-spacing: -.8px;
+  margin-bottom: 5mm;
+}
+.cover-title-accent {
+  color: var(--accent);
+  font-style: italic;
+}
+
+.cover-lead {
+  font-size: 9.5pt;
+  color: var(--ink-mid);
+  line-height: 1.65;
+  font-weight: 300;
+  border-left: 2.5px solid var(--accent);
+  padding-left: 4mm;
+  margin-bottom: 10mm;
+  max-width: 58ch;
+}
+
+/* Cover stats strip */
+.cover-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1px solid var(--border);
+  margin-bottom: 8mm;
+}
+.cs-cell {
+  padding: 5.5mm 6mm;
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+.cs-cell:last-child { border-right: none; }
+.cs-cell::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 2.5px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .35s ease;
+}
+.cs-cell:hover::before { transform: scaleX(1); }
+.cs-label {
+  font-size: 6pt;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 2mm;
+}
+.cs-val {
+  font-family: var(--serif);
+  font-size: 24pt;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 1.5mm;
+  letter-spacing: -1px;
+}
+.cs-desc {
+  font-size: 7pt;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+/* Cover dual-column layout */
+.cover-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6mm;
+  margin-bottom: 8mm;
+}
+.cover-section-label {
+  font-size: 6pt;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 2.5mm;
+  padding-bottom: 2mm;
+  border-bottom: 1px solid var(--border);
+}
+.cover-section-items {
+  display: flex;
+  flex-direction: column;
+  gap: 2mm;
+}
+.cover-section-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 2.5mm;
+  font-size: 7.8pt;
+  color: var(--ink-mid);
+  line-height: 1.5;
+}
+.csi-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.csi-dot.g { background: var(--brand-4); }
+.csi-dot.y { background: var(--brand-1); }
+.csi-dot.t { background: var(--brand-7); }
+
+/* Cover donut */
+.cover-donut-wrap {
+  margin-bottom: 8mm;
+  display: flex;
+  align-items: center;
+  gap: 6mm;
+}
+.donut-legend { display: flex; flex-direction: column; gap: 2.5mm; }
+.dl-row {
+  display: flex;
+  align-items: center;
+  gap: 2.5mm;
+  font-size: 7.5pt;
+  color: var(--ink-mid);
+}
+.dl-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.dl-note {
+  font-size: 6.5pt;
+  color: var(--ink-faint);
+  margin-top: 2mm;
+  line-height: 1.5;
+}
+
+.cover-bottom {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-top: 1px solid var(--border);
+  padding-top: 3.5mm;
+}
+.cb-meta { font-size: 6.5pt; color: var(--ink-faint); }
+.cb-meta strong { display: block; color: var(--ink); font-size: 7pt; margin-bottom: 1px; }
+
+/* ════════════════════════════════
+   STAT CARDS
+════════════════════════════════ */
+.stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5mm;
+  margin: 3.5mm 0 5mm;
+}
+.stat-card {
+  padding: 5mm;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  position: relative;
+  overflow: hidden;
+  transition: border-color .2s, box-shadow .2s;
+}
+.stat-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--brand-1));
+  transition: width .3s ease;
+}
+.stat-card:hover { border-color: var(--accent); box-shadow: 0 4px 16px rgba(23,162,169,.08); }
+.stat-card:hover::after { width: 100%; }
+.stat-lbl {
+  font-size: 6pt;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 2mm;
+}
+.stat-val {
+  font-family: var(--serif);
+  font-size: 28pt;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 2mm;
+  letter-spacing: -1px;
+}
+.stat-body {
+  font-size: 7.8pt;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+/* ════════════════════════════════
+   TABLES
+════════════════════════════════ */
+.tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 8pt;
+  margin: 3mm 0 5mm;
+  border: 1px solid var(--border);
+}
+.tbl thead tr {
+  background: var(--ink);
+  color: #fff;
+}
+.tbl thead th {
+  padding: 5px 9px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 7.5pt;
+  letter-spacing: .3px;
+}
+.tbl tbody tr:nth-child(even) { background: var(--bg); }
+.tbl tbody tr { transition: background .15s; }
+.tbl tbody tr:hover { background: rgba(23,162,169,.04); }
+.tbl tbody td {
+  padding: 5.5px 9px;
+  color: var(--ink-mid);
+  border-bottom: 1px solid var(--border);
+  line-height: 1.5;
+  vertical-align: top;
+}
+.tbl tbody td:first-child {
+  color: var(--ink);
+  font-weight: 600;
+  width: 38%;
+}
+
+/* ════════════════════════════════
+   BAR CHART
+════════════════════════════════ */
+.bar-chart { display: flex; flex-direction: column; gap: 3mm; margin: 3mm 0 5mm; }
+.bar-row { display: flex; align-items: center; gap: 3mm; }
+.bar-lbl {
+  font-size: 7.5pt;
+  color: var(--ink-mid);
+  width: 34mm;
+  flex-shrink: 0;
+  text-align: right;
+  line-height: 1.4;
+}
+.bar-track {
+  flex: 1;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  height: 13px;
+  position: relative;
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  transition: width .4s cubic-bezier(.4,0,.2,1);
+}
+.bar-fill.teal  { background: linear-gradient(90deg, var(--brand-2), var(--brand-7)); }
+.bar-fill.green { background: linear-gradient(90deg, var(--brand-4), var(--brand-6)); }
+.bar-fill.lime  { background: linear-gradient(90deg, var(--brand-5), var(--brand-1)); }
+.bar-fill.muted { background: var(--border); }
+.bar-fill.soft  { background: linear-gradient(90deg, var(--brand-7), var(--brand-8)); }
+.bar-val { font-size: 7.8pt; font-weight: 700; color: var(--ink); width: 18mm; flex-shrink: 0; }
+
+/* ════════════════════════════════
+   CALLOUT / QUOTE
+════════════════════════════════ */
+.callout {
+  background: linear-gradient(135deg, rgba(23,162,169,.05) 0%, rgba(191,216,91,.04) 100%);
+  border-left: 2.5px solid var(--accent);
+  padding: 4mm 5mm;
+  margin: 4mm 0;
+  font-size: 8.8pt;
+  color: var(--ink-mid);
+  line-height: 1.7;
+  font-style: italic;
+}
+
+/* ════════════════════════════════
+   FUNCTIONAL MAP (§2)
+════════════════════════════════ */
+.func-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3.5mm;
+  margin: 3.5mm 0 5mm;
+}
+.func-card {
+  border: 1px solid var(--border);
+  padding: 4.5mm;
+  position: relative;
+  overflow: hidden;
+  background: var(--surface);
+  transition: border-color .2s, transform .2s, box-shadow .2s;
+}
+.func-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 3px;
+}
+.fc-teal::before  { background: linear-gradient(90deg, var(--brand-2), var(--brand-7)); }
+.fc-lime::before  { background: linear-gradient(90deg, var(--brand-1), var(--brand-5)); }
+.fc-green::before { background: linear-gradient(90deg, var(--brand-4), var(--brand-6)); }
+.fc-mint::before  { background: linear-gradient(90deg, var(--brand-7), var(--brand-8)); }
+.fc-sky::before   { background: linear-gradient(90deg, var(--brand-3), var(--brand-2)); }
+.fc-sage::before  { background: linear-gradient(90deg, var(--brand-6), var(--brand-4)); }
+
+.func-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(23,162,169,.1);
+}
+.fc-num {
+  font-family: var(--serif);
+  font-size: 20pt;
+  color: var(--border);
+  line-height: 1;
+  position: absolute;
+  top: 2mm;
+  right: 3mm;
+  font-style: italic;
+  transition: color .2s;
+}
+.func-card:hover .fc-num { color: rgba(23,162,169,.12); }
+.fc-icon {
+  width: 28px;
+  height: 28px;
+  margin-bottom: 3mm;
+}
+.fc-icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.fc-lime .fc-icon svg   { stroke: #8aab2a; }
+.fc-green .fc-icon svg  { stroke: var(--brand-6); }
+.fc-mint .fc-icon svg   { stroke: var(--brand-7); }
+.fc-sky .fc-icon svg    { stroke: var(--brand-3); }
+.fc-sage .fc-icon svg   { stroke: var(--brand-6); }
+.fc-title {
+  font-size: 8.5pt;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 1.5mm;
+  line-height: 1.25;
+}
+.fc-desc {
+  font-size: 7.5pt;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+/* ════════════════════════════════
+   TECH STACK (§2)
+════════════════════════════════ */
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3.5mm;
+  margin: 3.5mm 0;
+}
+.tech-card {
+  border: 1px solid var(--border);
+  padding: 4mm;
+  background: var(--bg);
+  transition: border-color .2s, box-shadow .2s;
+  position: relative;
+}
+.tech-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 14px rgba(23,162,169,.07);
+}
+.tech-layer {
+  font-size: 5.8pt;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 2.5mm;
+}
+.tech-name {
+  font-family: var(--serif);
+  font-size: 10pt;
+  color: var(--ink);
+  margin-bottom: 1mm;
+}
+.tech-desc {
+  font-size: 7.2pt;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+.tech-pill {
+  display: inline-block;
+  margin-top: 2mm;
+  font-size: 6pt;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 1.5px 5px;
+  border-radius: 2px;
+  background: rgba(23,162,169,.1);
+  color: var(--accent);
+}
+
+/* ════════════════════════════════
+   PROBLEM / SOLUTION (§3)
+════════════════════════════════ */
+.ps-grid {
+  display: grid;
+  grid-template-columns: 1fr 8mm 1fr;
+  gap: 0;
+  margin: 3.5mm 0 5mm;
+}
+.ps-col { display: flex; flex-direction: column; gap: 2.5mm; }
+.ps-card {
+  padding: 3.5mm 4mm;
+  border-radius: 2px;
+}
+.ps-problem {
+  background: rgba(220,80,60,.04);
+  border-left: 2.5px solid #c94a3a;
+}
+.ps-solution {
+  background: rgba(23,162,169,.05);
+  border-left: 2.5px solid var(--accent);
+}
+.ps-tag {
+  font-size: 6pt;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 1.5mm;
+}
+.ps-problem .ps-tag { color: #c94a3a; }
+.ps-solution .ps-tag { color: var(--accent); }
+.ps-text {
+  font-size: 7.8pt;
+  color: var(--ink-mid);
+  line-height: 1.55;
+}
+
+.ps-arrows {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 1mm;
+  gap: 2.5mm;
+}
+.ps-arrow-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ps-arrow-svg {
+  width: 6mm;
+  stroke: var(--accent);
+  opacity: .5;
+}
+
+/* ════════════════════════════════
+   VALUE CANVAS (§4)
+════════════════════════════════ */
+.value-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5mm;
+  margin: 3.5mm 0 5mm;
+}
+.value-col {
+  border: 1px solid var(--border);
+  padding: 5mm;
+  position: relative;
+  background: var(--surface);
+}
+.value-col-header {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 3mm;
+  margin-bottom: 3.5mm;
+}
+.vcol-label {
+  font-size: 6pt;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 1mm;
+}
+.vcol-title {
+  font-family: var(--serif);
+  font-size: 11.5pt;
+  color: var(--ink);
+  letter-spacing: -.2px;
+}
+.value-item {
+  display: flex;
+  gap: 3mm;
+  align-items: flex-start;
+  padding: 2.5mm 0;
+  border-bottom: 1px solid var(--border);
+}
+.value-item:last-child { border-bottom: none; }
+.vi-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.vi-icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: var(--accent);
+  stroke-width: 1.8;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.vi-right {}
+.vi-title {
+  font-size: 8pt;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.8mm;
+}
+.vi-desc {
+  font-size: 7.2pt;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+/* ════════════════════════════════
+   COMPETITOR TABLE (§5)
+════════════════════════════════ */
+.comp-grid {
+  display: grid;
+  grid-template-columns: 28mm repeat(5, 1fr);
+  gap: 0;
+  margin: 3.5mm 0 5mm;
+  border: 1px solid var(--border);
+  font-size: 7.5pt;
+}
+.cg-header {
+  background: var(--ink);
+  color: #fff;
+  padding: 4.5px 6px;
+  font-weight: 700;
+  font-size: 7pt;
+  letter-spacing: .3px;
+  display: flex;
+  align-items: center;
+}
+.cg-header.hl { background: var(--accent); }
+.cg-cell {
+  padding: 4px 6px;
+  border-top: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 7pt;
+  color: var(--ink-mid);
+  text-align: center;
+}
+.cg-row-label {
+  border-top: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  padding: 4px 6px;
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 7.5pt;
+  display: flex;
+  align-items: center;
+}
+.cg-row-label.alt { background: var(--bg); }
+.cg-cell.alt { background: var(--bg); }
+.cg-cell.sportly { background: rgba(23,162,169,.06); font-weight: 700; color: var(--accent); }
+.cg-yes { color: var(--brand-6); font-weight: 700; }
+.cg-no  { color: #c94a3a; opacity: .7; }
+.cg-partial { color: var(--brand-1); font-weight: 600; }
+
+/* ════════════════════════════════
+   TARGET (§6)
+════════════════════════════════ */
+.target-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4mm;
+  margin: 3.5mm 0 5mm;
+}
+.target-card {
+  border: 1px solid var(--border);
+  padding: 5mm;
+  position: relative;
+  overflow: hidden;
+  background: var(--surface);
+}
+.target-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--brand-1));
+}
+.tc-num {
+  font-family: var(--serif);
+  font-size: 28pt;
+  color: rgba(23,162,169,.1);
+  line-height: 1;
+  margin-bottom: 3mm;
+  font-style: italic;
+}
+.tc-segment {
+  font-size: 6pt;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5mm;
+}
+.tc-name {
+  font-family: var(--serif);
+  font-size: 11pt;
+  color: var(--ink);
+  margin-bottom: 2.5mm;
+  letter-spacing: -.2px;
+}
+.tc-traits {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5mm;
+}
+.tc-trait {
+  font-size: 7.5pt;
+  color: var(--ink-soft);
+  display: flex;
+  align-items: baseline;
+  gap: 1.5mm;
+  line-height: 1.4;
+}
+.tc-trait::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.tc-size {
+  margin-top: 3mm;
+  font-size: 7pt;
+  font-weight: 700;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 1.5mm;
+}
+.tc-size::before {
+  content: '';
+  width: 10px;
+  height: 1.5px;
+  background: var(--accent);
+}
+
+/* ════════════════════════════════
+   BUSINESS MODEL (§7)
+════════════════════════════════ */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4mm;
+  margin: 3.5mm 0 5mm;
+}
+.price-card {
+  border: 1px solid var(--border);
+  padding: 5mm;
+  background: var(--surface);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  transition: border-color .2s, box-shadow .2s;
+}
+.price-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--border);
+  transition: background .2s;
+}
+.price-card.featured {
+  border-color: var(--accent);
+  box-shadow: 0 6px 24px rgba(23,162,169,.12);
+}
+.price-card.featured::before {
+  background: linear-gradient(90deg, var(--brand-2), var(--brand-7));
+}
+.price-card:hover { border-color: var(--accent); }
+.price-card:hover::before { background: linear-gradient(90deg, var(--brand-2), var(--brand-7)); }
+.price-badge {
+  position: absolute;
+  top: 4.5mm; right: 0;
+  background: var(--accent);
+  color: #fff;
+  font-size: 5.5pt;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 2px 6px;
+}
+.price-tier {
+  font-size: 6pt;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 2.5mm;
+}
+.price-amount {
+  font-family: var(--serif);
+  font-size: 26pt;
+  color: var(--ink);
+  line-height: 1;
+  letter-spacing: -1px;
+  margin-bottom: .5mm;
+}
+.price-period {
+  font-size: 7.5pt;
+  color: var(--ink-faint);
+  margin-bottom: 4mm;
+}
+.price-features {
+  display: flex;
+  flex-direction: column;
+  gap: 2mm;
+  text-align: left;
+}
+.pf-item {
+  font-size: 7.2pt;
+  color: var(--ink-soft);
+  display: flex;
+  align-items: baseline;
+  gap: 2mm;
+  line-height: 1.4;
+}
+.pf-item::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+  opacity: .5;
+}
+.price-card.featured .pf-item::before { opacity: 1; }
+
+/* Revenue table */
+.rev-table {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5mm;
+  margin: 3.5mm 0 5mm;
+}
+.rev-scenario {
+  border: 1px solid var(--border);
+  padding: 4.5mm;
+}
+.rev-scenario-title {
+  font-size: 7pt;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 3mm;
+  padding-bottom: 2.5mm;
+  border-bottom: 1px solid var(--border);
+}
+.rev-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 2mm 0;
+  border-bottom: 1px dotted var(--border);
+  font-size: 7.8pt;
+}
+.rev-row:last-of-type { border-bottom: none; }
+.rev-row-lbl { color: var(--ink-mid); }
+.rev-row-val { font-weight: 700; color: var(--ink); }
+.rev-total {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 2.5mm;
+  margin-top: 2mm;
+  border-top: 1.5px solid var(--ink);
+  font-size: 9.5pt;
+  font-weight: 700;
+}
+.rev-total-val { color: var(--accent); font-family: var(--serif); font-size: 12pt; }
+
+/* ════════════════════════════════
+   WBS (§8)
+════════════════════════════════ */
+.wbs-wrap { margin: 3.5mm 0 4mm; }
+.wbs-root-node {
+  background: var(--ink);
+  color: #fff;
+  padding: 4mm 6mm;
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+  margin-bottom: 0;
+  position: relative;
+}
+.wbs-root-node::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -4.5mm;
+  width: 1.5px;
+  height: 4.5mm;
+  background: var(--accent);
+}
+.wbs-root-title {
+  font-family: var(--serif);
+  font-size: 10pt;
+  color: #fff;
+  letter-spacing: -.2px;
+}
+.wbs-root-sub {
+  font-size: 6.5pt;
+  color: rgba(255,255,255,.55);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-left: auto;
+}
+.wbs-connector-bar {
+  height: 1.5px;
+  background: var(--accent);
+  margin: 4.5mm 12.5% 0;
+}
+.wbs-phases {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3mm;
+  margin-top: 0;
+  position: relative;
+}
+.wbs-phase {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.wbs-phase-stem {
+  width: 1.5px;
+  height: 4mm;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+.wbs-phase-node {
+  width: 100%;
+  padding: 2.5mm 3mm;
+  text-align: center;
+  margin-bottom: 0;
+  position: relative;
+}
+.wbs-phase-node::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -3mm;
+  width: 1.5px;
+  height: 3mm;
+  background: var(--border);
+}
+.wbn-teal   { background: var(--brand-2); }
+.wbn-lime   { background: #8aab2a; }
+.wbn-green  { background: var(--brand-6); }
+.wbn-mint   { background: var(--brand-7); }
+.wbn-sage   { background: var(--brand-8); }
+.wbn-amber  { background: #c77b2a; }
+.wbn-red    { background: #c94a3a; }
+.wbn-dark   { background: #4a5568; }
+.wbn-num {
+  font-size: 6pt;
+  color: rgba(255,255,255,.7);
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 1px;
+}
+.wbn-title {
+  font-size: 7.5pt;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.25;
+}
+.wbs-deliverables {
+  width: 100%;
+  margin-top: 3mm;
+  border-left: 1.5px solid var(--border);
+  padding-left: 3mm;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5mm;
+}
+.wbs-del {
+  font-size: 6.8pt;
+  color: var(--ink-soft);
+  padding: 1.5mm 2mm;
+  border-bottom: 1px dotted var(--border);
+  line-height: 1.4;
+  position: relative;
+}
+.wbs-del::before {
+  content: attr(data-n);
+  font-size: 6pt;
+  font-weight: 700;
+  color: var(--ink-faint);
+  margin-right: 1.5mm;
+}
+
+/* ════════════════════════════════
+   GANTT / TIMELINE (§8)
+════════════════════════════════ */
+.gantt-container {
+  margin: 3.5mm 0 5mm;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.gantt-header {
+  display: grid;
+  grid-template-columns: 26mm repeat(10, 1fr);
+  background: var(--ink);
+}
+.gh-cell {
+  padding: 3.5px 4px;
+  font-size: 6.2pt;
+  font-weight: 700;
+  color: rgba(255,255,255,.7);
+  text-align: center;
+  border-right: 1px solid rgba(255,255,255,.08);
+  letter-spacing: .5px;
+}
+.gh-cell:first-child { text-align: left; padding-left: 5px; color: rgba(255,255,255,.4); }
+.gantt-row {
+  display: grid;
+  grid-template-columns: 26mm repeat(10, 1fr);
+  border-top: 1px solid var(--border);
+  position: relative;
+}
+.gantt-row:nth-child(even) { background: var(--bg); }
+.gr-label {
+  padding: 5px 5px;
+  font-size: 7pt;
+  font-weight: 600;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  border-right: 1px solid var(--border);
+}
+.gr-label span {
+  font-size: 6.2pt;
+  color: var(--ink-faint);
+  font-weight: 400;
+  display: block;
+  margin-top: 1px;
+}
+.gr-cells {
+  grid-column: 2 / -1;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  position: relative;
+  height: 28px;
+}
+.gr-cell-bg {
+  border-right: 1px solid var(--border);
+  height: 100%;
+}
+.gantt-bar {
+  position: absolute;
+  height: 14px;
+  top: 7px;
+  border-radius: 2px;
+}
+.gb-teal  { background: linear-gradient(90deg, var(--brand-2), var(--brand-7)); }
+.gb-lime  { background: linear-gradient(90deg, #8aab2a, var(--brand-5)); }
+.gb-green { background: linear-gradient(90deg, var(--brand-4), var(--brand-6)); }
+.gb-mint  { background: linear-gradient(90deg, var(--brand-7), var(--brand-8)); }
+.gb-amber { background: #c77b2a; }
+.gb-red   { background: #c94a3a; }
+.gb-dark  { background: #4a5568; }
+
+.gantt-milestones {
+  display: flex;
+  gap: 3mm;
+  margin-top: 3mm;
+  flex-wrap: wrap;
+}
+.gm-item {
+  display: flex;
+  align-items: center;
+  gap: 2mm;
+  font-size: 6.8pt;
+  color: var(--ink-soft);
+}
+.gm-diamond {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  transform: rotate(45deg);
+}
+
+/* ════════════════════════════════
+   MILESTONE LIST (§8)
+════════════════════════════════ */
+.ms-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 3.5mm 0 5mm;
+  position: relative;
+}
+.ms-list::before {
+  content: '';
+  position: absolute;
+  left: 4mm;
+  top: 4mm;
+  bottom: 4mm;
+  width: 1.5px;
+  background: var(--border);
+}
+.ms-item {
+  display: flex;
+  gap: 4mm;
+  align-items: flex-start;
+  padding: 3.5mm 0;
+  border-bottom: 1px solid var(--border);
+}
+.ms-item:last-child { border-bottom: none; }
+.ms-dot-wrap {
+  flex-shrink: 0;
+  width: 8mm;
+  display: flex;
+  justify-content: center;
+  padding-top: 1px;
+  position: relative;
+  z-index: 1;
+}
+.ms-dot {
+  width: 8mm;
+  height: 8mm;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 6pt;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+  letter-spacing: -.5px;
+  flex-shrink: 0;
+}
+.ms-dot.done {
+  background: var(--accent);
+  color: #fff;
+}
+.ms-dot.launch {
+  background: var(--brand-1);
+  border-color: var(--brand-1);
+  color: var(--ink);
+}
+.ms-content {}
+.ms-title {
+  font-size: 8.8pt;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: .8mm;
+}
+.ms-date {
+  font-size: 7pt;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 1mm;
+}
+.ms-del {
+  font-size: 7.5pt;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+/* ════════════════════════════════
+   CONCLUSIONS
+════════════════════════════════ */
+.concl-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4mm;
+  margin: 3.5mm 0 5mm;
+}
+.concl-card {
+  border: 1px solid var(--border);
+  padding: 5mm;
+  background: var(--surface);
+  display: flex;
+  gap: 4mm;
+  align-items: flex-start;
+  transition: border-color .2s, box-shadow .2s;
+}
+.concl-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 16px rgba(23,162,169,.08);
+}
+.concl-num {
+  font-family: var(--serif);
+  font-size: 22pt;
+  color: var(--accent);
+  opacity: .3;
+  line-height: 1;
+  flex-shrink: 0;
+  font-style: italic;
+  transition: opacity .2s;
+}
+.concl-card:hover .concl-num { opacity: 1; }
+.concl-title {
+  font-size: 9pt;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 1.5mm;
+  letter-spacing: -.1px;
+}
+.concl-desc {
+  font-size: 7.8pt;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+/* ════════════════════════════════
+   PRINT
+════════════════════════════════ */
+@media print {
+  body { background: white; padding: 0; }
+  .page { box-shadow: none; margin: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     COPERTINA
+══════════════════════════════════ -->
+<div class="page">
+
+  <div class="cover-eyebrow">
+    <div class="cover-brand">Sportly<span class="cover-brand-accent">.</span></div>
+    <div class="cover-meta-top">Prima Consegna · Project Blueprint<br>Gestione Progetto e Organizzazione di Impresa</div>
+  </div>
+
+  <div class="cover-kicker">App per Prenotazione Attività Sportive</div>
+
+  <div class="cover-title">
+    Lo sport locale<br>entra nell'era<br><span class="cover-title-accent">digitale.</span>
+  </div>
+
+  <div class="cover-lead">
+    Sportly è la piattaforma che connette sportivi, strutture e associazioni dilettantistiche in un unico ecosistema digitale — sostituendo registri cartacei e telefonate con un motore di prenotazione integrato, accessibile 24 ore su 24.
+  </div>
+
+  <div class="cover-stats">
+    <div class="cs-cell">
+      <div class="cs-label">Gap di mercato</div>
+      <div class="cs-val">65%</div>
+      <div class="cs-desc">delle ASD italiane ancora su sistemi non digitalizzati</div>
+    </div>
+    <div class="cs-cell">
+      <div class="cs-label">Sportivi attivi</div>
+      <div class="cs-val">36%</div>
+      <div class="cs-desc">della popolazione pratica sport regolarmente (ISTAT 2024)</div>
+    </div>
+    <div class="cs-cell">
+      <div class="cs-label">Ricavo stimato M12</div>
+      <div class="cs-val">15K€</div>
+      <div class="cs-desc">entrate mensili al mese 12 — scenario di crescita</div>
+    </div>
+  </div>
+
+  <div class="cover-body">
+    <div>
+      <div class="cover-section-label">Ambito del Progetto</div>
+      <div class="cover-section-items">
+        <div class="cover-section-item"><div class="csi-dot"></div>Applicazione mobile cross-platform (iOS + Android)</div>
+        <div class="cover-section-item"><div class="csi-dot"></div>Portale web per gestori delle strutture</div>
+        <div class="cover-section-item"><div class="csi-dot t"></div>Calendario prenotazioni in tempo reale</div>
+        <div class="cover-section-item"><div class="csi-dot t"></div>Gestione slot, pagamenti e notifiche smart</div>
+        <div class="cover-section-item"><div class="csi-dot g"></div>Area amministratore con analytics</div>
+        <div class="cover-section-item"><div class="csi-dot g"></div>Community e funzionalità social</div>
+        <div class="cover-section-item"><div class="csi-dot y"></div>Sistema di abbonamenti e commissioni</div>
+      </div>
+    </div>
+    <div>
+      <div class="cover-section-label">Indice del Documento</div>
+      <div class="cover-section-items">
+        <div class="cover-section-item"><div class="csi-dot t"></div><strong>§1</strong> &nbsp;Scelta del Progetto e Validazione</div>
+        <div class="cover-section-item"><div class="csi-dot t"></div><strong>§2</strong> &nbsp;Descrizione Dettagliata dell'Idea</div>
+        <div class="cover-section-item"><div class="csi-dot g"></div><strong>§3</strong> &nbsp;Problema che si Vuole Risolvere</div>
+        <div class="cover-section-item"><div class="csi-dot g"></div><strong>§4</strong> &nbsp;Valore per il Cliente</div>
+        <div class="cover-section-item"><div class="csi-dot y"></div><strong>§5</strong> &nbsp;Analisi della Concorrenza</div>
+        <div class="cover-section-item"><div class="csi-dot y"></div><strong>§6</strong> &nbsp;Target Clienti</div>
+        <div class="cover-section-item"><div class="csi-dot"></div><strong>§7</strong> &nbsp;Modello di Business</div>
+        <div class="cover-section-item"><div class="csi-dot"></div><strong>§8</strong> &nbsp;WBS Preliminare e Timeline</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-donut-wrap">
+    <svg width="88" height="88" viewBox="0 0 88 88">
+      <circle cx="44" cy="44" r="34" fill="none" stroke="var(--border)" stroke-width="14"/>
+      <!-- Teal: 65% = 138.2deg / circumference=213.6 → dasharray=138.9 -->
+      <circle cx="44" cy="44" r="34" fill="none" stroke="var(--brand-2)" stroke-width="14"
+              stroke-dasharray="138.9 213.6" stroke-dashoffset="53.4" stroke-linecap="butt"/>
+      <!-- Lime: 35% = 74.7 -->
+      <circle cx="44" cy="44" r="34" fill="none" stroke="var(--brand-1)" stroke-width="14"
+              stroke-dasharray="74.7 213.6" stroke-dashoffset="-85.5" stroke-linecap="butt"/>
+      <text x="44" y="48" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)" font-family="DM Serif Display,serif" letter-spacing="-1">65%</text>
+    </svg>
+    <div class="donut-legend">
+      <div class="dl-row">
+        <div class="dl-swatch" style="background:var(--brand-2);"></div>
+        ASD non digitalizzate — target primario Sportly (65%)
+      </div>
+      <div class="dl-row">
+        <div class="dl-swatch" style="background:var(--brand-1);"></div>
+        Strutture già digitalizzate — mercato presidiato (35%)
+      </div>
+      <div class="dl-note">Fonte: stime su associazioni sportive dilettantistiche italiane</div>
+    </div>
+  </div>
+
+  <div class="cover-bottom">
+    <div class="cb-meta"><strong>Tipologia</strong>Startup Digitale · Mobile &amp; Web</div>
+    <div class="cb-meta"><strong>Target Primario</strong>18–45 anni, sportivi e gestori ASD</div>
+    <div class="cb-meta"><strong>Piattaforma</strong>iOS · Android · Web</div>
+    <div class="cb-meta"><strong>Team</strong>Classe 5I — Team 6-3-14</div>
+    <div class="cb-meta" style="text-align:right;"><strong>Data</strong>Aprile 2025</div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════
+     §1 — SCELTA DEL PROGETTO
+══════════════════════════════════ -->
+<div class="page">
+
+  <div class="rh">
+    <span class="rh-brand">Sportly<span>.</span></span>
+    <span class="rh-section">§ 1 — Scelta del Progetto</span>
+  </div>
+
+  <div class="sec-num">01</div>
+  <div class="sec-title">Scelta del Progetto</div>
+
+  <div class="sub-title">1.1 L'Idea Imprenditoriale</div>
+
+  <p>Il progetto scelto è lo sviluppo di <strong>Sportly</strong>, un'applicazione mobile e web per la <strong>prenotazione di attività sportive e ricreative</strong> dedicata a sportivi, famiglie e associazioni locali sul territorio italiano. La piattaforma agisce come marketplace bidirezionale: da un lato semplifica la ricerca e la prenotazione per gli utenti finali, dall'altro digitalizza e automatizza la gestione operativa per le strutture.</p>
+
+  <p>L'idea emerge dall'osservazione diretta di due tendenze convergenti: la <strong>crescente abitudine digitale</strong> nella gestione quotidiana dei servizi e la <strong>perdurante analogicità</strong> del settore sportivo dilettantistico, ancora fortemente dipendente da telefonate, registri cartacei e fogli Excel.</p>
+
+  <div class="sub-title">1.2 Evidenze di Mercato — Validazione Preliminare</div>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-lbl">Gap di Mercato</div>
+      <div class="stat-val">65%</div>
+      <div class="stat-body">delle ASD italiane opera su sistemi non digitali. Rappresenta l'opportunità primaria e il target di acquisizione diretto di Sportly.</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-lbl">Sportivi Attivi in Italia</div>
+      <div class="stat-val">36%</div>
+      <div class="stat-body">della popolazione pratica sport in modo continuativo con smartphone. Domanda reale, canale digitale mancante: il classico market gap.</div>
+    </div>
+  </div>
+
+  <table class="tbl">
+    <thead>
+      <tr>
+        <th>Evidenza di Mercato</th>
+        <th>Dato / Stima</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Strutture sportive attive in Italia</td>
+        <td>Decine di migliaia tra palestre, piscine, campi sportivi e centri benessere</td>
+      </tr>
+      <tr>
+        <td>ASD dilettantistiche non digitalizzate</td>
+        <td>~60–70% ancora prive di sistemi di booking digitale</td>
+      </tr>
+      <tr>
+        <td>Popolazione sportiva attiva (ISTAT 2024)</td>
+        <td>~36% in forma continuativa, ulteriore 18% in modo saltuario</td>
+      </tr>
+      <tr>
+        <td>Penetrazione smartphone adulti</td>
+        <td>Oltre il 50% della popolazione adulta italiana connessa</td>
+      </tr>
+      <tr>
+        <td>Concorrenti identificati</td>
+        <td>Wansport, PrenotaWeb, Squby, Playtomic — nessuno con copertura completa</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sub-title">1.3 Indicatori di Opportunità</div>
+
+  <div class="bar-chart">
+    <div class="bar-row">
+      <div class="bar-lbl">ASD non digitalizzate</div>
+      <div class="bar-track"><div class="bar-fill teal" style="width:65%"></div></div>
+      <div class="bar-val">~65%</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-lbl">Sportivi con smartphone</div>
+      <div class="bar-track"><div class="bar-fill green" style="width:52%"></div></div>
+      <div class="bar-val">&gt;50%</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-lbl">Pratica sportiva regolare</div>
+      <div class="bar-track"><div class="bar-fill lime" style="width:36%"></div></div>
+      <div class="bar-val">36%</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-lbl">Copertura concorrenti</div>
+      <div class="bar-track"><div class="bar-fill muted" style="width:28%"></div></div>
+      <div class="bar-val">Parziale</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    La presenza di concorrenti già attivi conferma la validità del mercato. La loro incompletezza funzionale — nessuno copre contemporaneamente booking, community, analytics e marketing — conferma lo spazio concreto per un nuovo operatore integrato.
+  </div>
+
+  <div class="pf">
+    <span>Sportly — Prima Consegna · Documento di Progetto v1.0</span>
+    <div class="pf-dot"></div>
+    <span>§ 1 / Scelta del Progetto · Pag. 02</span>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════
+     §2 — DESCRIZIONE DETTAGLIATA
+══════════════════════════════════ -->
+<div class="page">
+
+  <div class="rh">
+    <span class="rh-brand">Sportly<span>.</span></span>
+    <span class="rh-section">§ 2 — Descrizione Dettagliata dell'Idea</span>
+  </div>
+
+  <div class="sec-num">02</div>
+  <div class="sec-title">Descrizione Dettagliata dell'Idea</div>
+
+  <div class="sub-title">2.1 Visione e Scopo</div>
+
+  <p>Sportly digitalizza completamente il ciclo di prenotazione nelle strutture sportive dilettantistiche italiane. L'ecosistema è progettato su <strong>due lati complementari</strong>: l'interfaccia utente — intuitiva, rapida, disponibile 24/7 — e la dashboard per i gestori — analitica, automatizzata, integrata con strumenti di marketing diretto. Il tutto collegato da un backend robusto e scalabile in cloud.</p>
+
+  <div class="sub-title">2.2 Moduli Funzionali Principali</div>
+
+  <div class="func-grid">
+
+    <div class="func-card fc-teal">
+      <div class="fc-num">1</div>
+      <div class="fc-icon">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5l3.5 3.5"/></svg>
+      </div>
+      <div class="fc-title">Ricerca Multi-Sport</div>
+      <div class="fc-desc">Filtri per sport, data, orario, zona e fascia di prezzo. Integrazione Google Maps per strutture nelle vicinanze.</div>
+    </div>
+
+    <div class="func-card fc-lime">
+      <div class="fc-num">2</div>
+      <div class="fc-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      </div>
+      <div class="fc-title">Calendario Real-Time</div>
+      <div class="fc-desc">Disponibilità slot aggiornata in tempo reale. Prenotazione immediata, modifica e cancellazione autonome.</div>
+    </div>
+
+    <div class="func-card fc-green">
+      <div class="fc-num">3</div>
+      <div class="fc-icon">
+        <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>
+      </div>
+      <div class="fc-title">Pagamenti Integrati</div>
+      <div class="fc-desc">Gateway Stripe, Apple Pay e Google Pay. Abbonamenti digitali, ricevute automatiche, zero contante.</div>
+    </div>
+
+    <div class="func-card fc-mint">
+      <div class="fc-num">4</div>
+      <div class="fc-icon">
+        <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      </div>
+      <div class="fc-title">Notifiche Smart</div>
+      <div class="fc-desc">Conferme istantanee, reminder H-24 e H-2, avvisi cancellazione, offerte personalizzate via push e email.</div>
+    </div>
+
+    <div class="func-card fc-sky">
+      <div class="fc-num">5</div>
+      <div class="fc-icon">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <div class="fc-title">Community e Social</div>
+      <div class="fc-desc">Funzione "Cerca compagno", gruppi sportivi locali, badge fedeltà, sfide mensili e gamification.</div>
+    </div>
+
+    <div class="func-card fc-sage">
+      <div class="fc-num">6</div>
+      <div class="fc-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      </div>
+      <div class="fc-title">Dashboard Gestori</div>
+      <div class="fc-desc">Analytics real-time su occupazione e ricavi, strumenti di marketing diretto, widget booking integrabile.</div>
+    </div>
+
+  </div>
+
+  <div class="sub-title">2.3 Stack Tecnologico</div>
+
+  <div class="tech-grid">
+    <div class="tech-card">
+      <div class="tech-layer">Frontend Mobile</div>
+      <div class="tech-name">React Native</div>
+      <div class="tech-desc">App cross-platform iOS e Android da un unico codebase, performance nativa.</div>
+      <div class="tech-pill">Cross-platform</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-layer">Backend API</div>
+      <div class="tech-name">Node.js</div>
+      <div class="tech-desc">Microservizi RESTful su AWS Lambda. Scalabilità automatica, basso costo a riposo.</div>
+      <div class="tech-pill">Serverless</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-layer">Database</div>
+      <div class="tech-name">PostgreSQL</div>
+      <div class="tech-desc">Database relazionale principale. Redis per cache, sessioni real-time e slot booking atomico.</div>
+      <div class="tech-pill">+ Redis Cache</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-layer">Notifiche Push</div>
+      <div class="tech-name">Firebase FCM</div>
+      <div class="tech-desc">Cloud messaging affidabile per iOS e Android, con targeting granulare per segmento utente.</div>
+      <div class="tech-pill">Cloud Messaging</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-layer">Pagamenti</div>
+      <div class="tech-name">Stripe API</div>
+      <div class="tech-desc">Gateway PCI-compliant, supporto Apple/Google Pay, gestione abbonamenti ricorrenti.</div>
+      <div class="tech-pill">PCI-compliant</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-layer">Geolocalizzazione</div>
+      <div class="tech-name">Google Maps API</div>
+      <div class="tech-desc">Ricerca strutture per prossimità, visualizzazione su mappa, integrazione con navigazione nativa.</div>
+      <div class="tech-pill">Location-aware</div>
+    </div>
+  </div>
+
+  <div class="pf">
+    <span>Sportly — Prima Consegna · Documento di Progetto v1.0</span>
+    <div class="pf-dot"></div>
+    <span>§ 2 / Descrizione dell'Idea · Pag. 03</span>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════
+     §3 — PROBLEMA
+══════════════════════════════════ -->
+<div class="page">
+
+  <div class="rh">
+    <span class="rh-brand">Sportly<span>.</span></span>
+    <span class="rh-section">§ 3 — Problema che si Vuole Risolvere</span>
+  </div>
+
+  <div class="sec-num">03</div>
+  <div class="sec-title">Problema che si Vuole Risolvere</div>
+
+  <div class="sub-title">3.1 Pain Point — Mappatura Problema / Soluzione</div>
+
+  <div class="ps-grid">
+
+    <div class="ps-col">
+      <div class="ps-card ps-problem">
+        <div class="ps-tag">Problema</div>
+        <div class="ps-text"><strong>Gestione manuale delle prenotazioni.</strong> Telefonate, fogli Excel, registri cartacei. Errori frequenti, doppie prenotazioni, sovraccarico del personale amministrativo.</div>
+      </div>
+      <div class="ps-card ps-problem">
+        <div class="ps-tag">Problema</div>
+        <div class="ps-text"><strong>Nessuna visibilità in tempo reale.</strong> Impossibile verificare la disponibilità o prenotare fuori dall'orario di apertura della struttura senza telefonare.</div>
+      </div>
+      <div class="ps-card ps-problem">
+        <div class="ps-tag">Problema</div>
+        <div class="ps-text"><strong>Community sportiva frammentata.</strong> Nessuno strumento digitale per aggregare giocatori, organizzare partite, cercare compagni o partecipare a tornei locali.</div>
+      </div>
+      <div class="ps-card ps-problem">
+        <div class="ps-tag">Problema</div>
+        <div class="ps-text"><strong>Scarsa visibilità delle ASD locali.</strong> Le piccole strutture senza canali digitali propri perdono clientela a favore di grandi catene già presidiate online.</div>
+      </div>
+      <div class="ps-card ps-problem">
+        <div class="ps-tag">Problema</div>
+        <div class="ps-text"><strong>Rischio operativo nei pagamenti.</strong> Incassi in contante con ammanchi, abbonamenti gestiti manualmente, contabilità disorganizzata e assenza di reportistica.</div>
+      </div>
+    </div>
+
+    <div class="ps-arrows">
+      <svg class="ps-arrow-svg" viewBox="0 0 24 10" fill="none">
+        <path d="M0 5h20M16 1l4 4-4 4" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <svg class="ps-arrow-svg" viewBox="0 0 24 10" fill="none">
+        <path d="M0 5h20M16 1l4 4-4 4" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <svg class="ps-arrow-svg" viewBox="0 0 24 10" fill="none">
+        <path d="M0 5h20M16 1l4 4-4 4" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <svg class="ps-arrow-svg" viewBox="0 0 24 10" fill="none">
+        <path d="M0 5h20M16 1l4 4-4 4" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <svg class="ps-arrow-svg" viewBox="0 0 24 10" fill="none">
+        <path d="M0 5h20M16 1l4 4-4 4" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <div class="ps-col">
+      <div class="ps-card ps-solution">
+        <div class="ps-tag">Soluzione Sportly</div>
+        <div class="ps-text"><strong>Booking digitale automatizzato 24/7.</strong> Calendario smart con slot in tempo reale, prenotazioni autonome, conferma immediata, zero intervento umano.</div>
+      </div>
+      <div class="ps-card ps-solution">
+        <div class="ps-tag">Soluzione Sportly</div>
+        <div class="ps-text"><strong>Accesso multi-dispositivo continuo.</strong> App mobile e portale web. Disponibilità sempre visibile, prenotazione in qualunque momento da qualunque device.</div>
+      </div>
+      <div class="ps-card ps-solution">
+        <div class="ps-tag">Soluzione Sportly</div>
+        <div class="ps-text"><strong>Feature social integrate.</strong> "Cerca compagno", gruppi sportivi locali, notifiche eventi e tornei, gamification con badge e classifiche.</div>
+      </div>
+      <div class="ps-card ps-solution">
+        <div class="ps-tag">Soluzione Sportly</div>
+        <div class="ps-text"><strong>Marketplace centralizzato uniforme.</strong> Visibilità garantita per tutte le strutture, indipendentemente dalla dimensione. Piccole ASD competitive quanto grandi catene.</div>
+      </div>
+      <div class="ps-card ps-solution">
+        <div class="ps-tag">Soluzione Sportly</div>
+        <div class="ps-text"><strong>Pagamenti digitali sicuri.</strong> Gateway PCI-compliant, ricevute automatiche, dashboard contabilità real-time, abbonamenti ricorrenti automatizzati.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="callout">
+    Ogni pain point identificato sul mercato ha una risposta tecnologica concreta in Sportly. Il valore non è teorico: è operativo, misurabile e immediatamente percepibile da entrambi i lati della piattaforma.
+  </div>
+
+  <div class="pf">
+    <span>Sportly — Prima Consegna · Documento di Progetto v1.0</span>
+    <div class="pf-dot"></div>
+    <span>§ 3 / Problema · Pag. 04</span>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════
+     §4 — VALORE PER IL CLIENTE
+══════════════════════════════════ -->
+<div class="page">
+
+  <div class="rh">
+    <span class="rh-brand">Sportly<span>.</span></span>
+    <span class="rh-section">§ 4 — Valore per il Cliente</span>
+  </div>
+
+  <div class="sec-num">04</div>
+  <div class="sec-title">Valore per il Cliente</div>
+
+  <div class="sub-title">4.1 Value Proposition Canvas</div>
+
+  <div class="value-grid">
+
+    <div class="value-col">
+      <div class="value-col-header">
+        <div class="vcol-label">Segmento A</div>
+        <div class="vcol-title">Utenti Sportivi</div>
+      </div>
+
+      <div class="value-item">
+        <div class="vi-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div class="vi-right">
+          <div class="vi-title">Risparmio di tempo reale</div>
+          <div class="vi-desc">Prenotazione completata in 30 secondi da smartphone. Fine delle telefonate e dei messaggi WhatsApp al gestore.</div>
+        </div>
+      </div>
+
+      <div class="value-item">
+        <div class="vi-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+        <div class="vi-right">
+          <div class="vi-title">Disponibilità 24 ore su 24</div>
+          <div class="vi-desc">Accesso al calendario in qualsiasi momento, anche la domenica sera o alle 23:00 prima dell'allenamento del giorno dopo.</div>
+        </div>
+      </div>
+
+      <div class="value-item">
+        <div class="vi-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
+        <div class="vi-right">
+          <div class="vi-title">Scelta ampia e confronto</div>
+          <div class="vi-desc">Tutte le strutture in zona in un'unica app. Confronto per prezzo, recensioni, distanza e orari disponibili.</div>
+        </div>
+      </div>
+
+      <div class="value-item">
+        <div class="vi-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="vi-right">
+          <div class="vi-title">Community sportiva locale</div>
+          <div class="vi-desc">Trova compagni di gioco, unisciti a gruppi, partecipa a tornei e scopri eventi vicino a te.</div>
+        </div>
+      </div>
+
+      <div class="value-item">
+        <div class="vi-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <div class="vi-right">
+          <div class="vi-title">Gamification e fedeltà</div>
+          <div class="vi-desc">Badge attività, punti fedeltà, sfide mensili e classifiche per mantenere alta la motivazione.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="value-col">
+      <div class="value-col-header">
+        <div class="vcol-label">Segmento B</div>
+        <div class="vcol-title">Gestori di Strutture</div>
+      </div>
+
+      <div class="value-item">
+        <div class="vi-icon"><svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 17"/><polyline points="17 6 23 6 23 12"/></svg></div>
+        <div class="vi-right">
+          <div class="vi-title">Incremento delle prenotazioni</div>
+          <div class="vi-desc">Visibilità sul marketplace comune porta nuovi clienti in modo organico e automatico, senza costi di acquisizione diretti.</div>
+        </div>
+      </div>
+
+      <div class="value-item">
+        <div class="vi-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+        <div class="vi-right">
+          <div class="vi-title">Analytics e decisioni data-driven</div>
+          <div class="vi-desc">Dashboard con tasso di occupazione, ricavi per slot, trend stagionali e comportamento degli utenti abituali.</div>
+        </div>
+      </div>
+
+      <div class="value-item">
+        <div class="vi-icon"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+        <div class="vi-right">
+          <div class="vi-title">Automazione operativa completa</div>
+          <div class="vi-desc">Meno tempo al telefono, prenotazioni gestite 24/7 in autonomia, notifiche automatiche agli utenti, zero intervento manuale.</div>
+        </div>
+      </div>
+
+      <div class="value-item">
+        <div class="vi-icon"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+        <div class="vi-right">
+          <div class="vi-title">Pagamenti certi e automatici</div>
+          <div class="vi-desc">Incassi digitali garantiti, ricevute automatiche, abbonamenti ricorrenti, report contabilità in un click.</div>
+        </div>
+      </div>
+
+      <div class="value-item">
+        <div class="vi-icon"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></div>
+        <div class="vi-right">
+          <div class="vi-title">Marketing diretto e widget web</div>
+          <div class="vi-desc">Promozioni push agli utenti iscritti, widget di booking integrabile nel sito della struttura senza sviluppo.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="sub-title">4.2 Copertura Funzionale vs Concorrenti</div>
+
+  <div class="bar-chart">
+    <div class="bar-row">
+      <div class="bar-lbl">Sportly (target)</div>
+      <div class="bar-track"><div class="bar-fill teal" style="width:95%"></div></div>
+      <div class="bar-val">Completo</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-lbl">Playtomic</div>
+      <div class="bar-track"><div class="bar-fill soft" style="width:60%"></div></div>
+      <div class="bar-val">Parziale</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-lbl">PrenotaWeb</div>
+      <div class="bar-track"><div class="bar-fill lime" style="width:42%"></div></div>
+      <div class="bar-val">Limitato</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-lbl">Squby</div>
+      <div class="bar-track"><div class="bar-fill muted" style="width:32%"></div></div>
+      <div class="bar-val">Base</div>
+    </div>
+  </div>
+
+  <div class="pf">
+    <span>Sportly — Prima Consegna · Documento di Progetto v1.0</span>
+    <div class="pf-dot"></div>
+    <span>§ 4 / Valore per il Cliente · Pag. 05</span>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════
+     §5 — ANALISI CONCORRENZA
+══════════════════════════════════ -->
+<div class="page">
+
+  <div class="rh">
+    <span class="rh-brand">Sportly<span>.</span></span>
+    <span class="rh-section">§ 5 — Analisi della Concorrenza</span>
+  </div>
+
+  <div class="sec-num">05</div>
+  <div class="sec-title">Prima Analisi della Concorrenza</div>
+
+  <div class="sub-title">5.1 Panorama Competitivo Italiano</div>
+
+  <p>Il mercato del booking sportivo digitale in Italia è composto da quattro tipologie di concorrenti: piattaforme verticali su sport specifici (es. Playtomic per il padel), strumenti generici di prenotazione, soluzioni gestionali B2B e, ancora diffusissimo, il <strong>non-digitale</strong> — ovvero le strutture che ancora operano senza alcun sistema di booking online. Quest'ultima categoria rappresenta il target di acquisizione primario di Sportly.</p>
+
+  <div class="sub-title">5.2 Matrice Comparativa Funzionale</div>
+
+  <div class="comp-grid">
+    <div class="cg-header">Funzionalità</div>
+    <div class="cg-header hl">Sportly</div>
+    <div class="cg-header">Playtomic</div>
+    <div class="cg-header">PrenotaWeb</div>
+    <div class="cg-header">Squby</div>
+    <div class="cg-header">Analogico</div>
+
+    <div class="cg-row-label">Booking multi-sport</div>
+    <div class="cg-cell sportly"><span class="cg-yes">SI</span></div>
+    <div class="cg-cell"><span class="cg-partial">Padel/tennis</span></div>
+    <div class="cg-cell"><span class="cg-partial">Limitato</span></div>
+    <div class="cg-cell"><span class="cg-partial">Parziale</span></div>
+    <div class="cg-cell"><span class="cg-no">NO</span></div>
+
+    <div class="cg-row-label alt">Disponibilità 24/7</div>
+    <div class="cg-cell sportly alt"><span class="cg-yes">SI</span></div>
+    <div class="cg-cell alt"><span class="cg-yes">SI</span></div>
+    <div class="cg-cell alt"><span class="cg-yes">SI</span></div>
+    <div class="cg-cell alt"><span class="cg-partial">Web only</span></div>
+    <div class="cg-cell alt"><span class="cg-no">NO</span></div>
+
+    <div class="cg-row-label">Pagamenti integrati</div>
+    <div class="cg-cell sportly"><span class="cg-yes">SI</span></div>
+    <div class="cg-cell"><span class="cg-yes">SI</span></div>
+    <div class="cg-cell"><span class="cg-partial">Parziale</span></div>
+    <div class="cg-cell"><span class="cg-no">NO</span></div>
+    <div class="cg-cell"><span class="cg-no">NO</span></div>
+
+    <div class="cg-row-label alt">Feature community</div>
+    <div class="cg-cell sportly alt"><span class="cg-yes">SI</span></div>
+    <div class="cg-cell alt"><span class="cg-partial">Base</span></div>
+    <div class="cg-cell alt"><span class="cg-no">NO</span></div>
+    <div class="cg-cell alt"><span class="cg-no">NO</span></div>
+    <div class="cg-cell alt"><span class="cg-no">NO</span></div>
+
+    <div class="cg-row-label">Analytics per gestori</div>
+    <div class="cg-cell sportly"><span class="cg-yes">SI</span></div>
+    <div class="cg-cell"><span class="cg-partial">Base</span></div>
+    <div class="cg-cell"><span class="cg-partial">Base</span></div>
+    <div class="cg-cell"><span class="cg-no">NO</span></div>
+    <div class="cg-cell"><span class="cg-no">NO</span></div>
+
+    <div class="cg-row-label alt">Notifiche push</div>
+    <div class="cg-cell sportly alt"><span class="cg-yes">SI</span></div>
+    <div class="cg-cell alt"><span class="cg-yes">SI</span></div>
+    <div class="cg-cell alt"><span class="cg-partial">Email only</span></div>
+    <div class="cg-cell alt"><span class="cg-no">NO</span></div>
+    <div class="cg-cell alt"><span class="cg-no">NO</span></div>
+
+    <div class="cg-row-label">Piano gratuito ASD</div>
+    <div class="cg-cell sportly"><span class="cg-yes">SI</span></div>
+    <div class="cg-cell"><span class="cg-no">NO</span></div>
+    <div class="cg-cell"><span class="cg-partial">Trial</span></div>
+    <div class="cg-cell"><span class="cg-partial">Trial</span></div>
+    <div class="cg-cell"><span class="cg-no">N/A</span></div>
+
+    <div class="cg-row-label alt">App mobile nativa</div>
+    <div class="cg-cell sportly alt"><span class="cg-yes">SI</span></div>
+    <div class="cg-cell alt"><span class="cg-yes">SI</span></div>
+    <div class="cg-cell alt"><span class="cg-no">NO</span></div>
+    <div class="cg-cell alt"><span class="cg-partial">PWA</span></div>
+    <div class="cg-cell alt"><span class="cg-no">NO</span></div>
+
+  </div>
+
+  <div class="sub-title">5.3 Posizionamento Strategico</div>
+
+  <table class="tbl">
+    <thead>
+      <tr>
+        <th>Concorrente</th>
+        <th>Punto di Forza</th>
+        <th>Punto Debole</th>
+        <th>Opportunità per Sportly</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Playtomic</td>
+        <td>Forte su padel e tennis, community attiva</td>
+        <td>Solo due sport, assenza dashboard analitica avanzata</td>
+        <td>Espansione multi-sport e analytics</td>
+      </tr>
+      <tr>
+        <td>PrenotaWeb</td>
+        <td>Semplice da configurare, web-based</td>
+        <td>No app mobile, no community, no analytics</td>
+        <td>App nativa + community differenziante</td>
+      </tr>
+      <tr>
+        <td>Squby</td>
+        <td>Focalizzato su piccole strutture</td>
+        <td>Funzionalità limitate, nessun piano gratuito</td>
+        <td>Freemium per abbassare barriera ingresso</td>
+      </tr>
+      <tr>
+        <td>Sistemi analogici</td>
+        <td>Nessun costo tecnologico</td>
+        <td>Inefficienti, errori frequenti, nessuna scalabilità</td>
+        <td>Target principale: 65% del mercato</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    Nessun concorrente attuale copre contemporaneamente booking multi-sport, community, analytics avanzate, piano gratuito e app nativa. Questa combinazione è la differenziazione centrale di Sportly.
+  </div>
+
+  <div class="pf">
+    <span>Sportly — Prima Consegna · Documento di Progetto v1.0</span>
+    <div class="pf-dot"></div>
+    <span>§ 5 / Analisi Concorrenza · Pag. 06</span>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════
+     §6 — TARGET CLIENTI
+══════════════════════════════════ -->
+<div class="page">
+
+  <div class="rh">
+    <span class="rh-brand">Sportly<span>.</span></span>
+    <span class="rh-section">§ 6 — Target Clienti</span>
+  </div>
+
+  <div class="sec-num">06</div>
+  <div class="sec-title">Analisi del Target Clienti</div>
+
+  <div class="sub-title">6.1 Segmenti Principali</div>
+
+  <div class="target-grid">
+
+    <div class="target-card">
+      <div class="tc-num">01</div>
+      <div class="tc-segment">Segmento B2C — Primario</div>
+      <div class="tc-name">Giovani Sportivi</div>
+      <div class="tc-traits">
+        <div class="tc-trait">Età 18–30, digitale-native, sportivi regolari</div>
+        <div class="tc-trait">Alta propensione all'uso di app per servizi quotidiani</div>
+        <div class="tc-trait">Praticano 2–4 sessioni settimanali di sport</div>
+        <div class="tc-trait">Sensibili alla community e alla gamification</div>
+        <div class="tc-trait">Disposti a pagare per comodità e flessibilità</div>
+      </div>
+      <div class="tc-size">~8 milioni di potenziali utenti in Italia</div>
+    </div>
+
+    <div class="target-card">
+      <div class="tc-num">02</div>
+      <div class="tc-segment">Segmento B2C — Secondario</div>
+      <div class="tc-name">Adulti Attivi</div>
+      <div class="tc-traits">
+        <div class="tc-trait">Età 31–50, professionisti con poco tempo libero</div>
+        <div class="tc-trait">Priorità: semplicità, affidabilità, risparmio di tempo</div>
+        <div class="tc-trait">Sport regolari: padel, nuoto, fitness, corsa</div>
+        <div class="tc-trait">Spesa media mensile per sport: 60–150 €</div>
+        <div class="tc-trait">Apprezzano la possibilità di prenotare fuori orario</div>
+      </div>
+      <div class="tc-size">~5 milioni di potenziali utenti in Italia</div>
+    </div>
+
+    <div class="target-card">
+      <div class="tc-num">03</div>
+      <div class="tc-segment">Segmento B2B — Strutture</div>
+      <div class="tc-name">Associazioni Sportive</div>
+      <div class="tc-traits">
+        <div class="tc-trait">ASD dilettantistiche con 1–20 risorse (campi, corsie)</div>
+        <div class="tc-trait">Budget IT limitato, bisogno di soluzioni semplici</div>
+        <div class="tc-trait">Gestori spesso non tecnici, necessitano onboarding</div>
+        <div class="tc-trait">Motivati da: riduzione telefonate, pagamenti certi</div>
+        <div class="tc-trait">Aperti al digitale se il ROI è immediato e tangibile</div>
+      </div>
+      <div class="tc-size">~40.000 ASD target in Italia</div>
+    </div>
+
+  </div>
+
+  <div class="sub-title">6.2 Profilo Utente — Persona</div>
+
+  <table class="tbl">
+    <thead>
+      <tr>
+        <th>Attributo</th>
+        <th>Marco — Utente Sportivo</th>
+        <th>Lucia — Gestore ASD</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Età e professione</td>
+        <td>28 anni, ingegnere informatico</td>
+        <td>45 anni, responsabile centro sportivo</td>
+      </tr>
+      <tr>
+        <td>Bisogno principale</td>
+        <td>Trovare e prenotare un campo da padel in 5 minuti</td>
+        <td>Ridurre le telefonate e avere sempre il controllo delle entrate</td>
+      </tr>
+      <tr>
+        <td>Frustrazione attuale</td>
+        <td>Deve chiamare 3 strutture prima di trovare disponibilità</td>
+        <td>Doppie prenotazioni, pagamenti cash non tracciati</td>
+      </tr>
+      <tr>
+        <td>Cosa cerca in Sportly</td>
+        <td>Rapidità, scelta, pagamento integrato, community</td>
+        <td>Semplicità, analytics, marketing automatico, piano gratuito</td>
+      </tr>
+      <tr>
+        <td>Dispositivo principale</td>
+        <td>iPhone, usa 5–8 app quotidianamente</td>
+        <td>PC desktop + smartphone Android</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sub-title">6.3 Distribuzione del Mercato Indirizzabile</div>
+
+  <div class="bar-chart">
+    <div class="bar-row">
+      <div class="bar-lbl">Giovani 18–30</div>
+      <div class="bar-track"><div class="bar-fill teal" style="width:55%"></div></div>
+      <div class="bar-val">~8M utenti</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-lbl">Adulti 31–50</div>
+      <div class="bar-track"><div class="bar-fill green" style="width:38%"></div></div>
+      <div class="bar-val">~5M utenti</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-lbl">ASD target (B2B)</div>
+      <div class="bar-track"><div class="bar-fill lime" style="width:28%"></div></div>
+      <div class="bar-val">~40K strutture</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-lbl">Obiettivo anno 1</div>
+      <div class="bar-track"><div class="bar-fill soft" style="width:8%"></div></div>
+      <div class="bar-val">150 strutture</div>
+    </div>
+  </div>
+
+  <div class="pf">
+    <span>Sportly — Prima Consegna · Documento di Progetto v1.0</span>
+    <div class="pf-dot"></div>
+    <span>§ 6 / Target Clienti · Pag. 07</span>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════
+     §7 — MODELLO DI BUSINESS
+══════════════════════════════════ -->
+<div class="page">
+
+  <div class="rh">
+    <span class="rh-brand">Sportly<span>.</span></span>
+    <span class="rh-section">§ 7 — Ipotesi Modello di Business</span>
+  </div>
+
+  <div class="sec-num">07</div>
+  <div class="sec-title">Ipotesi Modello di Business</div>
+
+  <div class="sub-title">7.1 Fonti di Ricavo — Architettura Multi-Stream</div>
+
+  <table class="tbl">
+    <thead>
+      <tr>
+        <th>Stream di Ricavo</th>
+        <th>Meccanismo</th>
+        <th>Stima Unitaria</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Commissioni sulle prenotazioni</td>
+        <td>1,5% su ogni transazione processata dalla piattaforma</td>
+        <td>~1,50 € per prenotazione da 100 €</td>
+      </tr>
+      <tr>
+        <td>Abbonamento SaaS Standard</td>
+        <td>Strutture con fino a 10 risorse — funzionalità avanzate</td>
+        <td>29 €/mese per struttura</td>
+      </tr>
+      <tr>
+        <td>Abbonamento SaaS Premium</td>
+        <td>Strutture illimitate — analytics, marketing e API</td>
+        <td>59 €/mese per struttura</td>
+      </tr>
+      <tr>
+        <td>Piano Utente Plus (B2C)</td>
+        <td>Funzionalità avanzate per sportivi (prenotazioni prioritarie, badge, ecc.)</td>
+        <td>4,99 €/mese per utente</td>
+      </tr>
+      <tr>
+        <td>Pubblicità ed eventi sponsorizzati</td>
+        <td>Promozione eventi e strutture nell'app agli utenti rilevanti</td>
+        <td>Variabile — CPM/CPC</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sub-title">7.2 Piani SaaS per Strutture</div>
+
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-tier">Base</div>
+      <div class="price-amount">0 €</div>
+      <div class="price-period">Gratuito per sempre</div>
+      <div class="price-features">
+        <div class="pf-item">Fino a 2 campi o risorse</div>
+        <div class="pf-item">Booking base con calendario</div>
+        <div class="pf-item">Commissione 1,5% per prenotazione</div>
+        <div class="pf-item">Notifiche email automatiche</div>
+        <div class="pf-item">Profilo struttura nel marketplace</div>
+      </div>
+    </div>
+    <div class="price-card featured">
+      <div class="price-badge">Consigliato</div>
+      <div class="price-tier">Standard</div>
+      <div class="price-amount">29 €</div>
+      <div class="price-period">al mese</div>
+      <div class="price-features">
+        <div class="pf-item">Fino a 10 risorse gestite</div>
+        <div class="pf-item">Analytics base (occupazione, ricavi)</div>
+        <div class="pf-item">Notifiche push personalizzate</div>
+        <div class="pf-item">QR code check-in</div>
+        <div class="pf-item">Commissione ridotta all'1%</div>
+      </div>
+    </div>
+    <div class="price-card">
+      <div class="price-tier">Premium</div>
+      <div class="price-amount">59 €</div>
+      <div class="price-period">al mese</div>
+      <div class="price-features">
+        <div class="pf-item">Risorse illimitate</div>
+        <div class="pf-item">Analytics avanzate e reportistica</div>
+        <div class="pf-item">Marketing diretto agli utenti</div>
+        <div class="pf-item">Widget booking per sito web</div>
+        <div class="pf-item">API e supporto prioritario</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-title">7.3 Proiezione Ricavi — Anno 1</div>
+
+  <div class="rev-table">
+    <div class="rev-scenario">
+      <div class="rev-scenario-title">Scenario Conservativo — Mese 6</div>
+      <div class="rev-row"><span class="rev-row-lbl">Commissioni (1.000 prev.)</span><span class="rev-row-val">1.500 €</span></div>
+      <div class="rev-row"><span class="rev-row-lbl">Standard SaaS (×30 strutture)</span><span class="rev-row-val">870 €</span></div>
+      <div class="rev-row"><span class="rev-row-lbl">Premium SaaS (×10 strutture)</span><span class="rev-row-val">590 €</span></div>
+      <div class="rev-row"><span class="rev-row-lbl">Utenti Plus (×100)</span><span class="rev-row-val">499 €</span></div>
+      <div class="rev-total"><span>Totale Mensile</span><span class="rev-total-val">~3.459 €</span></div>
+    </div>
+    <div class="rev-scenario">
+      <div class="rev-scenario-title">Scenario di Crescita — Mese 12</div>
+      <div class="rev-row"><span class="rev-row-lbl">Commissioni (5.000 prev.)</span><span class="rev-row-val">7.500 €</span></div>
+      <div class="rev-row"><span class="rev-row-lbl">Strutture (80 Std + 30 Prem)</span><span class="rev-row-val">4.090 €</span></div>
+      <div class="rev-row"><span class="rev-row-lbl">Utenti Plus (×500)</span><span class="rev-row-val">2.495 €</span></div>
+      <div class="rev-row"><span class="rev-row-lbl">Pubblicità e sponsorizzazioni</span><span class="rev-row-val">1.000 €</span></div>
+      <div class="rev-total"><span>Totale Mensile</span><span class="rev-total-val" style="color:var(--brand-6);">~15.085 €</span></div>
+    </div>
+  </div>
+
+  <div class="sub-title">7.4 Struttura dei Costi Principali</div>
+
+  <table class="tbl">
+    <thead><tr><th>Voce di Costo</th><th>Stima</th></tr></thead>
+    <tbody>
+      <tr><td>Sviluppo app (iOS + Android + Web admin)</td><td>30.000 – 70.000 € una tantum</td></tr>
+      <tr><td>Infrastruttura cloud (AWS)</td><td>300 – 800 €/mese in base al traffico</td></tr>
+      <tr><td>Commissioni gateway Stripe</td><td>~1,4% + 0,25 € per transazione</td></tr>
+      <tr><td>Marketing di lancio (social, eventi)</td><td>2.000 – 5.000 €/mese nella fase iniziale</td></tr>
+      <tr><td>Customer support e operations</td><td>1.000 – 2.000 €/mese</td></tr>
+    </tbody>
+  </table>
+
+  <div class="pf">
+    <span>Sportly — Prima Consegna · Documento di Progetto v1.0</span>
+    <div class="pf-dot"></div>
+    <span>§ 7 / Modello di Business · Pag. 08</span>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════
+     §8 — WBS
+══════════════════════════════════ -->
+<div class="page">
+
+  <div class="rh">
+    <span class="rh-brand">Sportly<span>.</span></span>
+    <span class="rh-section">§ 8 — WBS Preliminare</span>
+  </div>
+
+  <div class="sec-num">08</div>
+  <div class="sec-title">Work Breakdown Structure — Preliminare</div>
+
+  <div class="sub-title">8.1 Struttura Fasi 1 – 4</div>
+
+  <div class="wbs-wrap">
+    <div class="wbs-root-node">
+      <div class="wbs-root-title">Sportly — Progetto Completo</div>
+      <div class="wbs-root-sub">8 Fasi · 20 Settimane · Lancio Q3 2025</div>
+    </div>
+    <div class="wbs-connector-bar"></div>
+    <div class="wbs-phases">
+      <div class="wbs-phase">
+        <div class="wbs-phase-stem"></div>
+        <div class="wbs-phase-node wbn-teal">
+          <div class="wbn-num">FASE 1</div>
+          <div class="wbn-title">Analisi e Pianificazione</div>
+        </div>
+        <div class="wbs-deliverables">
+          <div class="wbs-del" data-n="1.1">Ricerca di mercato e validazione</div>
+          <div class="wbs-del" data-n="1.2">Definizione requisiti funzionali</div>
+          <div class="wbs-del" data-n="1.3">Studio legale e GDPR</div>
+          <div class="wbs-del" data-n="1.4">Analisi concorrenza dettagliata</div>
+          <div class="wbs-del" data-n="1.5">Definizione KPI e metriche</div>
+        </div>
+      </div>
+      <div class="wbs-phase">
+        <div class="wbs-phase-stem"></div>
+        <div class="wbs-phase-node wbn-lime">
+          <div class="wbn-num">FASE 2</div>
+          <div class="wbn-title">Progettazione Architettura</div>
+        </div>
+        <div class="wbs-deliverables">
+          <div class="wbs-del" data-n="2.1">Selezione stack tecnologico</div>
+          <div class="wbs-del" data-n="2.2">Diagrammi UML e schema ER</div>
+          <div class="wbs-del" data-n="2.3">Architettura cloud e sicurezza</div>
+          <div class="wbs-del" data-n="2.4">Wireframe schermate principali</div>
+          <div class="wbs-del" data-n="2.5">Prototipo interattivo UI/UX</div>
+        </div>
+      </div>
+      <div class="wbs-phase">
+        <div class="wbs-phase-stem"></div>
+        <div class="wbs-phase-node wbn-green">
+          <div class="wbn-num">FASE 3</div>
+          <div class="wbn-title">Sviluppo Backend</div>
+        </div>
+        <div class="wbs-deliverables">
+          <div class="wbs-del" data-n="3.1">Setup database PostgreSQL</div>
+          <div class="wbs-del" data-n="3.2">API RESTful e autenticazione</div>
+          <div class="wbs-del" data-n="3.3">Integrazione Stripe payments</div>
+          <div class="wbs-del" data-n="3.4">Sistema notifiche Firebase FCM</div>
+          <div class="wbs-del" data-n="3.5">Generazione QR code check-in</div>
+        </div>
+      </div>
+      <div class="wbs-phase">
+        <div class="wbs-phase-stem"></div>
+        <div class="wbs-phase-node wbn-mint">
+          <div class="wbn-num">FASE 4</div>
+          <div class="wbn-title">Sviluppo Frontend</div>
+        </div>
+        <div class="wbs-deliverables">
+          <div class="wbs-del" data-n="4.1">App mobile React Native</div>
+          <div class="wbs-del" data-n="4.2">Portale web gestori admin</div>
+          <div class="wbs-del" data-n="4.3">Libreria componenti UI</div>
+          <div class="wbs-del" data-n="4.4">Integrazione API backend</div>
+          <div class="wbs-del" data-n="4.5">Accessibilità e localizzazione</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-title" style="margin-top:7mm;">8.2 Struttura Fasi 5 – 8</div>
+
+  <div class="wbs-wrap">
+    <div class="wbs-root-node" style="background:#4a5568;">
+      <div class="wbs-root-title">Sportly — Progetto Completo (continua)</div>
+      <div class="wbs-root-sub">Fasi 5–8 · Integrazione, Test, Lancio e Monitor.</div>
+    </div>
+    <div class="wbs-connector-bar" style="background:#4a5568;"></div>
+    <div class="wbs-phases">
+      <div class="wbs-phase">
+        <div class="wbs-phase-stem"></div>
+        <div class="wbs-phase-node wbn-sage">
+          <div class="wbn-num">FASE 5</div>
+          <div class="wbn-title">Integrazione e Test</div>
+        </div>
+        <div class="wbs-deliverables">
+          <div class="wbs-del" data-n="5.1">Integrazione moduli end-to-end</div>
+          <div class="wbs-del" data-n="5.2">Unit test e integration test</div>
+          <div class="wbs-del" data-n="5.3">Test sicurezza e compliance GDPR</div>
+          <div class="wbs-del" data-n="5.4">Stress test e performance</div>
+          <div class="wbs-del" data-n="5.5">Test UX con utenti reali</div>
+        </div>
+      </div>
+      <div class="wbs-phase">
+        <div class="wbs-phase-stem"></div>
+        <div class="wbs-phase-node wbn-amber">
+          <div class="wbn-num">FASE 6</div>
+          <div class="wbn-title">Beta Testing</div>
+        </div>
+        <div class="wbs-deliverables">
+          <div class="wbs-del" data-n="6.1">Selezione gruppo pilota ASD</div>
+          <div class="wbs-del" data-n="6.2">Rilascio beta chiusa controllata</div>
+          <div class="wbs-del" data-n="6.3">Raccolta e analisi feedback</div>
+          <div class="wbs-del" data-n="6.4">Bug fixing e ottimizzazione</div>
+          <div class="wbs-del" data-n="6.5">Validazione KPI e metriche</div>
+        </div>
+      </div>
+      <div class="wbs-phase">
+        <div class="wbs-phase-stem"></div>
+        <div class="wbs-phase-node wbn-red">
+          <div class="wbn-num">FASE 7</div>
+          <div class="wbn-title">Marketing e Lancio</div>
+        </div>
+        <div class="wbs-deliverables">
+          <div class="wbs-del" data-n="7.1">Sito web promozionale</div>
+          <div class="wbs-del" data-n="7.2">Campagne social media</div>
+          <div class="wbs-del" data-n="7.3">Onboarding strutture partner</div>
+          <div class="wbs-del" data-n="7.4">Materiali di comunicazione</div>
+          <div class="wbs-del" data-n="7.5">Pubblicazione App Store e Play</div>
+        </div>
+      </div>
+      <div class="wbs-phase">
+        <div class="wbs-phase-stem"></div>
+        <div class="wbs-phase-node wbn-dark">
+          <div class="wbn-num">FASE 8</div>
+          <div class="wbn-title">Monitoraggio Continuo</div>
+        </div>
+        <div class="wbs-deliverables">
+          <div class="wbs-del" data-n="8.1">KPI mensili e analytics</div>
+          <div class="wbs-del" data-n="8.2">Customer support attivo</div>
+          <div class="wbs-del" data-n="8.3">Pianificazione nuove release</div>
+          <div class="wbs-del" data-n="8.4">Manutenzione sicurezza</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pf">
+    <span>Sportly — Prima Consegna · Documento di Progetto v1.0</span>
+    <div class="pf-dot"></div>
+    <span>§ 8 / WBS Preliminare · Pag. 09</span>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════
+     §8 — TIMELINE
+══════════════════════════════════ -->
+<div class="page">
+
+  <div class="rh">
+    <span class="rh-brand">Sportly<span>.</span></span>
+    <span class="rh-section">§ 8 — Timeline e Milestone</span>
+  </div>
+
+  <div class="sub-title" style="margin-top:0;">8.3 Timeline Preliminare — 20 Settimane</div>
+
+  <div class="gantt-container">
+    <div class="gantt-header">
+      <div class="gh-cell">Fase</div>
+      <div class="gh-cell">W1–2</div>
+      <div class="gh-cell">W3–4</div>
+      <div class="gh-cell">W5–6</div>
+      <div class="gh-cell">W7–8</div>
+      <div class="gh-cell">W9–10</div>
+      <div class="gh-cell">W11–12</div>
+      <div class="gh-cell">W13–14</div>
+      <div class="gh-cell">W15–16</div>
+      <div class="gh-cell">W17–18</div>
+      <div class="gh-cell">W19–20</div>
+    </div>
+
+    <!-- F1: W1-2 = col 1 (width 1) -->
+    <div class="gantt-row">
+      <div class="gr-label">1. Analisi<span>Pianificazione</span></div>
+      <div class="gr-cells">
+        <div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div>
+        <div class="gantt-bar gb-teal" style="left:0%;width:20%"></div>
+      </div>
+    </div>
+
+    <!-- F2: W3-5 -->
+    <div class="gantt-row">
+      <div class="gr-label">2. Progettazione<span>Architettura</span></div>
+      <div class="gr-cells">
+        <div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div>
+        <div class="gantt-bar gb-lime" style="left:20%;width:30%"></div>
+      </div>
+    </div>
+
+    <!-- F3: W5-9 -->
+    <div class="gantt-row">
+      <div class="gr-label">3. Backend<span>Sviluppo</span></div>
+      <div class="gr-cells">
+        <div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div>
+        <div class="gantt-bar gb-teal" style="left:30%;width:40%"></div>
+      </div>
+    </div>
+
+    <!-- F4: W7-13 -->
+    <div class="gantt-row">
+      <div class="gr-label">4. Frontend<span>Sviluppo</span></div>
+      <div class="gr-cells">
+        <div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div>
+        <div class="gantt-bar gb-green" style="left:40%;width:40%"></div>
+      </div>
+    </div>
+
+    <!-- F5: W11-13 -->
+    <div class="gantt-row">
+      <div class="gr-label">5. Testing<span>Integrazione</span></div>
+      <div class="gr-cells">
+        <div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div>
+        <div class="gantt-bar gb-mint" style="left:60%;width:20%"></div>
+      </div>
+    </div>
+
+    <!-- F6: W13-16 -->
+    <div class="gantt-row">
+      <div class="gr-label">6. Beta Test<span>Chiuso</span></div>
+      <div class="gr-cells">
+        <div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div>
+        <div class="gantt-bar gb-amber" style="left:70%;width:20%"></div>
+      </div>
+    </div>
+
+    <!-- F7: W9-20 -->
+    <div class="gantt-row">
+      <div class="gr-label">7. Marketing<span>e Lancio</span></div>
+      <div class="gr-cells">
+        <div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div>
+        <div class="gantt-bar gb-red" style="left:50%;width:50%"></div>
+      </div>
+    </div>
+
+    <!-- F8: W19-20 -->
+    <div class="gantt-row">
+      <div class="gr-label">8. Monitoraggio<span>Post-lancio</span></div>
+      <div class="gr-cells">
+        <div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div><div class="gr-cell-bg"></div>
+        <div class="gantt-bar gb-dark" style="left:90%;width:10%"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gantt-milestones">
+    <div class="gm-item"><div class="gm-diamond" style="background:var(--brand-2);"></div>M1: Analisi e documento completati (W2)</div>
+    <div class="gm-item"><div class="gm-diamond" style="background:var(--brand-5);"></div>M2: Architettura e mockup pronti (W5)</div>
+    <div class="gm-item"><div class="gm-diamond" style="background:var(--brand-6);"></div>M3: Backend funzionante (W9)</div>
+    <div class="gm-item"><div class="gm-diamond" style="background:var(--brand-7);"></div>M4: App v0.9 completa (W13)</div>
+    <div class="gm-item"><div class="gm-diamond" style="background:#c77b2a;"></div>M5: Beta test completato (W17)</div>
+    <div class="gm-item"><div class="gm-diamond" style="background:var(--brand-1);"></div>M6: Lancio ufficiale (W20)</div>
+  </div>
+
+  <div class="sub-title">8.4 Milestone Principali</div>
+
+  <div class="ms-list">
+
+    <div class="ms-item">
+      <div class="ms-dot-wrap">
+        <div class="ms-dot done">M1</div>
+      </div>
+      <div class="ms-content">
+        <div class="ms-title">Analisi e Definizione Completata</div>
+        <div class="ms-date">Fine Settimana 2</div>
+        <div class="ms-del">Deliverable: Documento di progetto — Prima Consegna. Ricerca di mercato, analisi concorrenza, target, business model e WBS preliminare.</div>
+      </div>
+    </div>
+
+    <div class="ms-item">
+      <div class="ms-dot-wrap">
+        <div class="ms-dot">M2</div>
+      </div>
+      <div class="ms-content">
+        <div class="ms-title">Architettura e Mockup Completati</div>
+        <div class="ms-date">Fine Settimana 5</div>
+        <div class="ms-del">Deliverable: Wireframe interattivi, schema ER del database, architettura cloud documentata — Seconda Consegna.</div>
+      </div>
+    </div>
+
+    <div class="ms-item">
+      <div class="ms-dot-wrap">
+        <div class="ms-dot">M3</div>
+      </div>
+      <div class="ms-content">
+        <div class="ms-title">Backend Funzionante e Testato</div>
+        <div class="ms-date">Fine Settimana 9</div>
+        <div class="ms-del">Deliverable: API RESTful documentate, database PostgreSQL operativo, integrazione Stripe e Firebase completate.</div>
+      </div>
+    </div>
+
+    <div class="ms-item">
+      <div class="ms-dot-wrap">
+        <div class="ms-dot">M4</div>
+      </div>
+      <div class="ms-content">
+        <div class="ms-title">App Mobile v0.9 Completata</div>
+        <div class="ms-date">Fine Settimana 13</div>
+        <div class="ms-del">Deliverable: Build interna testabile su iOS e Android, tutte le funzionalità core implementate e integrate con il backend.</div>
+      </div>
+    </div>
+
+    <div class="ms-item">
+      <div class="ms-dot-wrap">
+        <div class="ms-dot">M5</div>
+      </div>
+      <div class="ms-content">
+        <div class="ms-title">Beta Test Completato</div>
+        <div class="ms-date">Fine Settimana 17</div>
+        <div class="ms-del">Deliverable: Report feedback beta tester, elenco bug risolti, versione corretta pronta per store — Terza Consegna.</div>
+      </div>
+    </div>
+
+    <div class="ms-item">
+      <div class="ms-dot-wrap">
+        <div class="ms-dot launch">M6</div>
+      </div>
+      <div class="ms-content">
+        <div class="ms-title">Lancio Ufficiale Sportly</div>
+        <div class="ms-date">Fine Settimana 20</div>
+        <div class="ms-del">Deliverable: App pubblicata su App Store e Google Play, prime strutture onboarded, campagna di lancio attiva, presentazione finale del progetto.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="pf">
+    <span>Sportly — Prima Consegna · Documento di Progetto v1.0</span>
+    <div class="pf-dot"></div>
+    <span>§ 8 / Timeline e Milestone · Pag. 10</span>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════
+     CONCLUSIONI
+══════════════════════════════════ -->
+<div class="page">
+
+  <div class="rh">
+    <span class="rh-brand">Sportly<span>.</span></span>
+    <span class="rh-section">Conclusioni — Prima Consegna</span>
+  </div>
+
+  <div style="height:4mm;"></div>
+
+  <div style="border-left:3px solid var(--accent);padding-left:5mm;margin-bottom:7mm;">
+    <div style="font-size:6.5pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:1.5mm;">Sintesi del Documento</div>
+    <div class="sec-title" style="border-bottom:none;padding-bottom:0;margin-bottom:0;font-size:17pt;">Conclusioni</div>
+  </div>
+
+  <p>Sportly si configura come una soluzione concretamente necessaria nel panorama sportivo dilettantistico italiano. La combinazione di marketplace, booking real-time, community integrata e strumenti analitici per i gestori crea un prodotto che supera le limitazioni di ogni singolo concorrente e risponde a bisogni reali di un mercato ampio e non ancora pienamente servito.</p>
+
+  <div class="sub-title">Elementi Distintivi del Progetto</div>
+
+  <div class="concl-grid">
+    <div class="concl-card">
+      <div class="concl-num">01</div>
+      <div>
+        <div class="concl-title">Piattaforma Multi-Sport Integrata</div>
+        <div class="concl-desc">Campi, corsi, eventi e attività ricreative in un unico ecosistema digitale. L'utente non cambia app per sport diversi.</div>
+      </div>
+    </div>
+    <div class="concl-card">
+      <div class="concl-num">02</div>
+      <div>
+        <div class="concl-title">Community come Differenziatore</div>
+        <div class="concl-desc">La funzione "Cerca compagno", i gruppi locali e la gamification creano retention organica che i concorrenti non offrono.</div>
+      </div>
+    </div>
+    <div class="concl-card">
+      <div class="concl-num">03</div>
+      <div>
+        <div class="concl-title">Valore Immediato per le ASD</div>
+        <div class="concl-desc">Dashboard analitica, automazione prenotazioni e pagamenti digitali certi: ROI tangibile fin dal primo mese per le strutture.</div>
+      </div>
+    </div>
+    <div class="concl-card">
+      <div class="concl-num">04</div>
+      <div>
+        <div class="concl-title">Business Model Scalabile</div>
+        <div class="concl-desc">Quattro stream di ricavo complementari (commissioni, SaaS, freemium B2C, pubblicità) garantiscono crescita resiliente.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-title">Fattori Critici di Successo</div>
+
+  <div class="bar-chart">
+    <div class="bar-row">
+      <div class="bar-lbl">Copertura funzionale</div>
+      <div class="bar-track"><div class="bar-fill teal" style="width:95%"></div></div>
+      <div class="bar-val">Eccellente</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-lbl">Facilità d'uso</div>
+      <div class="bar-track"><div class="bar-fill green" style="width:90%"></div></div>
+      <div class="bar-val">Priorità assoluta</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-lbl">Mercato indirizzabile</div>
+      <div class="bar-track"><div class="bar-fill lime" style="width:85%"></div></div>
+      <div class="bar-val">Molto ampio</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-lbl">Scalabilità tecnica</div>
+      <div class="bar-track"><div class="bar-fill soft" style="width:88%"></div></div>
+      <div class="bar-val">Alta</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-lbl">Differenziazione</div>
+      <div class="bar-track"><div class="bar-fill teal" style="width:80%"></div></div>
+      <div class="bar-val">Forte</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    Il mercato italiano delle ASD dilettantistiche rappresenta un'opportunità significativa e ancora largamente inesplorata: decine di migliaia di strutture con scarsa digitalizzazione, milioni di sportivi con smartphone sempre in mano e una domanda crescente di servizi digitali integrati nel settore sport e benessere. La roadmap pianificata copre tutti gli aspetti — dalla validazione al lancio — entro 20 settimane con milestone chiare, deliverable definiti e un modello di ricavo sostenibile dal mese 6.
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4mm;margin-top:4mm;">
+    <div style="border:1px solid var(--border);padding:4mm;text-align:center;">
+      <div style="font-size:6pt;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-faint);margin-bottom:1.5mm;">Team</div>
+      <div style="font-family:var(--serif);font-size:10pt;color:var(--ink);">Classe 5I — Gruppo 6-3-14</div>
+    </div>
+    <div style="border:1px solid var(--accent);padding:4mm;text-align:center;background:rgba(23,162,169,.03);">
+      <div style="font-size:6pt;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:1.5mm;">Consegna</div>
+      <div style="font-family:var(--serif);font-size:10pt;color:var(--ink);">Prima Consegna · Aprile 2025</div>
+    </div>
+    <div style="border:1px solid var(--border);padding:4mm;text-align:center;">
+      <div style="font-size:6pt;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-faint);margin-bottom:1.5mm;">Versione</div>
+      <div style="font-family:var(--serif);font-size:10pt;color:var(--ink);">Documento v1.0</div>
+    </div>
+  </div>
+
+  <div class="pf" style="margin-top:auto;">
+    <span>DOCUMENTO RISERVATO — USO INTERNO DIDATTICO</span>
+    <div class="pf-dot"></div>
+    <span>Pagina 11 / Fine Documento</span>
+  </div>
+
+</div>
+
+</body>
+</html>
