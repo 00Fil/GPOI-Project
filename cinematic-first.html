@@ -164,7 +164,7 @@ nav.visible {
   opacity: 1;
   border-color: var(--rule);
 }
-.nav-logo { height: 42px; margin-right: 1rem; }
+.nav-logo { height: 60px; margin-right: 1rem; }
 .nav-links {
   display: flex;
   gap: 2.5rem;
@@ -2914,11 +2914,38 @@ hoverEls.forEach(el => {
   el.addEventListener('mouseleave', () => {
     cursor.style.width = '8px';
     cursor.style.height = '8px';
-    cursor.style.background = 'var(--k)';
+    updateCursorColor();
     cursorRing.style.opacity = '.3';
-    cursorRing.style.borderColor = 'var(--k)';
   });
 });
+
+// Change cursor color on dark backgrounds
+function updateCursorColor() {
+  const elements = document.elementsFromPoint(cursor.offsetLeft, cursor.offsetTop);
+  let isDark = false;
+  for (let el of elements) {
+    const bgColor = getComputedStyle(el).backgroundColor;
+    if (bgColor && bgColor !== 'rgba(0, 0, 0, 0)' && bgColor !== 'transparent') {
+      const rgb = bgColor.match(/\d+/g);
+      if (rgb) {
+        const brightness = (parseInt(rgb[0]) * 299 + parseInt(rgb[1]) * 587 + parseInt(rgb[2]) * 114) / 1000;
+        if (brightness < 128) {
+          isDark = true;
+          break;
+        }
+      }
+    }
+  }
+  if (isDark) {
+    cursor.style.background = 'white';
+    cursorRing.style.borderColor = 'white';
+  } else {
+    cursor.style.background = 'var(--k)';
+    cursorRing.style.borderColor = 'var(--k)';
+  }
+}
+
+document.addEventListener('mousemove', updateCursorColor);
 
 /* ══════════════════════════════
    9. NAV LINK SCROLL (Lenis)
