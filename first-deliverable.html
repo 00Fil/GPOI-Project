@@ -1646,44 +1646,59 @@ p strong {
 
   <div class="cover-bottom-half">
 
-    <div class="cover-chart-row">
-      <div class="cover-donut-wrap">
-        <svg width="80" height="80" viewBox="0 0 80 80">
-          <circle cx="40" cy="40" r="28" fill="none" stroke="#e2e2da" stroke-width="12"/>
-          <circle cx="40" cy="40" r="28" fill="none" stroke="#a3c639" stroke-width="12"
-                  stroke-dasharray="113.7 175.9" stroke-dashoffset="43.98"
-                  stroke-linecap="butt"/>
-          <circle cx="40" cy="40" r="28" fill="none" stroke="#0d8c8c" stroke-width="12"
-                  stroke-dasharray="62.2 175.9" stroke-dashoffset="-69.72"
-                  stroke-linecap="butt"/>
-          <text x="40" y="44" text-anchor="middle" font-size="11" font-family="Space Grotesk, sans-serif" font-weight="700" fill="#0c0c0c">65%</text>
-        </svg>
-      </div>
-      <div class="cover-donut-legend">
-        <div class="donut-legend-item">
-          <div class="dl-swatch" style="background:var(--c1);"></div>
-          <span><strong>65%</strong> strutture non digitalizzate — opportunità primaria</span>
-        </div>
-        <div class="donut-legend-item">
-          <div class="dl-swatch" style="background:var(--c2);"></div>
-          <span><strong>35%</strong> già digitalizzate — mercato concorrenziale</span>
-        </div>
-        <div style="font-family:var(--mono);font-size:6pt;color:var(--ink-4);margin-top:2mm;">Stima su ASD dilettantistiche italiane — CONI / ISTAT 2024</div>
-      </div>
-    </div>
+<div class="cover-chart-row">
+  <div class="cover-donut-wrap">
+    <svg width="80" height="80" viewBox="0 0 80 80">
 
-    <div class="cover-info-grid">
-      <div class="cover-info-card">
-        <div class="cover-info-label">Tipologia di Progetto</div>
-        <div class="cover-info-val">Piattaforma Multi-device</div>
-        <div class="cover-info-sub">App Mobile (iOS + Android) & Portale Web</div>
-      </div>
-      <div class="cover-info-card">
-        <div class="cover-info-label">Modello di Business</div>
-        <div class="cover-info-val">Multi-Revenue</div>
-        <div class="cover-info-sub">SaaS B2B + Commissioni + Freemium</div>
-      </div>
+      <!-- Sfondo grigio pieno -->
+      <circle cx="40" cy="40" r="28"
+              fill="none"
+              stroke="#e2e2da"
+              stroke-width="12"/>
+
+      <!-- Segmento VERDE 65% — parte da ore 12 -->
+      <circle cx="40" cy="40" r="28"
+              fill="none"
+              stroke="#a3c639"
+              stroke-width="12"
+              stroke-dasharray="114.35 61.58"
+              stroke-dashoffset="43.98"
+              stroke-linecap="butt"/>
+
+      <!-- Segmento TEAL 35% — parte subito dopo il verde -->
+      <circle cx="40" cy="40" r="28"
+              fill="none"
+              stroke="#0d8c8c"
+              stroke-width="12"
+              stroke-dasharray="61.58 114.35"
+              stroke-dashoffset="-70.37"
+              stroke-linecap="butt"/>
+
+      <!-- Testo centrale -->
+      <text x="40" y="44"
+            text-anchor="middle"
+            font-size="11"
+            font-family="Space Grotesk, sans-serif"
+            font-weight="700"
+            fill="#0c0c0c">65%</text>
+
+    </svg>
+  </div>
+
+  <div class="cover-donut-legend">
+    <div class="donut-legend-item">
+      <div class="dl-swatch" style="background:#a3c639;"></div>
+      <span><strong>65%</strong> strutture non digitalizzate — opportunità primaria</span>
     </div>
+    <div class="donut-legend-item">
+      <div class="dl-swatch" style="background:#0d8c8c;"></div>
+      <span><strong>35%</strong> già digitalizzate — mercato concorrenziale</span>
+    </div>
+    <div style="font-family:var(--mono);font-size:6pt;color:var(--ink-4);margin-top:2mm;">
+      Stima su ASD dilettantistiche italiane — CONI / ISTAT 2024
+    </div>
+  </div>
+</div>
 
     <div class="cover-team-strip">
       <div class="cover-team-label">Team</div>
