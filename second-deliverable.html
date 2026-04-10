@@ -1185,35 +1185,64 @@ p strong { color: var(--ink); font-weight: 500; }
 
   <div class="cover-bottom-half">
 
-    <div class="cover-chart-row">
-      <div class="cover-donut-wrap">
-        <svg width="80" height="80" viewBox="0 0 80 80">
-          <circle cx="40" cy="40" r="28" fill="none" stroke="#e2e2da" stroke-width="12"/>
-          <circle cx="40" cy="40" r="28" fill="none" stroke="#a3c639" stroke-width="12"
-                  stroke-dasharray="87.9 175.9" stroke-dashoffset="43.98"/>
-          <circle cx="40" cy="40" r="28" fill="none" stroke="#0d8c8c" stroke-width="12"
-                  stroke-dasharray="52.8 175.9" stroke-dashoffset="-43.92"/>
-          <circle cx="40" cy="40" r="28" fill="none" stroke="#3a9e7a" stroke-width="12"
-                  stroke-dasharray="35.2 175.9" stroke-dashoffset="-96.72"/>
-          <text x="40" y="44" text-anchor="middle" font-size="9" font-family="Outfit, sans-serif" font-weight="700" fill="#0c0c0c">Rev</text>
-        </svg>
-      </div>
-      <div class="cover-donut-legend">
-        <div class="donut-legend-item">
-          <div class="dl-swatch" style="background:var(--c1);"></div>
-          <span><strong>50%</strong> Commissioni prenotazioni (scala con volume)</span>
-        </div>
-        <div class="donut-legend-item">
-          <div class="dl-swatch" style="background:var(--c2);"></div>
-          <span><strong>30%</strong> SaaS strutture — ricavo ricorrente mensile</span>
-        </div>
-        <div class="donut-legend-item">
-          <div class="dl-swatch" style="background:var(--c6);"></div>
-          <span><strong>20%</strong> Pubblicità, eventi sponsorizzati, premium user</span>
-        </div>
-        <div style="font-family:var(--mono);font-size:6pt;color:var(--ink-4);margin-top:2mm;">Mix ricavi stimato a regime — Anno 2</div>
-      </div>
+<div class="cover-chart-row">
+  <div class="cover-donut-wrap">
+    <svg width="80" height="80" viewBox="0 0 80 80">
+
+      <!-- Sfondo -->
+      <circle cx="40" cy="40" r="28"
+              fill="none" stroke="#e2e2da" stroke-width="12"/>
+
+      <!-- Verde 50% — da ore 12 -->
+      <circle cx="40" cy="40" r="28"
+              fill="none" stroke="#a3c639" stroke-width="12"
+              stroke-dasharray="87.96 87.97"
+              stroke-dashoffset="43.98"
+              stroke-linecap="butt"/>
+
+      <!-- Teal 30% — dopo verde -->
+      <circle cx="40" cy="40" r="28"
+              fill="none" stroke="#0d8c8c" stroke-width="12"
+              stroke-dasharray="52.78 123.15"
+              stroke-dashoffset="-43.98"
+              stroke-linecap="butt"/>
+
+      <!-- Verde scuro 20% — dopo teal -->
+      <circle cx="40" cy="40" r="28"
+              fill="none" stroke="#3a9e7a" stroke-width="12"
+              stroke-dasharray="35.19 140.74"
+              stroke-dashoffset="-96.76"
+              stroke-linecap="butt"/>
+
+      <!-- Testo centrale -->
+      <text x="40" y="44"
+            text-anchor="middle"
+            font-size="9"
+            font-family="Outfit, sans-serif"
+            font-weight="700"
+            fill="#0c0c0c">Rev</text>
+
+    </svg>
+  </div>
+
+  <div class="cover-donut-legend">
+    <div class="donut-legend-item">
+      <div class="dl-swatch" style="background:#a3c639;"></div>
+      <span><strong>50%</strong> Commissioni prenotazioni (scala con volume)</span>
     </div>
+    <div class="donut-legend-item">
+      <div class="dl-swatch" style="background:#0d8c8c;"></div>
+      <span><strong>30%</strong> SaaS strutture — ricavo ricorrente mensile</span>
+    </div>
+    <div class="donut-legend-item">
+      <div class="dl-swatch" style="background:#3a9e7a;"></div>
+      <span><strong>20%</strong> Pubblicità, eventi sponsorizzati, premium user</span>
+    </div>
+    <div style="font-family:var(--mono);font-size:6pt;color:var(--ink-4);margin-top:2mm;">
+      Mix ricavi stimato a regime — Anno 2
+    </div>
+  </div>
+</div>
 
     <div class="cover-info-grid">
       <div class="cover-info-card">
