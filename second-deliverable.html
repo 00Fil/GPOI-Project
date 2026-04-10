@@ -1,0 +1,3115 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sportly — Seconda Consegna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --c1: #a3c639;
+  --c2: #0d8c8c;
+  --c3: #0a7a7a;
+  --c4: #5daa60;
+  --c5: #8cb85a;
+  --c6: #3a9e7a;
+  --c7: #2d9a90;
+  --c8: #38a898;
+
+  --ink:       #0c0c0c;
+  --ink-2:     #3a3a3a;
+  --ink-3:     #717171;
+  --ink-4:     #a8a8a8;
+  --surface:   #fafaf8;
+  --surface-2: #f3f3ef;
+  --surface-3: #eaeae4;
+  --border:    #e2e2da;
+  --border-2:  #d0d0c6;
+
+  --accent:    var(--c1);
+  --accent-2:  var(--c2);
+
+  --type-display: 'Outfit', system-ui, sans-serif;
+  --type-heading:'Instrument Serif', Georgia, serif;
+  --sans:  'DM Sans', system-ui, sans-serif;
+  --mono:  'JetBrains Mono', 'DM Mono', monospace;
+  --serif: var(--type-heading);
+
+  --page-w: 210mm;
+  --page-h: 297mm;
+  --page-pad-x: 20mm;
+  --page-pad-y: 18mm;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 10pt; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+body {
+  font-family: var(--sans);
+  background: #d8d8d2;
+  color: var(--ink);
+  padding: 32px 24px;
+  line-height: 1.6;
+}
+
+.page {
+  width: var(--page-w);
+  min-height: var(--page-h);
+  background: var(--surface);
+  margin: 0 auto 16px;
+  padding: var(--page-pad-y) var(--page-pad-x);
+  box-shadow:
+    0 1px 2px rgba(0,0,0,.04),
+    0 4px 16px rgba(0,0,0,.06),
+    0 24px 64px rgba(0,0,0,.08);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.page::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--c1) 0%, var(--c2) 50%, transparent 100%);
+}
+
+/* ═══ COVER ═══ */
+.cover { padding: 0; overflow: hidden; background: #ffffff; }
+.cover::before { background: linear-gradient(180deg, var(--c1) 0%, var(--c2) 100%); }
+
+.cover-top {
+  background: #ffffff;
+  padding: 14mm 20mm 12mm;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+
+.cover-top::after {
+  content: '';
+  position: absolute;
+  right: -40mm; top: -40mm;
+  width: 160mm; height: 160mm;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(163,198,57,.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cover-top::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--c1) 0%, var(--c2) 100%);
+}
+
+.cover-header {
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+  padding-bottom: 5mm;
+  margin-bottom: 6mm;
+  border-bottom: 1px solid var(--border);
+}
+
+.cover-header .rh-logo { height: 24px; width: auto; display: block; }
+.cover-header .rh-divider { width: 1px; height: 14px; background: var(--border-2); }
+.cover-header .rh-type {
+  font-family: var(--mono);
+  font-size: 6pt;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--ink-4);
+}
+
+.cover-meta-line { display: flex; align-items: center; gap: 3mm; margin-bottom: 10mm; }
+
+.cover-badge {
+  font-family: var(--mono);
+  font-size: 6.5pt;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--c2);
+  border: 1px solid rgba(13,140,140,.35);
+  padding: 1.5mm 3mm;
+}
+
+.cover-date { font-family: var(--mono); font-size: 6.5pt; color: var(--ink-3); letter-spacing: .5px; }
+
+.cover-h1 {
+  font-family: var(--type-display);
+  font-size: 58pt;
+  font-weight: 700;
+  line-height: .85;
+  letter-spacing: -3px;
+  color: var(--ink);
+  margin-bottom: 6mm;
+}
+
+.cover-h1 em {
+  font-weight: 300;
+  font-style: italic;
+  font-family: var(--type-heading);
+  color: var(--c2);
+  letter-spacing: 0;
+}
+
+.cover-sub {
+  font-size: 9.5pt;
+  font-weight: 300;
+  color: var(--ink-3);
+  max-width: 58ch;
+  line-height: 1.65;
+  margin-bottom: 10mm;
+}
+
+.cover-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border) 0%, transparent 100%);
+  margin-bottom: 7mm;
+}
+
+.cover-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+
+.cover-kpi { padding: 5mm 0; border-right: 1px solid var(--border); padding-right: 6mm; }
+.cover-kpi:first-child { padding-left: 0; }
+.cover-kpi:last-child { border-right: none; padding-right: 0; padding-left: 6mm; }
+.cover-kpi:nth-child(2) { padding-left: 6mm; }
+
+.cover-kpi-val {
+  font-family: var(--type-display);
+  font-size: 26pt;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--c2);
+  letter-spacing: -1.5px;
+  margin-bottom: 1.5mm;
+}
+
+.cover-kpi-label {
+  font-family: var(--mono);
+  font-size: 6pt;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 1mm;
+}
+
+.cover-kpi-desc { font-size: 7.5pt; font-weight: 300; color: var(--ink-3); line-height: 1.5; }
+
+.cover-bottom-half {
+  padding: 8mm 20mm 12mm;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6mm;
+  background: #ffffff;
+}
+
+.cover-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; margin-top: 2mm; }
+
+.cover-info-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  padding: 4.5mm 5mm;
+  position: relative;
+}
+
+.cover-info-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--c1), var(--c2));
+}
+
+.cover-info-label {
+  font-family: var(--mono);
+  font-size: 6pt;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 2mm;
+}
+
+.cover-info-val { font-family: var(--type-heading); font-size: 11pt; color: var(--ink); line-height: 1.3; }
+.cover-info-sub { font-size: 7.5pt; font-weight: 300; color: var(--ink-3); margin-top: 1mm; }
+
+.cover-team-strip { border: 1px solid var(--border); display: flex; align-items: stretch; }
+
+.cover-team-label {
+  background: var(--c2);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 6.5pt;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  padding: 4mm 3mm;
+  flex-shrink: 0;
+}
+
+.cover-team-content { padding: 4mm 5mm; flex: 1; }
+
+.cover-team-name {
+  font-family: var(--type-display);
+  font-size: 13pt;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 1.5mm;
+}
+
+.cover-team-details { font-family: var(--mono); font-size: 7pt; color: var(--ink-3); letter-spacing: .3px; }
+
+.cover-chart-row { display: flex; align-items: center; gap: 6mm; }
+.cover-donut-wrap { flex-shrink: 0; }
+.cover-donut-legend { flex: 1; }
+
+.donut-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 2.5mm;
+  margin-bottom: 2.5mm;
+  font-size: 7.8pt;
+  color: var(--ink-2);
+  font-weight: 300;
+}
+
+.donut-legend-item strong { font-weight: 500; color: var(--ink); }
+.dl-swatch { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+
+/* ═══ RUNNING HEADER ═══ */
+.rh {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 5mm;
+  margin-bottom: 8mm;
+  border-bottom: 1px solid var(--border);
+}
+
+.rh-left { display: flex; align-items: center; gap: 3mm; }
+.rh-logo { height: 22px; width: auto; display: block; }
+.rh-divider { width: 1px; height: 12px; background: var(--border-2); }
+.rh-section { font-family: var(--mono); font-size: 6.5pt; color: var(--ink-3); letter-spacing: .8px; text-transform: uppercase; }
+.rh-page { font-family: var(--mono); font-size: 7pt; color: var(--ink-4); }
+
+/* ═══ SECTION HEADINGS ═══ */
+.s-eyebrow { font-family: var(--mono); font-size: 6.5pt; letter-spacing: 2px; text-transform: uppercase; color: var(--c2); margin-bottom: 2.5mm; }
+
+.s-title {
+  font-family: var(--type-display);
+  font-size: 28pt;
+  font-weight: 700;
+  line-height: .92;
+  letter-spacing: -1.5px;
+  color: var(--ink);
+  margin-bottom: 6mm;
+}
+
+.s-title em { font-style: italic; font-family: var(--type-heading); color: var(--c2); font-weight: 400; letter-spacing: 0; }
+
+.ss-title {
+  font-family: var(--type-heading);
+  font-size: 14pt;
+  color: var(--ink);
+  margin-top: 7mm;
+  margin-bottom: 3.5mm;
+  padding-bottom: 2.5mm;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: baseline;
+  gap: 3mm;
+}
+
+.ss-title-num { font-family: var(--mono); font-size: 8pt; color: var(--c2); flex-shrink: 0; }
+
+/* ═══ TYPOGRAPHY ═══ */
+p { font-size: 8.8pt; color: var(--ink-2); line-height: 1.7; margin-bottom: 3mm; max-width: 72ch; font-weight: 300; }
+p strong { color: var(--ink); font-weight: 500; }
+
+/* ═══ PAGE FOOTER ═══ */
+.pf {
+  margin-top: auto;
+  padding-top: 4mm;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 6.5pt;
+  color: var(--ink-4);
+}
+
+.pf-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--c1); flex-shrink: 0; }
+
+/* ═══ STAT CARDS ═══ */
+.stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3.5mm; margin: 3.5mm 0 5mm; }
+.stat-row-2 { grid-template-columns: 1fr 1fr; }
+.stat-row-4 { grid-template-columns: repeat(4, 1fr); }
+
+.stat-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  padding: 4.5mm 5mm;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card-accent {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--c1), var(--c2));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .3s ease;
+}
+
+.stat-card:hover .stat-card-accent { transform: scaleX(1); }
+
+.sc-label { font-family: var(--mono); font-size: 6pt; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink-3); margin-bottom: 2mm; }
+.sc-val { font-family: var(--type-display); font-size: 26pt; font-weight: 700; line-height: 1; color: var(--c2); letter-spacing: -1.5px; margin-bottom: 1.5mm; }
+.sc-val.green { color: var(--c4); }
+.sc-val.lime  { color: var(--c1); }
+.sc-desc { font-size: 7.5pt; font-weight: 300; color: var(--ink-3); line-height: 1.55; }
+
+/* ═══ TABLES ═══ */
+.tbl { width: 100%; border-collapse: collapse; margin: 3.5mm 0 5mm; font-size: 8pt; }
+.tbl thead tr { background: var(--ink); color: #fff; }
+.tbl thead th { text-align: left; padding: 4px 8px; font-family: var(--mono); font-size: 6.5pt; letter-spacing: 1px; text-transform: uppercase; font-weight: 400; }
+.tbl tbody tr { border-bottom: 1px solid var(--border); transition: background .15s; }
+.tbl tbody tr:hover { background: var(--surface-2); }
+.tbl tbody td { padding: 5px 8px; color: var(--ink-2); vertical-align: top; line-height: 1.5; font-weight: 300; }
+.tbl tbody td:first-child { font-weight: 500; color: var(--ink); width: 40%; }
+
+/* ═══ BAR CHARTS ═══ */
+.bar-chart { display: flex; flex-direction: column; gap: 3mm; margin: 3mm 0 4.5mm; }
+.bar-row { display: grid; grid-template-columns: 28mm 1fr 16mm; align-items: center; gap: 3mm; }
+.bar-label { font-size: 7.5pt; font-weight: 300; color: var(--ink-2); text-align: right; line-height: 1.3; }
+.bar-track { height: 10px; background: var(--surface-3); border-radius: 1px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 1px; }
+.bar-fill.c1 { background: var(--c1); }
+.bar-fill.c2 { background: var(--c2); }
+.bar-fill.c4 { background: var(--c4); }
+.bar-fill.c6 { background: var(--c6); }
+.bar-fill.c7 { background: var(--c7); }
+.bar-fill.muted { background: var(--surface-3); border: 1px solid var(--border-2); }
+.bar-val { font-family: var(--mono); font-size: 7.5pt; color: var(--ink); font-weight: 500; }
+
+/* ═══ CALLOUT ═══ */
+.callout {
+  border-left: 2px solid var(--c1);
+  background: linear-gradient(90deg, rgba(163,198,57,.06) 0%, transparent 100%);
+  padding: 4mm 5mm;
+  margin: 4mm 0;
+}
+.callout p { font-style: italic; font-size: 9pt; color: var(--ink-2); line-height: 1.65; max-width: 100%; margin: 0; }
+.callout p strong { font-style: normal; }
+
+/* ═══ VALUE GRID ═══ */
+.value-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; margin: 3.5mm 0 5mm; }
+
+.value-section {
+  border: 1px solid var(--border);
+  padding: 5mm;
+  background: var(--surface-2);
+}
+
+.value-section-label {
+  font-family: var(--mono);
+  font-size: 6pt;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--c2);
+  margin-bottom: 3.5mm;
+  padding-bottom: 2.5mm;
+  border-bottom: 1px solid var(--border);
+}
+
+.value-item { display: flex; gap: 2.5mm; align-items: flex-start; margin-bottom: 3mm; padding-bottom: 3mm; border-bottom: 1px dotted var(--border); }
+.value-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+.value-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--c1); flex-shrink: 0; margin-top: 3px; }
+.value-dot.teal { background: var(--c2); }
+.value-dot.red  { background: #e05252; }
+.value-dot.gray { background: var(--border-2); }
+.vi-title { font-size: 8pt; font-weight: 500; color: var(--ink); margin-bottom: .8mm; line-height: 1.3; }
+.vi-text { font-size: 7.5pt; font-weight: 300; color: var(--ink-3); line-height: 1.5; }
+
+/* ═══ TWO COL ═══ */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
+
+/* ═══ COST ROWS ═══ */
+.cost-block { border: 1px solid var(--border); margin: 2mm 0 3mm; }
+.cost-block-header { background: var(--surface-3); padding: 3mm 4mm; font-family: var(--mono); font-size: 6.5pt; letter-spacing: 1px; text-transform: uppercase; color: var(--ink-3); border-bottom: 1px solid var(--border); }
+.cost-row { display: flex; justify-content: space-between; align-items: center; padding: 3mm 4mm; border-bottom: 1px solid var(--border); font-size: 8pt; }
+.cost-row:last-child { border-bottom: none; }
+.cost-label { font-weight: 300; color: var(--ink-2); }
+.cost-value { font-family: var(--mono); font-size: 8.5pt; font-weight: 500; color: var(--ink); }
+.cost-row.total { background: var(--surface-2); border-top: 2px solid var(--ink); }
+.cost-row.total .cost-label { font-weight: 600; color: var(--ink); }
+.cost-row.total .cost-value { color: var(--c6); font-size: 10pt; }
+
+/* ═══ PRICING ═══ */
+.pricing-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3.5mm; margin: 3.5mm 0 4.5mm; }
+
+.price-card { border: 1px solid var(--border); background: var(--surface-2); padding: 5mm; text-align: center; position: relative; }
+.price-card.featured { border-color: var(--c2); background: rgba(13,140,140,.04); }
+
+.pc-badge { position: absolute; top: 0; right: 0; background: var(--c2); color: #fff; font-family: var(--mono); font-size: 5.5pt; letter-spacing: 1px; text-transform: uppercase; padding: 1.5mm 2.5mm; }
+.pc-tier { font-family: var(--mono); font-size: 6.5pt; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink-3); margin-bottom: 2mm; }
+.pc-price { font-family: var(--type-display); font-size: 28pt; font-weight: 700; line-height: 1; letter-spacing: -1.5px; color: var(--ink); margin-bottom: .5mm; }
+.pc-period { font-family: var(--mono); font-size: 7pt; color: var(--ink-4); margin-bottom: 3mm; }
+.pc-features { font-size: 7.5pt; font-weight: 300; color: var(--ink-2); line-height: 1.8; text-align: left; }
+.pc-feat-item { display: flex; align-items: flex-start; gap: 2mm; margin-bottom: 1.5mm; }
+.pc-feat-item::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--c1); flex-shrink: 0; margin-top: 3px; }
+
+/* ═══ SWOT ═══ */
+.swot-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--border);
+  margin: 3.5mm 0 5mm;
+  overflow: hidden;
+}
+
+.swot-cell {
+  padding: 5mm;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.swot-cell:nth-child(2) { border-right: none; }
+.swot-cell:nth-child(3) { border-bottom: none; }
+.swot-cell:nth-child(4) { border-right: none; border-bottom: none; }
+
+.swot-cell.strengths { background: rgba(163,198,57,.05); }
+.swot-cell.weaknesses { background: rgba(224,82,82,.04); }
+.swot-cell.opportunities { background: rgba(13,140,140,.05); }
+.swot-cell.threats { background: rgba(113,113,113,.04); }
+
+.swot-label {
+  font-family: var(--mono);
+  font-size: 6pt;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 3mm;
+  padding-bottom: 2mm;
+  border-bottom: 1px solid var(--border);
+}
+
+.strengths .swot-label    { color: var(--c4); }
+.weaknesses .swot-label   { color: #e05252; }
+.opportunities .swot-label{ color: var(--c2); }
+.threats .swot-label      { color: var(--ink-3); }
+
+.swot-title {
+  font-family: var(--type-heading);
+  font-size: 12pt;
+  margin-bottom: 3mm;
+  line-height: 1.2;
+}
+
+.strengths .swot-title    { color: var(--c4); }
+.weaknesses .swot-title   { color: #e05252; }
+.opportunities .swot-title{ color: var(--c2); }
+.threats .swot-title      { color: var(--ink-3); }
+
+.swot-item {
+  display: flex;
+  gap: 2mm;
+  align-items: flex-start;
+  margin-bottom: 2.5mm;
+  font-size: 7.5pt;
+  color: var(--ink-2);
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+.swot-item::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 3.5px;
+}
+
+.strengths .swot-item::before    { background: var(--c4); }
+.weaknesses .swot-item::before   { background: #e05252; }
+.opportunities .swot-item::before{ background: var(--c2); }
+.threats .swot-item::before      { background: var(--ink-4); }
+
+.swot-item strong { font-weight: 500; color: var(--ink); }
+
+/* ═══ MARKETING MIX ═══ */
+.mix-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5mm;
+  margin: 3.5mm 0 5mm;
+}
+
+.mix-card {
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  padding: 5mm;
+  position: relative;
+  overflow: hidden;
+}
+
+.mix-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+
+.mix-card.prod::before  { background: var(--c1); }
+.mix-card.price::before { background: var(--c2); }
+.mix-card.place::before { background: var(--c6); }
+.mix-card.promo::before { background: var(--c7); }
+
+.mix-p-tag {
+  font-family: var(--mono);
+  font-size: 7pt;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 1.5mm;
+}
+
+.mix-card.prod  .mix-p-tag { color: var(--c1); }
+.mix-card.price .mix-p-tag { color: var(--c2); }
+.mix-card.place .mix-p-tag { color: var(--c6); }
+.mix-card.promo .mix-p-tag { color: var(--c7); }
+
+.mix-title {
+  font-family: var(--type-display);
+  font-size: 16pt;
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: var(--ink);
+  margin-bottom: 3mm;
+  line-height: 1;
+}
+
+.mix-list { list-style: none; }
+
+.mix-list li {
+  font-size: 7.8pt;
+  font-weight: 300;
+  color: var(--ink-2);
+  line-height: 1.55;
+  padding: 2mm 0 2mm 3.5mm;
+  border-bottom: 1px dotted var(--border);
+  position: relative;
+}
+
+.mix-list li:last-child { border-bottom: none; }
+
+.mix-list li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 50%;
+  transform: translateY(-50%);
+  width: 5px; height: 1px;
+}
+
+.mix-card.prod  .mix-list li::before { background: var(--c1); }
+.mix-card.price .mix-list li::before { background: var(--c2); }
+.mix-card.place .mix-list li::before { background: var(--c6); }
+.mix-card.promo .mix-list li::before { background: var(--c7); }
+
+.mix-list li strong { font-weight: 500; color: var(--ink); }
+
+/* ═══ GANTT ═══ */
+.gantt-outer {
+  margin: 4mm 0 5mm;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+/* ═══ ARCHITECTURE / DATABASE ═══ */
+.arch-layers { border: 1px solid var(--border); margin: 3.5mm 0 5mm; overflow: hidden; }
+
+.arch-layer {
+  display: grid;
+  grid-template-columns: 20mm 1fr;
+  min-height: 14mm;
+  border-bottom: 1px solid var(--border);
+}
+
+.arch-layer:last-child { border-bottom: none; }
+
+.arch-layer-label {
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5mm;
+  text-align: center;
+}
+
+.arch-layer-label-text {
+  font-family: var(--mono);
+  font-size: 6pt;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.5);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.arch-layer-content { display: flex; align-items: stretch; }
+
+.arch-tech-block {
+  flex: 1;
+  padding: 3mm 3.5mm;
+  border-right: 1px solid var(--border);
+  background: var(--surface-2);
+}
+
+.arch-tech-block:last-child { border-right: none; }
+.atb-name { font-size: 8pt; font-weight: 500; color: var(--ink); margin-bottom: .8mm; }
+.atb-desc { font-size: 7pt; font-weight: 300; color: var(--ink-3); line-height: 1.45; }
+
+.arch-layer.l1 .arch-layer-label { background: var(--c2); }
+.arch-layer.l2 .arch-layer-label { background: var(--c7); }
+.arch-layer.l3 .arch-layer-label { background: var(--c6); }
+.arch-layer.l4 .arch-layer-label { background: var(--c4); }
+.arch-layer.l5 .arch-layer-label { background: var(--c3); }
+
+/* ═══ MOCKUP FRAMES ═══ */
+.mockup-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4mm;
+  margin: 3.5mm 0 5mm;
+}
+
+.mockup-frame {
+  border: 1px solid var(--border);
+  background: #ffffff;
+  overflow: hidden;
+  position: relative;
+}
+
+.mockup-bar {
+  background: var(--ink);
+  padding: 2.5mm 3mm;
+  display: flex;
+  align-items: center;
+  gap: 2mm;
+}
+
+.mockup-dots span {
+  display: inline-block;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  margin-right: 2px;
+}
+
+.mockup-label-bar {
+  font-family: var(--mono);
+  font-size: 5.5pt;
+  color: rgba(255,255,255,.4);
+  letter-spacing: .8px;
+  margin-left: auto;
+}
+
+.mockup-screen { padding: 3mm; background: #f8f8f6; min-height: 70mm; }
+.mockup-title { font-family: var(--mono); font-size: 6pt; letter-spacing: 1px; text-transform: uppercase; color: var(--ink-3); margin-top: 2mm; text-align: center; }
+
+/* ── mockup UI elements ── */
+.mu-nav {
+  background: var(--ink);
+  padding: 2mm 2.5mm;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2mm;
+}
+
+.mu-nav-logo { font-family: var(--type-display); font-size: 8pt; font-weight: 700; color: #fff; letter-spacing: -.5px; }
+.mu-nav-link { font-family: var(--mono); font-size: 5pt; color: rgba(255,255,255,.4); letter-spacing: .5px; }
+
+.mu-hero {
+  background: linear-gradient(135deg, var(--c2) 0%, var(--c3) 100%);
+  padding: 4mm 3mm;
+  margin-bottom: 2mm;
+  position: relative;
+  overflow: hidden;
+}
+
+.mu-hero::after {
+  content: '';
+  position: absolute;
+  right: -6mm; bottom: -6mm;
+  width: 20mm; height: 20mm;
+  border-radius: 50%;
+  background: rgba(255,255,255,.08);
+}
+
+.mu-hero-eyebrow { font-family: var(--mono); font-size: 5pt; color: rgba(255,255,255,.5); letter-spacing: 1px; margin-bottom: 1mm; }
+.mu-hero-title { font-family: var(--type-display); font-size: 11pt; font-weight: 700; color: #fff; line-height: 1.1; letter-spacing: -.5px; margin-bottom: 1.5mm; }
+.mu-hero-sub { font-size: 6pt; color: rgba(255,255,255,.65); font-weight: 300; margin-bottom: 2.5mm; }
+
+.mu-btn {
+  display: inline-block;
+  background: var(--c1);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 5pt;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+  padding: 1.5mm 3mm;
+  font-weight: 500;
+}
+
+.mu-search-bar {
+  background: #fff;
+  border: 1px solid var(--border);
+  padding: 1.5mm 2.5mm;
+  display: flex;
+  align-items: center;
+  gap: 2mm;
+  margin-bottom: 2mm;
+}
+
+.mu-search-icon { width: 5px; height: 5px; border-radius: 50%; border: 1px solid var(--ink-3); flex-shrink: 0; }
+.mu-search-text { font-size: 6pt; color: var(--ink-4); font-weight: 300; }
+
+.mu-filter-row { display: flex; gap: 1.5mm; margin-bottom: 2mm; flex-wrap: wrap; }
+.mu-filter-chip {
+  font-family: var(--mono);
+  font-size: 5pt;
+  letter-spacing: .5px;
+  padding: 1mm 2mm;
+  border: 1px solid var(--border);
+  color: var(--ink-3);
+  background: #fff;
+}
+
+.mu-filter-chip.active { background: var(--c2); color: #fff; border-color: var(--c2); }
+
+.mu-card-list { display: flex; flex-direction: column; gap: 1.5mm; }
+
+.mu-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  padding: 2mm 2.5mm;
+  display: flex;
+  gap: 2mm;
+  align-items: center;
+}
+
+.mu-card-thumb {
+  width: 10mm; height: 10mm;
+  flex-shrink: 0;
+  border-radius: 1px;
+}
+
+.mu-card-info { flex: 1; }
+.mu-card-name { font-size: 7pt; font-weight: 500; color: var(--ink); margin-bottom: .5mm; }
+.mu-card-meta { font-family: var(--mono); font-size: 5pt; color: var(--ink-3); }
+.mu-card-price { font-family: var(--mono); font-size: 7pt; font-weight: 500; color: var(--c2); }
+
+.mu-bottom-nav {
+  display: flex;
+  justify-content: space-around;
+  background: #fff;
+  border-top: 1px solid var(--border);
+  padding: 1.5mm 0;
+  margin-top: 2mm;
+}
+
+.mu-bnav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .5mm;
+}
+
+.mu-bnav-icon {
+  width: 6mm; height: 6mm;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.mu-bnav-icon.active { background: var(--c2); }
+
+.mu-bnav-label { font-family: var(--mono); font-size: 4.5pt; color: var(--ink-4); }
+.mu-bnav-item.active .mu-bnav-label { color: var(--c2); }
+
+/* calendar mockup */
+.mu-cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2mm; }
+.mu-cal-month { font-size: 8pt; font-weight: 500; color: var(--ink); }
+.mu-cal-nav { font-family: var(--mono); font-size: 6pt; color: var(--c2); }
+.mu-cal-weekdays { display: grid; grid-template-columns: repeat(7,1fr); gap: .5mm; margin-bottom: 1mm; }
+.mu-cal-wd { font-family: var(--mono); font-size: 5pt; color: var(--ink-4); text-align: center; }
+.mu-cal-days { display: grid; grid-template-columns: repeat(7,1fr); gap: 1mm; }
+
+.mu-cal-day {
+  aspect-ratio: 1;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono);
+  font-size: 6pt;
+  color: var(--ink-2);
+  border-radius: 1px;
+}
+
+.mu-cal-day.today { background: var(--c2); color: #fff; }
+.mu-cal-day.has-booking { background: rgba(163,198,57,.2); color: var(--ink); }
+.mu-cal-day.available { background: var(--surface-2); }
+.mu-cal-day.gray { color: var(--ink-4); }
+
+.mu-slots { margin-top: 2mm; }
+.mu-slots-label { font-family: var(--mono); font-size: 5.5pt; color: var(--ink-3); letter-spacing: .5px; margin-bottom: 1.5mm; }
+.mu-slot-row { display: flex; gap: 1.5mm; flex-wrap: wrap; }
+
+.mu-slot {
+  font-family: var(--mono);
+  font-size: 5.5pt;
+  padding: 1mm 2mm;
+  border: 1px solid var(--border);
+  color: var(--ink-2);
+  background: #fff;
+}
+
+.mu-slot.booked { background: var(--c2); color: #fff; border-color: var(--c2); }
+.mu-slot.unavail { background: var(--surface-3); color: var(--ink-4); }
+
+/* dashboard mockup */
+.mu-dash-header { background: var(--ink); padding: 2.5mm 3mm; margin: -3mm -3mm 2mm; }
+.mu-dash-title { font-family: var(--type-display); font-size: 9pt; font-weight: 600; color: #fff; }
+.mu-dash-sub { font-family: var(--mono); font-size: 5pt; color: rgba(255,255,255,.3); }
+
+.mu-kpi-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5mm; margin-bottom: 2mm; }
+.mu-kpi-box { background: var(--surface-2); border: 1px solid var(--border); padding: 2mm; }
+.mu-kpi-val { font-family: var(--type-display); font-size: 11pt; font-weight: 700; color: var(--c2); letter-spacing: -1px; }
+.mu-kpi-lbl { font-family: var(--mono); font-size: 4.5pt; color: var(--ink-3); letter-spacing: .5px; }
+
+.mu-mini-chart { height: 15mm; background: var(--surface-2); border: 1px solid var(--border); margin-bottom: 2mm; padding: 2mm; position: relative; overflow: hidden; }
+
+.mu-mini-bar-wrap { display: flex; align-items: flex-end; gap: 1.5mm; height: 100%; }
+.mu-mini-bar { flex: 1; border-radius: 1px 1px 0 0; }
+
+.mu-upcoming { border: 1px solid var(--border); }
+.mu-upcoming-head { background: var(--surface-3); padding: 1.5mm 2mm; font-family: var(--mono); font-size: 5pt; color: var(--ink-3); letter-spacing: .5px; border-bottom: 1px solid var(--border); }
+.mu-upcoming-row { display: flex; justify-content: space-between; align-items: center; padding: 1.5mm 2mm; border-bottom: 1px dotted var(--border); }
+.mu-upcoming-row:last-child { border-bottom: none; }
+.mu-upcoming-name { font-size: 6pt; font-weight: 500; color: var(--ink); }
+.mu-upcoming-time { font-family: var(--mono); font-size: 5pt; color: var(--ink-3); }
+.mu-upcoming-badge { font-family: var(--mono); font-size: 5pt; padding: 0.5mm 1.5mm; }
+.mu-badge-conf { background: rgba(93,170,96,.15); color: var(--c4); }
+.mu-badge-pend { background: rgba(163,198,57,.15); color: #7a9820; }
+
+/* ═══ DB SCHEMA ═══ */
+.db-schema-wrap {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 3.5mm;
+  margin: 3.5mm 0 5mm;
+}
+
+.db-table {
+  border: 1px solid var(--border);
+  background: #fff;
+  overflow: hidden;
+}
+
+.db-table-header {
+  background: var(--ink);
+  padding: 2.5mm 3mm;
+  display: flex;
+  align-items: center;
+  gap: 2mm;
+}
+
+.db-table-name {
+  font-family: var(--mono);
+  font-size: 7.5pt;
+  font-weight: 500;
+  color: #fff;
+  letter-spacing: .5px;
+}
+
+.db-table-pk {
+  font-family: var(--mono);
+  font-size: 5pt;
+  background: var(--c1);
+  color: var(--ink);
+  padding: .5mm 1.5mm;
+  letter-spacing: .5px;
+  margin-left: auto;
+}
+
+.db-field {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  padding: 2mm 3mm;
+  border-bottom: 1px solid var(--border);
+  gap: 2mm;
+  align-items: center;
+}
+
+.db-field:last-child { border-bottom: none; }
+
+.db-field-name {
+  font-family: var(--mono);
+  font-size: 6.5pt;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.db-field-name.pk { color: var(--c1); }
+.db-field-name.fk { color: var(--c2); }
+.db-field-name.idx { color: var(--c6); }
+
+.db-field-type {
+  font-family: var(--mono);
+  font-size: 5.5pt;
+  color: var(--ink-4);
+  text-align: right;
+}
+
+.db-field-constraint {
+  font-family: var(--mono);
+  font-size: 4.5pt;
+  color: var(--c2);
+  text-align: right;
+}
+
+.db-table.t-accent-1 .db-table-header { background: var(--c2); }
+.db-table.t-accent-2 .db-table-header { background: var(--c6); }
+.db-table.t-accent-3 .db-table-header { background: var(--c7); }
+.db-table.t-accent-4 .db-table-header { background: var(--c4); }
+.db-table.t-accent-5 .db-table-header { background: var(--c3); }
+.db-table.t-accent-6 .db-table-header { background: var(--c1); }
+
+.db-field-name.pk { color: var(--c1); }
+.t-accent-1 .db-field-name.pk { color: rgba(255,255,255,.9); }
+
+.db-rel-legend {
+  display: flex;
+  gap: 4mm;
+  margin: -1mm 0 4mm;
+  flex-wrap: wrap;
+}
+
+.db-rel-item {
+  display: flex;
+  align-items: center;
+  gap: 2mm;
+  font-family: var(--mono);
+  font-size: 6pt;
+  color: var(--ink-3);
+}
+
+.db-rel-dot { width: 8px; height: 8px; border-radius: 2px; }
+
+/* ═══ BUSINESS PLAN TABLE ═══ */
+.bp-section {
+  border: 1px solid var(--border);
+  margin: 3mm 0 4mm;
+  overflow: hidden;
+}
+
+.bp-section-header {
+  background: var(--surface-3);
+  padding: 3mm 4mm;
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+  border-bottom: 1px solid var(--border);
+}
+
+.bp-section-num {
+  font-family: var(--type-display);
+  font-size: 16pt;
+  font-weight: 300;
+  color: var(--border-2);
+  letter-spacing: -1px;
+  line-height: 1;
+}
+
+.bp-section-title {
+  font-size: 9pt;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.bp-section-sub {
+  font-family: var(--mono);
+  font-size: 6pt;
+  color: var(--ink-4);
+  letter-spacing: .5px;
+  margin-top: .5mm;
+}
+
+.bp-row {
+  display: grid;
+  grid-template-columns: 35mm 1fr;
+  border-bottom: 1px solid var(--border);
+}
+
+.bp-row:last-child { border-bottom: none; }
+
+.bp-key {
+  padding: 3mm 4mm;
+  background: var(--surface-2);
+  border-right: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 6.5pt;
+  color: var(--ink-3);
+  letter-spacing: .5px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.bp-val {
+  padding: 3mm 4mm;
+  font-size: 8pt;
+  color: var(--ink-2);
+  font-weight: 300;
+  line-height: 1.55;
+}
+
+.bp-val strong { font-weight: 500; color: var(--ink); }
+
+/* ═══ REV TABLE ═══ */
+.rev-table { width: 100%; border-collapse: collapse; margin: 3mm 0 4mm; font-size: 8pt; }
+.rev-table thead tr { background: var(--ink); }
+.rev-table thead th { padding: 4px 8px; color: #fff; font-family: var(--mono); font-size: 6.5pt; letter-spacing: .8px; text-transform: uppercase; font-weight: 400; text-align: left; }
+.rev-table thead th:not(:first-child) { text-align: right; }
+.rev-table tbody tr { border-bottom: 1px solid var(--border); }
+.rev-table tbody tr:hover { background: var(--surface-2); }
+.rev-table tbody tr.total-row { border-top: 2px solid var(--ink); background: var(--surface-2); }
+.rev-table tbody td { padding: 4.5px 8px; color: var(--ink-2); font-weight: 300; }
+.rev-table tbody td:first-child { font-weight: 500; color: var(--ink); }
+.rev-table tbody td:not(:first-child) { text-align: right; font-family: var(--mono); font-size: 7.5pt; }
+.rev-table .total-row td { font-weight: 600; color: var(--ink); }
+.highlight-cell { color: var(--c6); font-weight: 600; }
+.highlight-cell-lime { color: var(--c1); font-weight: 600; }
+
+/* ═══ MILESTONE ═══ */
+.timeline-wrap { position: relative; margin: 4mm 0; padding-left: 12mm; }
+.timeline-wrap::before { content: ''; position: absolute; left: 4mm; top: 3mm; bottom: 3mm; width: 1px; background: linear-gradient(180deg, var(--c1) 0%, var(--c2) 100%); }
+
+.ms-item { position: relative; margin-bottom: 4.5mm; }
+.ms-dot { position: absolute; left: -12mm; top: 1mm; width: 8mm; height: 8mm; border-radius: 50%; background: var(--c1); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 6pt; font-weight: 500; color: var(--ink); }
+.ms-dot.m2 { background: var(--c2); color: #fff; }
+.ms-dot.m3 { background: var(--c6); color: #fff; }
+.ms-dot.m4 { background: var(--c7); color: #fff; }
+.ms-dot.m5 { background: var(--c4); color: #fff; }
+.ms-dot.launch { background: var(--ink); color: var(--c1); }
+
+.ms-title { font-size: 9pt; font-weight: 500; color: var(--ink); margin-bottom: .8mm; }
+.ms-week { font-family: var(--mono); font-size: 6.5pt; color: var(--c2); }
+.ms-meta { display: flex; align-items: center; gap: 3mm; margin-bottom: 1mm; }
+.ms-deliverable { font-size: 7.5pt; font-weight: 300; color: var(--ink-3); line-height: 1.5; }
+
+/* segments grid for mockup page */
+.segments-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5mm;
+  margin: 3.5mm 0 5mm;
+}
+
+@media print {
+  body { background: #fff; padding: 0; }
+  .page { margin: 0; box-shadow: none; width: 100%; page-break-after: always; }
+}
+</style>
+</head>
+<body>
+
+<!-- ╔══════════════════════════════════════════╗
+     ║        COPERTINA — SECONDA CONSEGNA      ║
+     ╚══════════════════════════════════════════╝ -->
+<div class="page cover">
+
+  <div class="cover-top">
+    <div class="cover-header">
+      <img src="https://i.ibb.co/C3yKdHqw/asd.png" alt="Logo" class="rh-logo">
+      <div class="rh-divider"></div>
+      <span class="rh-type">Sportly — Documento di Progetto</span>
+    </div>
+
+    <div class="cover-meta-line">
+      <span class="cover-badge">Seconda Consegna</span>
+      <span class="cover-date">Classe 5I — Maggio 2025</span>
+    </div>
+
+    <div class="cover-h1">
+      Plan<br>
+      Build<br>
+      <em>Launch.</em>
+    </div>
+
+    <div class="cover-sub">
+      Business plan preliminare, analisi SWOT, marketing mix (4P), diagramma di Gantt aggiornato, mockup delle interfacce software e schema completo del database — il progetto Sportly prende forma concreta.
+    </div>
+
+    <div class="cover-divider"></div>
+
+    <div class="cover-kpis">
+      <div class="cover-kpi">
+        <div class="cover-kpi-label">Deliverable</div>
+        <div class="cover-kpi-val">6</div>
+        <div class="cover-kpi-desc">Documenti tecnici e strategici prodotti per questa consegna</div>
+      </div>
+      <div class="cover-kpi">
+        <div class="cover-kpi-label">Break-Even</div>
+        <div class="cover-kpi-val">M18</div>
+        <div class="cover-kpi-desc">Mese stimato di pareggio in scenario conservativo</div>
+      </div>
+      <div class="cover-kpi">
+        <div class="cover-kpi-label">Tabelle DB</div>
+        <div class="cover-kpi-val">9+</div>
+        <div class="cover-kpi-desc">Entità relazionali nel modello dati progettato</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-bottom-half">
+
+    <div class="cover-chart-row">
+      <div class="cover-donut-wrap">
+        <svg width="80" height="80" viewBox="0 0 80 80">
+          <circle cx="40" cy="40" r="28" fill="none" stroke="#e2e2da" stroke-width="12"/>
+          <circle cx="40" cy="40" r="28" fill="none" stroke="#a3c639" stroke-width="12"
+                  stroke-dasharray="87.9 175.9" stroke-dashoffset="43.98"/>
+          <circle cx="40" cy="40" r="28" fill="none" stroke="#0d8c8c" stroke-width="12"
+                  stroke-dasharray="52.8 175.9" stroke-dashoffset="-43.92"/>
+          <circle cx="40" cy="40" r="28" fill="none" stroke="#3a9e7a" stroke-width="12"
+                  stroke-dasharray="35.2 175.9" stroke-dashoffset="-96.72"/>
+          <text x="40" y="44" text-anchor="middle" font-size="9" font-family="Outfit, sans-serif" font-weight="700" fill="#0c0c0c">Rev</text>
+        </svg>
+      </div>
+      <div class="cover-donut-legend">
+        <div class="donut-legend-item">
+          <div class="dl-swatch" style="background:var(--c1);"></div>
+          <span><strong>50%</strong> Commissioni prenotazioni (scala con volume)</span>
+        </div>
+        <div class="donut-legend-item">
+          <div class="dl-swatch" style="background:var(--c2);"></div>
+          <span><strong>30%</strong> SaaS strutture — ricavo ricorrente mensile</span>
+        </div>
+        <div class="donut-legend-item">
+          <div class="dl-swatch" style="background:var(--c6);"></div>
+          <span><strong>20%</strong> Pubblicità, eventi sponsorizzati, premium user</span>
+        </div>
+        <div style="font-family:var(--mono);font-size:6pt;color:var(--ink-4);margin-top:2mm;">Mix ricavi stimato a regime — Anno 2</div>
+      </div>
+    </div>
+
+    <div class="cover-info-grid">
+      <div class="cover-info-card">
+        <div class="cover-info-label">Consegna Precedente</div>
+        <div class="cover-info-val">Prima Consegna</div>
+        <div class="cover-info-sub">Scelta progetto, idea, problema, valore, target, concorrenza, WBS</div>
+      </div>
+      <div class="cover-info-card">
+        <div class="cover-info-label">Questa Consegna</div>
+        <div class="cover-info-val">Piano Operativo Completo</div>
+        <div class="cover-info-sub">Business plan, SWOT, 4P, Gantt, Mockup UI, Schema DB</div>
+      </div>
+    </div>
+
+    <div class="cover-team-strip">
+      <div class="cover-team-label">Team</div>
+      <div class="cover-team-content">
+        <div class="cover-team-name">Team 6-3-14</div>
+        <div class="cover-team-details">Gestione Progetto e Organizzazione di Impresa — Classe 5I &nbsp;&middot;&nbsp; Consegna: 10 Maggio 2025</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════╗
+     ║    1 — BUSINESS PLAN PRELIMINARE        ║
+     ╚══════════════════════════════════════════╝ -->
+<div class="page">
+  <div class="rh">
+    <div class="rh-left">
+      <img src="https://i.ibb.co/C3yKdHqw/asd.png" alt="Logo" class="rh-logo">
+      <div class="rh-divider"></div>
+      <span class="rh-section">01 — Business Plan Preliminare</span>
+    </div>
+    <span class="rh-page">02 / 12</span>
+  </div>
+
+  <div class="s-eyebrow">Sezione 01</div>
+  <div class="s-title">Business<br><em>Plan</em></div>
+
+  <p>Il business plan preliminare di Sportly delinea la visione strategica, il modello operativo e le proiezioni finanziarie per i primi 24 mesi. L'obiettivo è dimostrare la <strong>sostenibilità economica</strong> del progetto e la sua capacità di scalare progressivamente su base geografica.</p>
+
+  <!-- Executive Summary -->
+  <div class="bp-section">
+    <div class="bp-section-header">
+      <div class="bp-section-num">01</div>
+      <div>
+        <div class="bp-section-title">Executive Summary</div>
+        <div class="bp-section-sub">Visione, missione e proposta di valore sintetica</div>
+      </div>
+    </div>
+    <div class="bp-row">
+      <div class="bp-key">Visione</div>
+      <div class="bp-val">Diventare la piattaforma di riferimento in Italia per la prenotazione e gestione di attività sportive locali entro il 2027, con espansione in 3 regioni pilota nel primo anno.</div>
+    </div>
+    <div class="bp-row">
+      <div class="bp-key">Missione</div>
+      <div class="bp-val">Connettere sportivi e strutture attraverso tecnologia semplice, rendendo ogni ASD locale competitiva nel mercato digitale senza richiedere investimenti IT significativi.</div>
+    </div>
+    <div class="bp-row">
+      <div class="bp-key">Prodotto Core</div>
+      <div class="bp-val"><strong>App mobile + portale web</strong> per prenotazione real-time, pagamenti digitali, community sportiva e dashboard analytics per i gestori.</div>
+    </div>
+    <div class="bp-row">
+      <div class="bp-key">Mercato Target</div>
+      <div class="bp-val">Sportivi 18–50 anni, famiglie attive, gestori di palestre / ASD / centri sportivi con meno di 50 dipendenti e budget IT limitato.</div>
+    </div>
+    <div class="bp-row">
+      <div class="bp-key">Vantaggio Competitivo</div>
+      <div class="bp-val">Unica piattaforma italiana <strong>multi-sport + community + free tier strutture</strong>. Nessun concorrente copre simultaneamente queste tre dimensioni.</div>
+    </div>
+  </div>
+
+  <!-- Modello Operativo -->
+  <div class="bp-section">
+    <div class="bp-section-header">
+      <div class="bp-section-num">02</div>
+      <div>
+        <div class="bp-section-title">Modello Operativo e Struttura dei Costi</div>
+        <div class="bp-section-sub">Come l'azienda genera e impiega le risorse</div>
+      </div>
+    </div>
+    <div class="bp-row">
+      <div class="bp-key">Risorse Chiave</div>
+      <div class="bp-val">Team sviluppo (2–3 dev full-stack), designer UI/UX, responsabile commerciale B2B, infrastruttura cloud AWS/GCP.</div>
+    </div>
+    <div class="bp-row">
+      <div class="bp-key">Attività Chiave</div>
+      <div class="bp-val">Sviluppo continuo della piattaforma, acquisizione strutture partner, supporto onboarding, campagne marketing digitale.</div>
+    </div>
+    <div class="bp-row">
+      <div class="bp-key">Partner Chiave</div>
+      <div class="bp-val">Stripe (pagamenti), Firebase/Google (notifiche e maps), AWS (infrastruttura), CONI / federazioni sportive locali (canale B2B).</div>
+    </div>
+    <div class="bp-row">
+      <div class="bp-key">Canali Distributivi</div>
+      <div class="bp-val">App Store + Google Play, portale web, vendita diretta B2B a gestori, partnership con federazioni regionali.</div>
+    </div>
+  </div>
+
+  <!-- Proiezione Finanziaria -->
+  <div class="ss-title">
+    <span class="ss-title-num">1.3</span>
+    Proiezione Finanziaria — 24 Mesi
+  </div>
+
+  <table class="rev-table">
+    <thead>
+      <tr>
+        <th>Voce</th>
+        <th>Mese 6</th>
+        <th>Mese 12</th>
+        <th>Mese 18</th>
+        <th>Mese 24</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Commissioni prenotazioni</td>
+        <td>1.500 €</td>
+        <td>7.500 €</td>
+        <td class="highlight-cell-lime">16.000 €</td>
+        <td class="highlight-cell">32.000 €</td>
+      </tr>
+      <tr>
+        <td>SaaS strutture (Standard + Premium)</td>
+        <td>1.460 €</td>
+        <td>4.090 €</td>
+        <td class="highlight-cell-lime">9.500 €</td>
+        <td class="highlight-cell">18.000 €</td>
+      </tr>
+      <tr>
+        <td>Pubblicità ed eventi</td>
+        <td>200 €</td>
+        <td>1.000 €</td>
+        <td class="highlight-cell-lime">3.000 €</td>
+        <td class="highlight-cell">7.000 €</td>
+      </tr>
+      <tr class="total-row">
+        <td>Totale Ricavi Mensili</td>
+        <td class="highlight-cell-lime">3.160 €</td>
+        <td class="highlight-cell">12.590 €</td>
+        <td class="highlight-cell">28.500 €</td>
+        <td class="highlight-cell">57.000 €</td>
+      </tr>
+      <tr>
+        <td>Costi Operativi Stimati</td>
+        <td>8.000 €</td>
+        <td>12.000 €</td>
+        <td>18.000 €</td>
+        <td>22.000 €</td>
+      </tr>
+      <tr class="total-row">
+        <td>Margine Operativo</td>
+        <td style="color:#e05252;font-family:var(--mono);font-size:7.5pt;">−4.840 €</td>
+        <td style="color:var(--ink-3);font-family:var(--mono);font-size:7.5pt;">+590 €</td>
+        <td class="highlight-cell">+10.500 €</td>
+        <td class="highlight-cell">+35.000 €</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <p>Il <strong>break-even operativo è stimato tra il mese 12 e il mese 18</strong>, compatibile con un investimento iniziale di avvio compreso tra 50.000 e 80.000 euro (sviluppo + marketing). Lo scenario presentato è conservativo: ipotizza una crescita graduale senza picchi di viralità.</p>
+  </div>
+
+  <div class="pf">
+    <span>Sportly — Documento di Progetto — Seconda Consegna</span>
+    <div class="pf-dot"></div>
+    <span>01 Business Plan</span>
+    <div class="pf-dot"></div>
+    <span>Pagina 02 / 12</span>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════╗
+     ║    2 — ANALISI SWOT                     ║
+     ╚══════════════════════════════════════════╝ -->
+<div class="page">
+  <div class="rh">
+    <div class="rh-left">
+      <img src="https://i.ibb.co/C3yKdHqw/asd.png" alt="Logo" class="rh-logo">
+      <div class="rh-divider"></div>
+      <span class="rh-section">02 — Analisi SWOT</span>
+    </div>
+    <span class="rh-page">03 / 12</span>
+  </div>
+
+  <div class="s-eyebrow">Sezione 02</div>
+  <div class="s-title">Analisi<br><em>SWOT</em></div>
+
+  <p>L'analisi SWOT di Sportly mappa i fattori interni (punti di forza e debolezze) e i fattori esterni (opportunità e minacce) che influenzano le probabilità di successo del progetto. Ogni quadrante include azioni strategiche concrete per massimizzare i vantaggi e mitigare i rischi.</p>
+
+  <div class="swot-grid">
+
+    <!-- STRENGTHS -->
+    <div class="swot-cell strengths">
+      <div class="swot-label">Strengths — Punti di Forza</div>
+      <div class="swot-title">Vantaggi interni</div>
+
+      <div class="swot-item"><strong>Copertura multi-sport unica</strong> — unica piattaforma italiana senza limitazioni di disciplina</div>
+      <div class="swot-item"><strong>Free tier per ASD</strong> — barriera all'adozione quasi nulla per le piccole strutture</div>
+      <div class="swot-item"><strong>Community integrata nativa</strong> — differenziatore impossibile da copiare a breve termine</div>
+      <div class="swot-item"><strong>Stack tecnologico moderno</strong> — React Native + Node.js riducono il time-to-market</div>
+      <div class="swot-item"><strong>Modello multi-revenue</strong> — riduce dipendenza da un singolo flusso di cassa</div>
+      <div class="swot-item"><strong>Focus locale italiano</strong> — conoscenza del mercato e delle sue specificità normative</div>
+    </div>
+
+    <!-- WEAKNESSES -->
+    <div class="swot-cell weaknesses">
+      <div class="swot-label">Weaknesses — Punti di Debolezza</div>
+      <div class="swot-title">Limiti interni</div>
+
+      <div class="swot-item"><strong>Brand awareness zero</strong> — startup sconosciuta in mercato frammentato e abitudinario</div>
+      <div class="swot-item"><strong>Capitali limitati in fase early</strong> — sviluppo rallentato senza finanziamento esterno</div>
+      <div class="swot-item"><strong>Dipendenza da terze parti</strong> — Stripe, Google Maps, Firebase FCM come punti critici</div>
+      <div class="swot-item"><strong>Chicken-egg problem</strong> — senza strutture non ci sono utenti, senza utenti non ci sono strutture</div>
+      <div class="swot-item"><strong>Complessità onboarding B2B</strong> — gestori non tech-savvy richiedono supporto intensivo</div>
+      <div class="swot-item"><strong>Team piccolo</strong> — rischio collo di bottiglia sullo sviluppo e sul supporto</div>
+    </div>
+
+    <!-- OPPORTUNITIES -->
+    <div class="swot-cell opportunities">
+      <div class="swot-label">Opportunities — Opportunità</div>
+      <div class="swot-title">Fattori esterni favorevoli</div>
+
+      <div class="swot-item"><strong>65% strutture non digitalizzate</strong> — mercato enorme ancora non presidiato</div>
+      <div class="swot-item"><strong>Post-pandemia sport boom</strong> — crescita costante della domanda di attività fisica e benessere</div>
+      <div class="swot-item"><strong>Digitalizzazione PA e ASD</strong> — incentivi PNRR per la digitalizzazione dello sport</div>
+      <div class="swot-item"><strong>Crescita padel e sport emergenti</strong> — nuove discipline attraggono giovani digitali</div>
+      <div class="swot-item"><strong>Partnership federazioni CONI</strong> — canale privilegiato per onboarding strutture certificate</div>
+      <div class="swot-item"><strong>Espansione geografica progressiva</strong> — modello replicabile città per città</div>
+    </div>
+
+    <!-- THREATS -->
+    <div class="swot-cell threats">
+      <div class="swot-label">Threats — Minacce</div>
+      <div class="swot-title">Rischi esterni</div>
+
+      <div class="swot-item"><strong>Concorrenti internazionali</strong> — Playtomic con finanziamenti significativi potrebbe espandersi</div>
+      <div class="swot-item"><strong>Resistenza al cambiamento</strong> — gestori anziani abituati ai metodi analogici</div>
+      <div class="swot-item"><strong>Variazioni commissioni Stripe</strong> — aumento costi gateway impatta direttamente i margini</div>
+      <div class="swot-item"><strong>Normativa GDPR stringente</strong> — dati sportivi e pagamenti richiedono compliance costosa</div>
+      <div class="swot-item"><strong>Stagionalità della domanda</strong> — picchi estivi e inverno bassa stagione per alcune discipline</div>
+      <div class="swot-item"><strong>Copy da big tech</strong> — Google/Meta potrebbero integrare funzioni simili nei propri ecosistemi</div>
+    </div>
+
+  </div>
+
+  <div class="ss-title">
+    <span class="ss-title-num">2.1</span>
+    Strategie SWOT — Azioni Derivate
+  </div>
+
+  <table class="tbl">
+    <thead>
+      <tr>
+        <th>Strategia</th>
+        <th>Quadranti</th>
+        <th>Azione Concreta</th>
+        <th>Priorità</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>SO — Sfrutta forze su opportunità</td>
+        <td>S3 + O1</td>
+        <td>Lanciare community in città con alta densità di ASD non digitali (Milano, Bologna)</td>
+        <td style="color:var(--c4);font-family:var(--mono);font-size:7pt;">Alta</td>
+      </tr>
+      <tr>
+        <td>WO — Riduci debolezze con opportunità</td>
+        <td>W4 + O5</td>
+        <td>Partnership CONI per onboarding strutture — risolve chicken-egg con canale istituzionale</td>
+        <td style="color:var(--c1);font-family:var(--mono);font-size:7pt;">Alta</td>
+      </tr>
+      <tr>
+        <td>ST — Usa forze per neutralizzare minacce</td>
+        <td>S1 + T1</td>
+        <td>Posizionare la multi-disciplina come moat vs Playtomic specializzato solo su racket</td>
+        <td style="color:var(--c2);font-family:var(--mono);font-size:7pt;">Media</td>
+      </tr>
+      <tr>
+        <td>WT — Limita esposizione ai rischi</td>
+        <td>W3 + T3</td>
+        <td>Integrare secondo gateway (Satispay) per ridurre dipendenza da Stripe</td>
+        <td style="color:var(--ink-3);font-family:var(--mono);font-size:7pt;">Bassa</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pf">
+    <span>Sportly — Documento di Progetto — Seconda Consegna</span>
+    <div class="pf-dot"></div>
+    <span>02 Analisi SWOT</span>
+    <div class="pf-dot"></div>
+    <span>Pagina 03 / 12</span>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════╗
+     ║    3 — MARKETING MIX (4P)               ║
+     ╚══════════════════════════════════════════╝ -->
+<div class="page">
+  <div class="rh">
+    <div class="rh-left">
+      <img src="https://i.ibb.co/C3yKdHqw/asd.png" alt="Logo" class="rh-logo">
+      <div class="rh-divider"></div>
+      <span class="rh-section">03 — Marketing Mix (4P)</span>
+    </div>
+    <span class="rh-page">04 / 12</span>
+  </div>
+
+  <div class="s-eyebrow">Sezione 03</div>
+  <div class="s-title">Marketing<br><em>Mix 4P</em></div>
+
+  <p>Il marketing mix di Sportly è strutturato sulle quattro leve classiche adattate alla realtà di una startup digitale B2B2C. La strategia privilegia la <strong>crescita organica e il passaparola</strong> nelle fasi iniziali, supportata da un posizionamento di prezzo accessibile che riduce la resistenza all'adozione sia degli utenti che delle strutture.</p>
+
+  <div class="mix-grid">
+
+    <!-- PRODOTTO -->
+    <div class="mix-card prod">
+      <div class="mix-p-tag">Prima P — Product</div>
+      <div class="mix-title">Prodotto</div>
+      <ul class="mix-list">
+        <li><strong>App mobile</strong> iOS + Android con UX ottimizzata per prenotazione rapida</li>
+        <li><strong>Portale web</strong> responsive per gestori e utenti desktop</li>
+        <li><strong>Dashboard analytics</strong> per strutture con KPI occupazione e ricavi</li>
+        <li><strong>Community feature</strong>: cerca compagno, gruppi locali, badge fedeltà</li>
+        <li><strong>Calendario real-time</strong> con disponibilità aggiornata automaticamente</li>
+        <li><strong>Widget booking</strong> integrabile sul sito della struttura in 5 minuti</li>
+        <li><strong>QR code check-in</strong> per velocizzare l'accesso ai campi</li>
+        <li><strong>Notifiche push smart</strong>: reminder H-24, slot liberi, promozioni</li>
+      </ul>
+    </div>
+
+    <!-- PREZZO -->
+    <div class="mix-card price">
+      <div class="mix-p-tag">Seconda P — Price</div>
+      <div class="mix-title">Prezzo</div>
+      <ul class="mix-list">
+        <li><strong>Utenti finali: gratuito</strong> — nessuna commissione a carico dell'utente</li>
+        <li><strong>Strutture Base: 0 €/mese</strong> — fino a 2 risorse, booking illimitato</li>
+        <li><strong>Strutture Standard: 29 €/mese</strong> — fino a 10 risorse + analytics base</li>
+        <li><strong>Strutture Premium: 59 €/mese</strong> — risorse illimitate + marketing + API</li>
+        <li><strong>Commissione piattaforma: 1,5%</strong> su ogni transazione completata</li>
+        <li><strong>Strategia penetrazione</strong>: free tier crea base strutture, poi upsell naturale</li>
+        <li><strong>Trial Premium 60 giorni</strong> gratuito per le prime strutture onboarded</li>
+        <li><strong>Pricing annuale</strong>: sconto 20% su Standard/Premium per pagamento anticipato</li>
+      </ul>
+    </div>
+
+    <!-- DISTRIBUZIONE -->
+    <div class="mix-card place">
+      <div class="mix-p-tag">Terza P — Place</div>
+      <div class="mix-title">Distribuzione</div>
+      <ul class="mix-list">
+        <li><strong>App Store (iOS)</strong> e <strong>Google Play (Android)</strong> — canale principale utenti</li>
+        <li><strong>Portale web</strong> sportly.it — accesso universale senza installazione</li>
+        <li><strong>Vendita diretta B2B</strong> a gestori ASD tramite account manager dedicato</li>
+        <li><strong>Partnership CONI</strong> e federazioni regionali — canale istituzionale privilegiato</li>
+        <li><strong>Widget embed</strong> sul sito della struttura — distribuzione passiva automatica</li>
+        <li><strong>Referral program</strong>: strutture che portano altre strutture ricevono crediti</li>
+        <li><strong>Lancio per città</strong>: Milano e Bologna come mercati pilota Q1</li>
+        <li><strong>Espansione regionale</strong> graduale — dati pilota guidano priorità geografiche</li>
+      </ul>
+    </div>
+
+    <!-- PROMOZIONE -->
+    <div class="mix-card promo">
+      <div class="mix-p-tag">Quarta P — Promotion</div>
+      <div class="mix-title">Promozione</div>
+      <ul class="mix-list">
+        <li><strong>Social media organico</strong>: Instagram, TikTok, LinkedIn — contenuti sport + tech</li>
+        <li><strong>Influencer sportivi locali</strong>: micro-influencer padel, fitness, running</li>
+        <li><strong>Google Ads / Meta Ads</strong>: campagne geo-targettizzate nelle città pilota</li>
+        <li><strong>Content marketing</strong>: blog SEO su digitalizzazione ASD e sport management</li>
+        <li><strong>Email marketing B2B</strong>: newsletter mensile per gestori iscritti</li>
+        <li><strong>PR sportive</strong>: presenza a fiere del settore (RIMINI WELLNESS, ISPO)</li>
+        <li><strong>Evento di lancio</strong>: torneo sportivo inaugurale nelle città pilota</li>
+        <li><strong>Programma referral</strong>: utenti che invitano amici ricevono prenotazioni gratis</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="ss-title">
+    <span class="ss-title-num">3.1</span>
+    Budget Marketing Stimato — Anno 1
+  </div>
+
+  <div class="bar-chart">
+    <div class="bar-row">
+      <div class="bar-label">Social Ads (Meta + Google)</div>
+      <div class="bar-track"><div class="bar-fill c2" style="width:40%;"></div></div>
+      <div class="bar-val">~16.000 €</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Evento lancio + PR</div>
+      <div class="bar-track"><div class="bar-fill c1" style="width:25%;"></div></div>
+      <div class="bar-val">~10.000 €</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Influencer marketing</div>
+      <div class="bar-track"><div class="bar-fill c6" style="width:15%;"></div></div>
+      <div class="bar-val">~6.000 €</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Content + SEO</div>
+      <div class="bar-track"><div class="bar-fill c7" style="width:12%;"></div></div>
+      <div class="bar-val">~5.000 €</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Fiere e materiali</div>
+      <div class="bar-track"><div class="bar-fill c4" style="width:8%;"></div></div>
+      <div class="bar-val">~3.000 €</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <p>La strategia marketing privilegia il <strong>canale digitale geolocalizzato</strong> nelle fasi early per massimizzare la densità locale — è meglio avere 200 utenti concentrati a Milano che 2.000 sparsi in Italia. La densità locale crea l'effetto rete che rende la piattaforma utile.</p>
+  </div>
+
+  <div class="pf">
+    <span>Sportly — Documento di Progetto — Seconda Consegna</span>
+    <div class="pf-dot"></div>
+    <span>03 Marketing Mix 4P</span>
+    <div class="pf-dot"></div>
+    <span>Pagina 04 / 12</span>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════╗
+     ║    4 — DIAGRAMMA DI GANTT               ║
+     ╚══════════════════════════════════════════╝ -->
+<div class="page">
+  <div class="rh">
+    <div class="rh-left">
+      <img src="https://i.ibb.co/C3yKdHqw/asd.png" alt="Logo" class="rh-logo">
+      <div class="rh-divider"></div>
+      <span class="rh-section">04 — Diagramma di Gantt</span>
+    </div>
+    <span class="rh-page">05 / 12</span>
+  </div>
+
+  <div class="s-eyebrow">Sezione 04</div>
+  <div class="s-title">Diagramma<br><em>di Gantt</em></div>
+
+  <p>Il diagramma di Gantt pianifica le <strong>24 settimane operative</strong> del progetto Sportly, dalla fase di analisi al lancio ufficiale sugli store. Le fasi sono parzialmente sovrapposte per ottimizzare il time-to-market mantenendo la qualità. I milestones principali sono evidenziati in corrispondenza delle scadenze di consegna scolastica e degli obiettivi tecnici.</p>
+
+  <div class="ss-title">
+    <span class="ss-title-num">4.1</span>
+    Gantt Dettagliato — 24 Settimane
+  </div>
+
+  <!-- GANTT SVG esteso -->
+  <div class="gantt-outer">
+    <svg width="100%" viewBox="0 0 640 340" font-family="DM Sans, sans-serif" font-size="7.5">
+      <!-- BG -->
+      <rect width="640" height="340" fill="#f3f3ef"/>
+
+      <!-- Header row -->
+      <rect x="0" y="0" width="640" height="20" fill="#0c0c0c"/>
+
+      <!-- label header -->
+      <text x="96" y="13" fill="rgba(255,255,255,.35)" font-family="JetBrains Mono,monospace" font-size="6" letter-spacing="0.5">ATTIVITÀ</text>
+
+      <!-- week labels -->
+      <text x="122" y="13" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W1</text>
+      <text x="142" y="13" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W2</text>
+      <text x="162" y="13" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W3</text>
+      <text x="182" y="13" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W4</text>
+      <text x="202" y="13" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W5</text>
+      <text x="222" y="13" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W6</text>
+      <text x="242" y="13" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W7</text>
+      <text x="262" y="13" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W8</text>
+      <text x="282" y="13" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W9</text>
+      <text x="302" y="13" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W10</text>
+      <text x="322" y="13" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W11</text>
+      <text x="342" y="13" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W12</text>
+      <text x="362" y="13" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W13</text>
+      <text x="382" y="13" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W14</text>
+      <text x="402" y="13" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W15</text>
+      <text x="422" y="13" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W16</text>
+      <text x="442" y="13" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W17</text>
+      <text x="462" y="13" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W18</text>
+      <text x="482" y="13" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W19</text>
+      <text x="502" y="13" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W20</text>
+      <text x="522" y="13" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W21</text>
+      <text x="542" y="13" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W22</text>
+      <text x="562" y="13" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W23</text>
+      <text x="582" y="13" fill="rgba(255,255,255,.3)" font-family="JetBrains Mono,monospace" font-size="5.5" text-anchor="middle">W24</text>
+
+      <!-- grid lines -->
+      <g stroke="#e2e2da" stroke-width="0.4" opacity="0.7">
+        <line x1="112" y1="20" x2="112" y2="330"/>
+        <line x1="132" y1="20" x2="132" y2="330"/>
+        <line x1="152" y1="20" x2="152" y2="330"/>
+        <line x1="172" y1="20" x2="172" y2="330"/>
+        <line x1="192" y1="20" x2="192" y2="330"/>
+        <line x1="212" y1="20" x2="212" y2="330"/>
+        <line x1="232" y1="20" x2="232" y2="330"/>
+        <line x1="252" y1="20" x2="252" y2="330"/>
+        <line x1="272" y1="20" x2="272" y2="330"/>
+        <line x1="292" y1="20" x2="292" y2="330"/>
+        <line x1="312" y1="20" x2="312" y2="330"/>
+        <line x1="332" y1="20" x2="332" y2="330"/>
+        <line x1="352" y1="20" x2="352" y2="330"/>
+        <line x1="372" y1="20" x2="372" y2="330"/>
+        <line x1="392" y1="20" x2="392" y2="330"/>
+        <line x1="412" y1="20" x2="412" y2="330"/>
+        <line x1="432" y1="20" x2="432" y2="330"/>
+        <line x1="452" y1="20" x2="452" y2="330"/>
+        <line x1="472" y1="20" x2="472" y2="330"/>
+        <line x1="492" y1="20" x2="492" y2="330"/>
+        <line x1="512" y1="20" x2="512" y2="330"/>
+        <line x1="532" y1="20" x2="532" y2="330"/>
+        <line x1="552" y1="20" x2="552" y2="330"/>
+        <line x1="572" y1="20" x2="572" y2="330"/>
+        <line x1="592" y1="20" x2="592" y2="330"/>
+      </g>
+
+      <!-- alternating row bg -->
+      <rect x="0" y="20"  width="640" height="20" fill="rgba(255,255,255,.6)"/>
+      <rect x="0" y="60"  width="640" height="20" fill="rgba(255,255,255,.6)"/>
+      <rect x="0" y="100" width="640" height="20" fill="rgba(255,255,255,.6)"/>
+      <rect x="0" y="140" width="640" height="20" fill="rgba(255,255,255,.6)"/>
+      <rect x="0" y="180" width="640" height="20" fill="rgba(255,255,255,.6)"/>
+      <rect x="0" y="220" width="640" height="20" fill="rgba(255,255,255,.6)"/>
+      <rect x="0" y="260" width="640" height="20" fill="rgba(255,255,255,.6)"/>
+      <rect x="0" y="300" width="640" height="20" fill="rgba(255,255,255,.6)"/>
+
+      <!-- section headers -->
+      <rect x="0" y="20" width="112" height="20" fill="#f3f3ef"/>
+      <rect x="0" y="40" width="112" height="20" fill="#f3f3ef"/>
+      <rect x="0" y="60" width="112" height="20" fill="#f3f3ef"/>
+      <rect x="0" y="80" width="112" height="20" fill="#f3f3ef"/>
+      <rect x="0" y="100" width="112" height="20" fill="#f3f3ef"/>
+      <rect x="0" y="120" width="112" height="20" fill="#f3f3ef"/>
+      <rect x="0" y="140" width="112" height="20" fill="#f3f3ef"/>
+      <rect x="0" y="160" width="112" height="20" fill="#f3f3ef"/>
+      <rect x="0" y="180" width="112" height="20" fill="#f3f3ef"/>
+      <rect x="0" y="200" width="112" height="20" fill="#f3f3ef"/>
+      <rect x="0" y="220" width="112" height="20" fill="#f3f3ef"/>
+      <rect x="0" y="240" width="112" height="20" fill="#f3f3ef"/>
+      <rect x="0" y="260" width="112" height="20" fill="#f3f3ef"/>
+      <rect x="0" y="280" width="112" height="20" fill="#f3f3ef"/>
+      <rect x="0" y="300" width="112" height="20" fill="#f3f3ef"/>
+
+      <!-- row labels -->
+      <text x="108" y="33"  fill="#3a3a3a" font-weight="500" font-size="7" text-anchor="end">Analisi mercato</text>
+      <text x="108" y="53"  fill="#3a3a3a" font-weight="500" font-size="7" text-anchor="end">Requisiti</text>
+      <text x="108" y="73"  fill="#3a3a3a" font-weight="500" font-size="7" text-anchor="end">Architettura</text>
+      <text x="108" y="93"  fill="#3a3a3a" font-weight="500" font-size="7" text-anchor="end">UI/UX Design</text>
+      <text x="108" y="113" fill="#3a3a3a" font-weight="500" font-size="7" text-anchor="end">Database setup</text>
+      <text x="108" y="133" fill="#3a3a3a" font-weight="500" font-size="7" text-anchor="end">Backend API</text>
+      <text x="108" y="153" fill="#3a3a3a" font-weight="500" font-size="7" text-anchor="end">Frontend mobile</text>
+      <text x="108" y="173" fill="#3a3a3a" font-weight="500" font-size="7" text-anchor="end">Frontend web</text>
+      <text x="108" y="193" fill="#3a3a3a" font-weight="500" font-size="7" text-anchor="end">Pagamenti Stripe</text>
+      <text x="108" y="213" fill="#3a3a3a" font-weight="500" font-size="7" text-anchor="end">Notifiche FCM</text>
+      <text x="108" y="233" fill="#3a3a3a" font-weight="500" font-size="7" text-anchor="end">Test & QA</text>
+      <text x="108" y="253" fill="#3a3a3a" font-weight="500" font-size="7" text-anchor="end">Beta testing</text>
+      <text x="108" y="273" fill="#3a3a3a" font-weight="500" font-size="7" text-anchor="end">Marketing setup</text>
+      <text x="108" y="293" fill="#3a3a3a" font-weight="500" font-size="7" text-anchor="end">Onboarding ASD</text>
+      <text x="108" y="313" fill="#3a3a3a" font-weight="500" font-size="7" text-anchor="end">Lancio ufficiale</text>
+
+      <!-- BARS (x = 112 + (week-1)*20, width = weeks*20) -->
+      <!-- Analisi mercato: W1-W3 -->
+      <rect x="112" y="24" width="60"  height="12" fill="#a3c639" rx="2" opacity=".9"/>
+      <!-- Requisiti: W2-W4 -->
+      <rect x="132" y="44" width="60"  height="12" fill="#a3c639" rx="2" opacity=".7"/>
+      <!-- Architettura: W3-W6 -->
+      <rect x="152" y="64" width="80"  height="12" fill="#0d8c8c" rx="2" opacity=".9"/>
+      <!-- UI/UX: W4-W8 -->
+      <rect x="172" y="84" width="100" height="12" fill="#0d8c8c" rx="2" opacity=".7"/>
+      <!-- DB setup: W5-W8 -->
+      <rect x="192" y="104" width="80" height="12" fill="#2d9a90" rx="2" opacity=".9"/>
+      <!-- Backend API: W6-W14 -->
+      <rect x="212" y="124" width="180" height="12" fill="#3a9e7a" rx="2" opacity=".9"/>
+      <!-- Frontend mobile: W8-W16 -->
+      <rect x="252" y="144" width="180" height="12" fill="#2d9a90" rx="2" opacity=".9"/>
+      <!-- Frontend web: W9-W15 -->
+      <rect x="272" y="164" width="140" height="12" fill="#2d9a90" rx="2" opacity=".7"/>
+      <!-- Pagamenti Stripe: W10-W13 -->
+      <rect x="292" y="184" width="80"  height="12" fill="#0d8c8c" rx="2" opacity=".9"/>
+      <!-- Notifiche FCM: W11-W13 -->
+      <rect x="312" y="204" width="60"  height="12" fill="#0a7a7a" rx="2" opacity=".9"/>
+      <!-- Test & QA: W14-W19 -->
+      <rect x="372" y="224" width="120" height="12" fill="#5daa60" rx="2" opacity=".9"/>
+      <!-- Beta testing: W18-W21 -->
+      <rect x="452" y="244" width="80"  height="12" fill="#8cb85a" rx="2" opacity=".9"/>
+      <!-- Marketing: W12-W24 -->
+      <rect x="332" y="264" width="260" height="12" fill="#38a898" rx="2" opacity=".9"/>
+      <!-- Onboarding ASD: W20-W23 -->
+      <rect x="492" y="284" width="80"  height="12" fill="#0d8c8c" rx="2" opacity=".9"/>
+      <!-- Lancio: W24 -->
+      <rect x="572" y="304" width="20"  height="12" fill="#0c0c0c" rx="2" opacity=".95"/>
+
+      <!-- milestone diamonds -->
+      <!-- M1: W4 (consegna 1) -->
+      <polygon points="172,320 178,314 184,320 178,326" fill="#a3c639"/>
+      <text x="178" y="334" fill="#717171" font-family="JetBrains Mono,monospace" font-size="5" text-anchor="middle">C1</text>
+
+      <!-- M2: W8 (consegna 2) -->
+      <polygon points="252,320 258,314 264,320 258,326" fill="#0d8c8c"/>
+      <text x="258" y="334" fill="#717171" font-family="JetBrains Mono,monospace" font-size="5" text-anchor="middle">C2</text>
+
+      <!-- M3: W14 backend done -->
+      <polygon points="392,320 398,314 404,320 398,326" fill="#3a9e7a"/>
+      <text x="398" y="334" fill="#717171" font-family="JetBrains Mono,monospace" font-size="5" text-anchor="middle">M3</text>
+
+      <!-- M4: W18 alpha -->
+      <polygon points="452,320 458,314 464,320 458,326" fill="#5daa60"/>
+      <text x="458" y="334" fill="#717171" font-family="JetBrains Mono,monospace" font-size="5" text-anchor="middle">M4</text>
+
+      <!-- M5: W22 beta done -->
+      <polygon points="532,320 538,314 544,320 538,326" fill="#8cb85a"/>
+      <text x="538" y="334" fill="#717171" font-family="JetBrains Mono,monospace" font-size="5" text-anchor="middle">M5</text>
+
+      <!-- LAUNCH: W24 -->
+      <polygon points="572,320 579,313 586,320 579,327" fill="#0c0c0c"/>
+      <text x="579" y="334" fill="#0c0c0c" font-family="JetBrains Mono,monospace" font-size="5" font-weight="600" text-anchor="middle">GO</text>
+
+      <!-- today line at W8 -->
+      <line x1="252" y1="20" x2="252" y2="330" stroke="#a3c639" stroke-width="1.5" stroke-dasharray="3,2" opacity=".6"/>
+      <text x="256" y="30" fill="#a3c639" font-family="JetBrains Mono,monospace" font-size="5.5">OGGI</text>
+
+    </svg>
+  </div>
+
+  <div class="ss-title">
+    <span class="ss-title-num">4.2</span>
+    Legenda Milestone
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:3mm;margin:2mm 0 4mm;">
+
+    <div style="border:1px solid var(--border);padding:3mm 3.5mm;background:var(--surface-2);display:flex;gap:2.5mm;align-items:flex-start;">
+      <svg width="12" height="12" viewBox="0 0 12 12" style="flex-shrink:0;margin-top:1px;"><polygon points="6,1 11,6 6,11 1,6" fill="#a3c639"/></svg>
+      <div>
+        <div style="font-family:var(--mono);font-size:6.5pt;color:var(--c1);margin-bottom:.5mm;">C1 — Settimana 4</div>
+        <div style="font-size:7.5pt;font-weight:300;color:var(--ink-3);">Prima consegna scolastica — Analisi e definizione progetto</div>
+      </div>
+    </div>
+
+    <div style="border:1px solid var(--border);padding:3mm 3.5mm;background:var(--surface-2);display:flex;gap:2.5mm;align-items:flex-start;">
+      <svg width="12" height="12" viewBox="0 0 12 12" style="flex-shrink:0;margin-top:1px;"><polygon points="6,1 11,6 6,11 1,6" fill="#0d8c8c"/></svg>
+      <div>
+        <div style="font-family:var(--mono);font-size:6.5pt;color:var(--c2);margin-bottom:.5mm;">C2 — Settimana 8</div>
+        <div style="font-size:7.5pt;font-weight:300;color:var(--ink-3);">Seconda consegna — Business plan, SWOT, 4P, Gantt, Mockup, DB</div>
+      </div>
+    </div>
+
+    <div style="border:1px solid var(--border);padding:3mm 3.5mm;background:var(--surface-2);display:flex;gap:2.5mm;align-items:flex-start;">
+      <svg width="12" height="12" viewBox="0 0 12 12" style="flex-shrink:0;margin-top:1px;"><polygon points="6,1 11,6 6,11 1,6" fill="#0c0c0c"/></svg>
+      <div>
+        <div style="font-family:var(--mono);font-size:6.5pt;color:var(--ink);margin-bottom:.5mm;">GO — Settimana 24</div>
+        <div style="font-size:7.5pt;font-weight:300;color:var(--ink-3);">Lancio ufficiale App Store e Google Play — evento inaugurale</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="pf">
+    <span>Sportly — Documento di Progetto — Seconda Consegna</span>
+    <div class="pf-dot"></div>
+    <span>04 Diagramma di Gantt</span>
+    <div class="pf-dot"></div>
+    <span>Pagina 05 / 12</span>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════╗
+     ║    5 — MOCKUP INTERFACCE (pag 1)        ║
+     ╚══════════════════════════════════════════╝ -->
+<div class="page">
+  <div class="rh">
+    <div class="rh-left">
+      <img src="https://i.ibb.co/C3yKdHqw/asd.png" alt="Logo" class="rh-logo">
+      <div class="rh-divider"></div>
+      <span class="rh-section">05 — Mockup Interfacce Software</span>
+    </div>
+    <span class="rh-page">06 / 12</span>
+  </div>
+
+  <div class="s-eyebrow">Sezione 05</div>
+  <div class="s-title">Mockup<br><em>Interfacce</em></div>
+
+  <p>I mockup seguenti rappresentano i <strong>flussi principali dell'app mobile Sportly</strong>: home page di ricerca, schermata di prenotazione con calendario, e dashboard analytics per i gestori. Il design system privilegia la <strong>semplicità operativa</strong> — un utente deve poter prenotare in meno di 4 tap dal momento in cui apre l'app.</p>
+
+  <div class="ss-title">
+    <span class="ss-title-num">5.1</span>
+    Schermate App Mobile — Flusso Utente
+  </div>
+
+  <div class="mockup-row">
+
+    <!-- SCREEN 1: HOME / RICERCA -->
+    <div class="mockup-frame">
+      <div class="mockup-bar">
+        <div class="mockup-dots">
+          <span style="background:#e05252;"></span>
+          <span style="background:#f0a500;"></span>
+          <span style="background:#5daa60;"></span>
+        </div>
+        <span class="mockup-label-bar">HOME</span>
+      </div>
+      <div class="mockup-screen">
+        <!-- nav -->
+        <div class="mu-nav">
+          <div class="mu-nav-logo">Sportly</div>
+          <div class="mu-nav-link">●●●</div>
+        </div>
+        <!-- hero -->
+        <div class="mu-hero">
+          <div class="mu-hero-eyebrow">TROVA · PRENOTA · GIOCA</div>
+          <div class="mu-hero-title">Dove vuoi<br>giocare oggi?</div>
+          <div class="mu-hero-sub">Milano · 24 strutture vicino a te</div>
+          <div class="mu-btn">Cerca ora →</div>
+        </div>
+        <!-- search -->
+        <div class="mu-search-bar">
+          <div class="mu-search-icon"></div>
+          <div class="mu-search-text">Sport, struttura, zona…</div>
+        </div>
+        <!-- filter chips -->
+        <div class="mu-filter-row">
+          <div class="mu-filter-chip active">Padel</div>
+          <div class="mu-filter-chip">Calcetto</div>
+          <div class="mu-filter-chip">Nuoto</div>
+          <div class="mu-filter-chip">Yoga</div>
+          <div class="mu-filter-chip">Tennis</div>
+        </div>
+        <!-- card list -->
+        <div class="mu-card-list">
+          <div class="mu-card">
+            <div class="mu-card-thumb" style="background:linear-gradient(135deg,var(--c1),var(--c2));"></div>
+            <div class="mu-card-info">
+              <div class="mu-card-name">Sport Arena Milano</div>
+              <div class="mu-card-meta">0.8km · Padel · ★ 4.8</div>
+            </div>
+            <div class="mu-card-price">12€/h</div>
+          </div>
+          <div class="mu-card">
+            <div class="mu-card-thumb" style="background:linear-gradient(135deg,var(--c2),var(--c7));"></div>
+            <div class="mu-card-info">
+              <div class="mu-card-name">Centro Sportivo Est</div>
+              <div class="mu-card-meta">1.2km · Multi · ★ 4.6</div>
+            </div>
+            <div class="mu-card-price">8€/h</div>
+          </div>
+          <div class="mu-card">
+            <div class="mu-card-thumb" style="background:linear-gradient(135deg,var(--c6),var(--c4));"></div>
+            <div class="mu-card-info">
+              <div class="mu-card-name">ASD Verde Sport</div>
+              <div class="mu-card-meta">2.1km · Calcetto · ★ 4.5</div>
+            </div>
+            <div class="mu-card-price">10€/h</div>
+          </div>
+        </div>
+        <!-- bottom nav -->
+        <div class="mu-bottom-nav">
+          <div class="mu-bnav-item active">
+            <div class="mu-bnav-icon active"><svg width="10" height="10" viewBox="0 0 10 10"><rect x="1" y="5" width="4" height="4" fill="white" rx="0.5"/><rect x="5" y="2" width="4" height="7" fill="white" rx="0.5"/></svg></div>
+            <div class="mu-bnav-label">Home</div>
+          </div>
+          <div class="mu-bnav-item">
+            <div class="mu-bnav-icon"><svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="3.5" fill="none" stroke="#a8a8a8" stroke-width="1.5"/><line x1="7.5" y1="7.5" x2="9" y2="9" stroke="#a8a8a8" stroke-width="1.5"/></svg></div>
+            <div class="mu-bnav-label">Cerca</div>
+          </div>
+          <div class="mu-bnav-item">
+            <div class="mu-bnav-icon"><svg width="10" height="10" viewBox="0 0 10 10"><rect x="1.5" y="1.5" width="7" height="7" fill="none" stroke="#a8a8a8" stroke-width="1.2" rx="1"/><line x1="3" y1="1.5" x2="3" y2="0" stroke="#a8a8a8" stroke-width="1.2"/><line x1="7" y1="1.5" x2="7" y2="0" stroke="#a8a8a8" stroke-width="1.2"/></svg></div>
+            <div class="mu-bnav-label">Booking</div>
+          </div>
+          <div class="mu-bnav-item">
+            <div class="mu-bnav-icon"><svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="3.5" r="2" fill="none" stroke="#a8a8a8" stroke-width="1.2"/><path d="M1.5,9 Q5,6 8.5,9" fill="none" stroke="#a8a8a8" stroke-width="1.2"/></svg></div>
+            <div class="mu-bnav-label">Profilo</div>
+          </div>
+        </div>
+      </div>
+      <div class="mockup-title">01 — Home &amp; Ricerca</div>
+    </div>
+
+    <!-- SCREEN 2: CALENDARIO PRENOTAZIONE -->
+    <div class="mockup-frame">
+      <div class="mockup-bar">
+        <div class="mockup-dots">
+          <span style="background:#e05252;"></span>
+          <span style="background:#f0a500;"></span>
+          <span style="background:#5daa60;"></span>
+        </div>
+        <span class="mockup-label-bar">BOOKING</span>
+      </div>
+      <div class="mockup-screen">
+        <div class="mu-nav">
+          <div style="font-family:var(--mono);font-size:6pt;color:rgba(255,255,255,.5);">← Back</div>
+          <div class="mu-nav-logo" style="font-size:7pt;">Sport Arena</div>
+          <div class="mu-nav-link">♡</div>
+        </div>
+        <!-- struttura info -->
+        <div style="background:linear-gradient(135deg,var(--c2),var(--c3));padding:3mm;margin-bottom:2mm;display:flex;gap:2mm;align-items:center;">
+          <div style="width:12mm;height:12mm;background:rgba(255,255,255,.2);border-radius:2px;"></div>
+          <div>
+            <div style="font-size:8pt;font-weight:600;color:#fff;">Sport Arena Milano</div>
+            <div style="font-family:var(--mono);font-size:5pt;color:rgba(255,255,255,.6);">Padel · Via Rossi 12 · ★ 4.8</div>
+            <div style="font-family:var(--mono);font-size:5pt;color:var(--c1);margin-top:.5mm;">12€ / ora</div>
+          </div>
+        </div>
+        <!-- calendario -->
+        <div class="mu-cal-header">
+          <div class="mu-cal-month">Maggio 2025</div>
+          <div class="mu-cal-nav">‹ ›</div>
+        </div>
+        <div class="mu-cal-weekdays">
+          <div class="mu-cal-wd">L</div><div class="mu-cal-wd">M</div><div class="mu-cal-wd">M</div><div class="mu-cal-wd">G</div>
+          <div class="mu-cal-wd">V</div><div class="mu-cal-wd">S</div><div class="mu-cal-wd">D</div>
+        </div>
+        <div class="mu-cal-days">
+          <div class="mu-cal-day gray">28</div><div class="mu-cal-day gray">29</div><div class="mu-cal-day gray">30</div><div class="mu-cal-day available">1</div>
+          <div class="mu-cal-day available">2</div><div class="mu-cal-day has-booking">3</div><div class="mu-cal-day available">4</div>
+          <div class="mu-cal-day available">5</div><div class="mu-cal-day available">6</div><div class="mu-cal-day available">7</div><div class="mu-cal-day available">8</div>
+          <div class="mu-cal-day today">9</div><div class="mu-cal-day has-booking">10</div><div class="mu-cal-day available">11</div>
+          <div class="mu-cal-day available">12</div><div class="mu-cal-day available">13</div><div class="mu-cal-day available">14</div><div class="mu-cal-day available">15</div>
+          <div class="mu-cal-day available">16</div><div class="mu-cal-day available">17</div><div class="mu-cal-day available">18</div>
+        </div>
+        <!-- slot orari -->
+        <div class="mu-slots">
+          <div class="mu-slots-label">SLOT DISPONIBILI — VEN 9 MAGGIO</div>
+          <div class="mu-slot-row">
+            <div class="mu-slot">08:00</div>
+            <div class="mu-slot unavail">09:00</div>
+            <div class="mu-slot booked">10:00</div>
+            <div class="mu-slot">11:00</div>
+            <div class="mu-slot unavail">12:00</div>
+            <div class="mu-slot">14:00</div>
+            <div class="mu-slot">15:00</div>
+            <div class="mu-slot unavail">16:00</div>
+            <div class="mu-slot">17:00</div>
+            <div class="mu-slot">18:00</div>
+          </div>
+        </div>
+        <!-- CTA -->
+        <div style="margin-top:3mm;background:var(--c2);padding:2.5mm;text-align:center;">
+          <div style="font-family:var(--mono);font-size:7pt;color:#fff;font-weight:500;letter-spacing:.5px;">CONFERMA PRENOTAZIONE — 12 €</div>
+        </div>
+      </div>
+      <div class="mockup-title">02 — Calendario &amp; Slot</div>
+    </div>
+
+    <!-- SCREEN 3: COMMUNITY -->
+    <div class="mockup-frame">
+      <div class="mockup-bar">
+        <div class="mockup-dots">
+          <span style="background:#e05252;"></span>
+          <span style="background:#f0a500;"></span>
+          <span style="background:#5daa60;"></span>
+        </div>
+        <span class="mockup-label-bar">COMMUNITY</span>
+      </div>
+      <div class="mockup-screen">
+        <div class="mu-nav">
+          <div class="mu-nav-logo">Community</div>
+          <div class="mu-nav-link">+</div>
+        </div>
+        <!-- profile -->
+        <div style="display:flex;gap:2mm;align-items:center;background:var(--surface-2);padding:2.5mm;border:1px solid var(--border);margin-bottom:2mm;">
+          <div style="width:10mm;height:10mm;border-radius:50%;background:linear-gradient(135deg,var(--c1),var(--c2));flex-shrink:0;"></div>
+          <div>
+            <div style="font-size:8pt;font-weight:500;color:var(--ink);">Marco R.</div>
+            <div style="font-family:var(--mono);font-size:5pt;color:var(--c2);">● 847 punti sport · Livello 4</div>
+          </div>
+          <div style="margin-left:auto;text-align:center;">
+            <div style="font-family:var(--type-display);font-size:12pt;font-weight:700;color:var(--c1);letter-spacing:-1px;">23</div>
+            <div style="font-family:var(--mono);font-size:5pt;color:var(--ink-4);">sessioni</div>
+          </div>
+        </div>
+        <!-- badges -->
+        <div style="font-family:var(--mono);font-size:5.5pt;color:var(--ink-3);letter-spacing:.5px;margin-bottom:1.5mm;">I TUOI BADGE</div>
+        <div style="display:flex;gap:2mm;margin-bottom:2.5mm;flex-wrap:wrap;">
+          <div style="background:rgba(163,198,57,.15);border:1px solid rgba(163,198,57,.3);padding:1mm 2mm;font-family:var(--mono);font-size:5pt;color:var(--c1);">⚡ Early Adopter</div>
+          <div style="background:rgba(13,140,140,.1);border:1px solid rgba(13,140,140,.2);padding:1mm 2mm;font-family:var(--mono);font-size:5pt;color:var(--c2);">🎾 Padel Pro</div>
+          <div style="background:rgba(93,170,96,.1);border:1px solid rgba(93,170,96,.2);padding:1mm 2mm;font-family:var(--mono);font-size:5pt;color:var(--c4);">🔥 10 Days Streak</div>
+        </div>
+        <!-- cerca compagno -->
+        <div style="font-family:var(--mono);font-size:5.5pt;color:var(--ink-3);letter-spacing:.5px;margin-bottom:1.5mm;">CERCA COMPAGNO DI GIOCO</div>
+        <div style="display:flex;flex-direction:column;gap:1.5mm;">
+          <div style="background:#fff;border:1px solid var(--border);padding:2mm 2.5mm;display:flex;gap:2mm;align-items:center;">
+            <div style="width:8mm;height:8mm;border-radius:50%;background:linear-gradient(135deg,var(--c2),var(--c7));flex-shrink:0;"></div>
+            <div style="flex:1;">
+              <div style="font-size:7pt;font-weight:500;color:var(--ink);">Laura M. · Padel</div>
+              <div style="font-family:var(--mono);font-size:5pt;color:var(--ink-4);">Cerca match · Sabato mattina</div>
+            </div>
+            <div style="background:var(--c1);padding:1mm 2mm;font-family:var(--mono);font-size:5pt;color:var(--ink);font-weight:600;">MATCH</div>
+          </div>
+          <div style="background:#fff;border:1px solid var(--border);padding:2mm 2.5mm;display:flex;gap:2mm;align-items:center;">
+            <div style="width:8mm;height:8mm;border-radius:50%;background:linear-gradient(135deg,var(--c6),var(--c4));flex-shrink:0;"></div>
+            <div style="flex:1;">
+              <div style="font-size:7pt;font-weight:500;color:var(--ink);">Stefano K. · Calcetto</div>
+              <div style="font-family:var(--mono);font-size:5pt;color:var(--ink-4);">Cerca 5vs5 · Domenica ore 16</div>
+            </div>
+            <div style="background:var(--c2);padding:1mm 2mm;font-family:var(--mono);font-size:5pt;color:#fff;font-weight:600;">JOIN</div>
+          </div>
+        </div>
+        <!-- eventi -->
+        <div style="font-family:var(--mono);font-size:5.5pt;color:var(--ink-3);letter-spacing:.5px;margin:2.5mm 0 1.5mm;">EVENTI VICINO A TE</div>
+        <div style="background:linear-gradient(90deg,rgba(13,140,140,.08),transparent);border-left:2px solid var(--c2);padding:2mm 2.5mm;">
+          <div style="font-size:7pt;font-weight:500;color:var(--ink);">Torneo Padel Amatoriale</div>
+          <div style="font-family:var(--mono);font-size:5pt;color:var(--ink-3);">Sab 17 Mag · Sport Arena · 12 iscritti</div>
+        </div>
+      </div>
+      <div class="mockup-title">03 — Community</div>
+    </div>
+
+  </div>
+
+  <div class="pf">
+    <span>Sportly — Documento di Progetto — Seconda Consegna</span>
+    <div class="pf-dot"></div>
+    <span>05 Mockup Interfacce — App Mobile</span>
+    <div class="pf-dot"></div>
+    <span>Pagina 06 / 12</span>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════╗
+     ║    6 — MOCKUP INTERFACCE (pag 2)        ║
+     ╚══════════════════════════════════════════╝ -->
+<div class="page">
+  <div class="rh">
+    <div class="rh-left">
+      <img src="https://i.ibb.co/C3yKdHqw/asd.png" alt="Logo" class="rh-logo">
+      <div class="rh-divider"></div>
+      <span class="rh-section">05 — Mockup Interfacce Software (cont.)</span>
+    </div>
+    <span class="rh-page">07 / 12</span>
+  </div>
+
+  <div class="s-eyebrow">Sezione 05 — Continua</div>
+  <div class="s-title">Dashboard<br><em>Gestori</em></div>
+
+  <p>Il portale web per i gestori delle strutture sportive è progettato per essere <strong>leggibile a colpo d'occhio</strong>. La dashboard principale aggrega i KPI operativi più rilevanti — tasso di occupazione, prenotazioni del giorno, ricavi del mese — in un layout a card che non richiede formazione specifica per essere utilizzato.</p>
+
+  <div class="ss-title">
+    <span class="ss-title-num">5.2</span>
+    Portale Web Gestori — Dashboard Analytics
+  </div>
+
+  <!-- Full-width dashboard mockup -->
+  <div style="border:1px solid var(--border);background:#fff;overflow:hidden;margin:3.5mm 0 5mm;">
+    <div style="background:#0c0c0c;padding:3mm 5mm;display:flex;align-items:center;justify-content:space-between;">
+      <div style="display:flex;align-items:center;gap:3mm;">
+        <div style="font-family:var(--type-display);font-size:10pt;font-weight:700;color:#fff;letter-spacing:-.5px;">Sportly</div>
+        <div style="width:1px;height:14px;background:rgba(255,255,255,.15);"></div>
+        <div style="font-family:var(--mono);font-size:6pt;color:rgba(255,255,255,.4);letter-spacing:.5px;">DASHBOARD GESTORI</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:3mm;">
+        <div style="font-family:var(--mono);font-size:6pt;color:rgba(255,255,255,.3);">Sport Arena Milano</div>
+        <div style="width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,var(--c1),var(--c2));"></div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:40mm 1fr;min-height:100mm;">
+
+      <!-- sidebar -->
+      <div style="background:#f3f3ef;border-right:1px solid var(--border);padding:4mm 0;">
+        <div style="padding:2mm 4mm;font-family:var(--mono);font-size:5.5pt;color:var(--ink-4);letter-spacing:1px;margin-bottom:1mm;">NAVIGAZIONE</div>
+
+        <div style="padding:2mm 4mm;display:flex;align-items:center;gap:2mm;background:var(--c2);color:#fff;margin:0 2mm 1mm;">
+          <div style="width:5px;height:5px;border-radius:1px;background:rgba(255,255,255,.5);"></div>
+          <div style="font-family:var(--mono);font-size:6.5pt;letter-spacing:.5px;">Dashboard</div>
+        </div>
+
+        <div style="padding:2mm 4mm;display:flex;align-items:center;gap:2mm;color:var(--ink-3);margin:0 2mm 1mm;">
+          <div style="width:5px;height:5px;border-radius:1px;background:var(--border-2);"></div>
+          <div style="font-family:var(--mono);font-size:6.5pt;letter-spacing:.5px;">Prenotazioni</div>
+        </div>
+
+        <div style="padding:2mm 4mm;display:flex;align-items:center;gap:2mm;color:var(--ink-3);margin:0 2mm 1mm;">
+          <div style="width:5px;height:5px;border-radius:1px;background:var(--border-2);"></div>
+          <div style="font-family:var(--mono);font-size:6.5pt;letter-spacing:.5px;">Struttura</div>
+        </div>
+
+        <div style="padding:2mm 4mm;display:flex;align-items:center;gap:2mm;color:var(--ink-3);margin:0 2mm 1mm;">
+          <div style="width:5px;height:5px;border-radius:1px;background:var(--border-2);"></div>
+          <div style="font-family:var(--mono);font-size:6.5pt;letter-spacing:.5px;">Analytics</div>
+        </div>
+
+        <div style="padding:2mm 4mm;display:flex;align-items:center;gap:2mm;color:var(--ink-3);margin:0 2mm 1mm;">
+          <div style="width:5px;height:5px;border-radius:1px;background:var(--border-2);"></div>
+          <div style="font-family:var(--mono);font-size:6.5pt;letter-spacing:.5px;">Marketing</div>
+        </div>
+
+        <div style="padding:2mm 4mm;display:flex;align-items:center;gap:2mm;color:var(--ink-3);margin:0 2mm;">
+          <div style="width:5px;height:5px;border-radius:1px;background:var(--border-2);"></div>
+          <div style="font-family:var(--mono);font-size:6.5pt;letter-spacing:.5px;">Impostazioni</div>
+        </div>
+
+        <div style="margin:4mm 2mm 0;padding:3mm;background:rgba(163,198,57,.1);border:1px solid rgba(163,198,57,.2);">
+          <div style="font-family:var(--mono);font-size:5pt;color:var(--c1);letter-spacing:.5px;margin-bottom:1mm;">PIANO ATTIVO</div>
+          <div style="font-size:7pt;font-weight:500;color:var(--ink);">Standard · 29€/mese</div>
+          <div style="font-family:var(--mono);font-size:5pt;color:var(--ink-4);margin-top:.5mm;">Rinnovo 1 Giu 2025</div>
+        </div>
+      </div>
+
+      <!-- main content -->
+      <div style="padding:4mm;">
+        <!-- kpi row -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2.5mm;margin-bottom:3mm;">
+
+          <div style="border:1px solid var(--border);padding:3mm;background:var(--surface-2);">
+            <div style="font-family:var(--mono);font-size:5pt;color:var(--ink-3);letter-spacing:.5px;margin-bottom:1mm;">PRENOTAZIONI OGGI</div>
+            <div style="font-family:var(--type-display);font-size:18pt;font-weight:700;color:var(--c2);letter-spacing:-1.5px;line-height:1;">14</div>
+            <div style="font-family:var(--mono);font-size:5pt;color:var(--c4);">▲ +3 vs ieri</div>
+          </div>
+
+          <div style="border:1px solid var(--border);padding:3mm;background:var(--surface-2);">
+            <div style="font-family:var(--mono);font-size:5pt;color:var(--ink-3);letter-spacing:.5px;margin-bottom:1mm;">OCCUPAZIONE %</div>
+            <div style="font-family:var(--type-display);font-size:18pt;font-weight:700;color:var(--c1);letter-spacing:-1.5px;line-height:1;">78%</div>
+            <div style="font-family:var(--mono);font-size:5pt;color:var(--c4);">▲ +12% vs scorsa sett.</div>
+          </div>
+
+          <div style="border:1px solid var(--border);padding:3mm;background:var(--surface-2);">
+            <div style="font-family:var(--mono);font-size:5pt;color:var(--ink-3);letter-spacing:.5px;margin-bottom:1mm;">RICAVI MESE</div>
+            <div style="font-family:var(--type-display);font-size:18pt;font-weight:700;color:var(--c6);letter-spacing:-1.5px;line-height:1;">1.840€</div>
+            <div style="font-family:var(--mono);font-size:5pt;color:var(--c4);">▲ +320€ vs aprile</div>
+          </div>
+
+          <div style="border:1px solid var(--border);padding:3mm;background:var(--surface-2);">
+            <div style="font-family:var(--mono);font-size:5pt;color:var(--ink-3);letter-spacing:.5px;margin-bottom:1mm;">UTENTI ATTIVI</div>
+            <div style="font-family:var(--type-display);font-size:18pt;font-weight:700;color:var(--c7);letter-spacing:-1.5px;line-height:1;">156</div>
+            <div style="font-family:var(--mono);font-size:5pt;color:var(--c4);">▲ +24 nuovi iscritti</div>
+          </div>
+
+        </div>
+
+        <!-- chart + upcoming -->
+        <div style="display:grid;grid-template-columns:1fr 35mm;gap:2.5mm;">
+
+          <!-- mini bar chart -->
+          <div style="border:1px solid var(--border);padding:3mm;background:var(--surface-2);">
+            <div style="font-family:var(--mono);font-size:5pt;color:var(--ink-3);letter-spacing:.5px;margin-bottom:2mm;">PRENOTAZIONI — ULTIME 7 SETTIMANE</div>
+            <div style="height:22mm;display:flex;align-items:flex-end;gap:2mm;padding-top:2mm;">
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:1mm;">
+                <div style="flex:1;width:100%;background:rgba(13,140,140,.3);display:flex;align-items:flex-end;"><div style="width:100%;height:45%;background:var(--c2);border-radius:1px 1px 0 0;"></div></div>
+                <div style="font-family:var(--mono);font-size:4.5pt;color:var(--ink-4);">W1</div>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:1mm;">
+                <div style="flex:1;width:100%;background:rgba(13,140,140,.3);display:flex;align-items:flex-end;"><div style="width:100%;height:55%;background:var(--c2);border-radius:1px 1px 0 0;"></div></div>
+                <div style="font-family:var(--mono);font-size:4.5pt;color:var(--ink-4);">W2</div>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:1mm;">
+                <div style="flex:1;width:100%;background:rgba(13,140,140,.3);display:flex;align-items:flex-end;"><div style="width:100%;height:40%;background:var(--c2);border-radius:1px 1px 0 0;"></div></div>
+                <div style="font-family:var(--mono);font-size:4.5pt;color:var(--ink-4);">W3</div>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:1mm;">
+                <div style="flex:1;width:100%;background:rgba(13,140,140,.3);display:flex;align-items:flex-end;"><div style="width:100%;height:65%;background:var(--c2);border-radius:1px 1px 0 0;"></div></div>
+                <div style="font-family:var(--mono);font-size:4.5pt;color:var(--ink-4);">W4</div>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:1mm;">
+                <div style="flex:1;width:100%;background:rgba(13,140,140,.3);display:flex;align-items:flex-end;"><div style="width:100%;height:70%;background:var(--c2);border-radius:1px 1px 0 0;"></div></div>
+                <div style="font-family:var(--mono);font-size:4.5pt;color:var(--ink-4);">W5</div>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:1mm;">
+                <div style="flex:1;width:100%;background:rgba(163,198,57,.3);display:flex;align-items:flex-end;"><div style="width:100%;height:80%;background:var(--c1);border-radius:1px 1px 0 0;"></div></div>
+                <div style="font-family:var(--mono);font-size:4.5pt;color:var(--c1);">W6</div>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:1mm;">
+                <div style="flex:1;width:100%;background:rgba(163,198,57,.3);display:flex;align-items:flex-end;"><div style="width:100%;height:78%;background:var(--c1);border-radius:1px 1px 0 0;"></div></div>
+                <div style="font-family:var(--mono);font-size:4.5pt;color:var(--c1);">W7</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- prossime prenotazioni -->
+          <div style="border:1px solid var(--border);overflow:hidden;">
+            <div style="background:var(--surface-3);padding:1.5mm 2.5mm;font-family:var(--mono);font-size:5pt;color:var(--ink-3);letter-spacing:.5px;border-bottom:1px solid var(--border);">PROSSIME PRENOTAZIONI</div>
+            <div style="padding:2mm 2.5mm;border-bottom:1px dotted var(--border);">
+              <div style="font-size:6.5pt;font-weight:500;color:var(--ink);">Marco R.</div>
+              <div style="font-family:var(--mono);font-size:5pt;color:var(--ink-3);">10:00 · Campo 1 · Padel</div>
+              <div style="display:inline-block;background:rgba(93,170,96,.15);color:var(--c4);font-family:var(--mono);font-size:4.5pt;padding:.5mm 1.5mm;margin-top:.5mm;">CONF.</div>
+            </div>
+            <div style="padding:2mm 2.5mm;border-bottom:1px dotted var(--border);">
+              <div style="font-size:6.5pt;font-weight:500;color:var(--ink);">Laura M.</div>
+              <div style="font-family:var(--mono);font-size:5pt;color:var(--ink-3);">11:00 · Campo 2 · Padel</div>
+              <div style="display:inline-block;background:rgba(163,198,57,.15);color:#7a9820;font-family:var(--mono);font-size:4.5pt;padding:.5mm 1.5mm;margin-top:.5mm;">ATTESA</div>
+            </div>
+            <div style="padding:2mm 2.5mm;border-bottom:1px dotted var(--border);">
+              <div style="font-size:6.5pt;font-weight:500;color:var(--ink);">Team Rosso</div>
+              <div style="font-family:var(--mono);font-size:5pt;color:var(--ink-3);">15:00 · Campo 1 · Calcetto</div>
+              <div style="display:inline-block;background:rgba(93,170,96,.15);color:var(--c4);font-family:var(--mono);font-size:4.5pt;padding:.5mm 1.5mm;margin-top:.5mm;">CONF.</div>
+            </div>
+            <div style="padding:2mm 2.5mm;">
+              <div style="font-size:6.5pt;font-weight:500;color:var(--ink);">Giulia P.</div>
+              <div style="font-family:var(--mono);font-size:5pt;color:var(--ink-3);">17:00 · Sala A · Yoga</div>
+              <div style="display:inline-block;background:rgba(93,170,96,.15);color:var(--c4);font-family:var(--mono);font-size:4.5pt;padding:.5mm 1.5mm;margin-top:.5mm;">CONF.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ss-title">
+    <span class="ss-title-num">5.3</span>
+    Principi UX — Scelte di Design
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:3mm;margin:2mm 0 4mm;">
+
+    <div style="border:1px solid var(--border);padding:3.5mm;background:var(--surface-2);border-top:2px solid var(--c1);">
+      <div style="font-family:var(--mono);font-size:5.5pt;letter-spacing:1px;text-transform:uppercase;color:var(--c1);margin-bottom:1.5mm;">Principio 01</div>
+      <div style="font-size:8pt;font-weight:500;color:var(--ink);margin-bottom:1.5mm;">Max 4 Tap</div>
+      <div style="font-size:7pt;font-weight:300;color:var(--ink-3);line-height:1.5;">Ogni flusso di prenotazione deve completarsi in 4 interazioni o meno dall'apertura dell'app.</div>
+    </div>
+
+    <div style="border:1px solid var(--border);padding:3.5mm;background:var(--surface-2);border-top:2px solid var(--c2);">
+      <div style="font-family:var(--mono);font-size:5.5pt;letter-spacing:1px;text-transform:uppercase;color:var(--c2);margin-bottom:1.5mm;">Principio 02</div>
+      <div style="font-size:8pt;font-weight:500;color:var(--ink);margin-bottom:1.5mm;">Feedback Immediato</div>
+      <div style="font-size:7pt;font-weight:300;color:var(--ink-3);line-height:1.5;">Ogni azione riceve risposta visiva entro 100ms. Conferma prenotazione visibile prima ancora del server response.</div>
+    </div>
+
+    <div style="border:1px solid var(--border);padding:3.5mm;background:var(--surface-2);border-top:2px solid var(--c6);">
+      <div style="font-family:var(--mono);font-size:5.5pt;letter-spacing:1px;text-transform:uppercase;color:var(--c6);margin-bottom:1.5mm;">Principio 03</div>
+      <div style="font-size:8pt;font-weight:500;color:var(--ink);margin-bottom:1.5mm;">Accessibilità</div>
+      <div style="font-size:7pt;font-weight:300;color:var(--ink-3);line-height:1.5;">WCAG 2.1 AA compliance, testo minimo 16pt in app, contrasto colore &gt;4.5:1 per tutti gli elementi interattivi.</div>
+    </div>
+
+    <div style="border:1px solid var(--border);padding:3.5mm;background:var(--surface-2);border-top:2px solid var(--c7);">
+      <div style="font-family:var(--mono);font-size:5.5pt;letter-spacing:1px;text-transform:uppercase;color:var(--c7);margin-bottom:1.5mm;">Principio 04</div>
+      <div style="font-size:8pt;font-weight:500;color:var(--ink);margin-bottom:1.5mm;">Zero Training</div>
+      <div style="font-size:7pt;font-weight:300;color:var(--ink-3);line-height:1.5;">I gestori devono essere operativi in autonomia entro 15 minuti dall'onboarding, senza formazione specifica.</div>
+    </div>
+
+  </div>
+
+  <div class="pf">
+    <span>Sportly — Documento di Progetto — Seconda Consegna</span>
+    <div class="pf-dot"></div>
+    <span>05 Mockup Interfacce — Dashboard Gestori</span>
+    <div class="pf-dot"></div>
+    <span>Pagina 07 / 12</span>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════╗
+     ║    7 — SCHEMA DATABASE (pag 1)          ║
+     ╚══════════════════════════════════════════╝ -->
+<div class="page">
+  <div class="rh">
+    <div class="rh-left">
+      <img src="https://i.ibb.co/C3yKdHqw/asd.png" alt="Logo" class="rh-logo">
+      <div class="rh-divider"></div>
+      <span class="rh-section">06 — Schema Database</span>
+    </div>
+    <span class="rh-page">08 / 12</span>
+  </div>
+
+  <div class="s-eyebrow">Sezione 06</div>
+  <div class="s-title">Schema<br><em>Database</em></div>
+
+  <p>Il modello dati di Sportly è progettato su <strong>PostgreSQL</strong> con architettura relazionale normalizzata (3NF). Il database gestisce le entità principali — utenti, strutture, risorse prenotabili, prenotazioni, pagamenti, community — con chiavi esterne per garantire l'integrità referenziale e indici ottimizzati per le query più frequenti.</p>
+
+  <div class="ss-title">
+    <span class="ss-title-num">6.1</span>
+    Entità Principali — Tabelle Core
+  </div>
+
+  <div class="db-rel-legend">
+    <div class="db-rel-item"><div class="db-rel-dot" style="background:rgba(163,198,57,.7);"></div>PK — Primary Key</div>
+    <div class="db-rel-item"><div class="db-rel-dot" style="background:rgba(13,140,140,.7);"></div>FK — Foreign Key</div>
+    <div class="db-rel-item"><div class="db-rel-dot" style="background:rgba(58,158,122,.7);"></div>IDX — Indexed field</div>
+    <div class="db-rel-item"><div class="db-rel-dot" style="background:var(--border-2);"></div>Campo standard</div>
+  </div>
+
+  <div class="db-schema-wrap">
+
+    <!-- USERS -->
+    <div class="db-table t-accent-1">
+      <div class="db-table-header">
+        <div class="db-table-name">users</div>
+        <div class="db-table-pk">CORE</div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name pk">id</div><div class="db-field-constraint">PK · NOT NULL</div></div>
+        <div><div class="db-field-type">UUID</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name idx">email</div><div class="db-field-constraint">UNIQUE · NOT NULL</div></div>
+        <div><div class="db-field-type">VARCHAR(255)</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">password_hash</div></div>
+        <div><div class="db-field-type">VARCHAR(255)</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">full_name</div></div>
+        <div><div class="db-field-type">VARCHAR(100)</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name idx">phone</div></div>
+        <div><div class="db-field-type">VARCHAR(20)</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">avatar_url</div></div>
+        <div><div class="db-field-type">TEXT</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">sport_points</div><div class="db-field-constraint">DEFAULT 0</div></div>
+        <div><div class="db-field-type">INTEGER</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">role</div><div class="db-field-constraint">user|manager|admin</div></div>
+        <div><div class="db-field-type">ENUM</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">created_at</div></div>
+        <div><div class="db-field-type">TIMESTAMP</div></div>
+      </div>
+    </div>
+
+    <!-- VENUES -->
+    <div class="db-table t-accent-2">
+      <div class="db-table-header">
+        <div class="db-table-name">venues</div>
+        <div class="db-table-pk">CORE</div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name pk">id</div><div class="db-field-constraint">PK · NOT NULL</div></div>
+        <div><div class="db-field-type">UUID</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name fk">owner_id</div><div class="db-field-constraint">FK → users.id</div></div>
+        <div><div class="db-field-type">UUID</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name idx">name</div><div class="db-field-constraint">NOT NULL</div></div>
+        <div><div class="db-field-type">VARCHAR(150)</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">description</div></div>
+        <div><div class="db-field-type">TEXT</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name idx">city</div></div>
+        <div><div class="db-field-type">VARCHAR(100)</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name idx">lat</div></div>
+        <div><div class="db-field-type">DECIMAL(9,6)</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name idx">lng</div></div>
+        <div><div class="db-field-type">DECIMAL(9,6)</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">subscription_tier</div><div class="db-field-constraint">base|std|premium</div></div>
+        <div><div class="db-field-type">ENUM</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">verified</div><div class="db-field-constraint">DEFAULT false</div></div>
+        <div><div class="db-field-type">BOOLEAN</div></div>
+      </div>
+    </div>
+
+    <!-- RESOURCES -->
+    <div class="db-table t-accent-3">
+      <div class="db-table-header">
+        <div class="db-table-name">resources</div>
+        <div class="db-table-pk">CORE</div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name pk">id</div><div class="db-field-constraint">PK · NOT NULL</div></div>
+        <div><div class="db-field-type">UUID</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name fk">venue_id</div><div class="db-field-constraint">FK → venues.id</div></div>
+        <div><div class="db-field-type">UUID</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">name</div><div class="db-field-constraint">NOT NULL</div></div>
+        <div><div class="db-field-type">VARCHAR(100)</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name idx">sport_type</div></div>
+        <div><div class="db-field-type">VARCHAR(50)</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">capacity</div></div>
+        <div><div class="db-field-type">INTEGER</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">price_per_hour</div><div class="db-field-constraint">NOT NULL</div></div>
+        <div><div class="db-field-type">DECIMAL(8,2)</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">open_time</div></div>
+        <div><div class="db-field-type">TIME</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">close_time</div></div>
+        <div><div class="db-field-type">TIME</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">is_active</div><div class="db-field-constraint">DEFAULT true</div></div>
+        <div><div class="db-field-type">BOOLEAN</div></div>
+      </div>
+    </div>
+
+    <!-- BOOKINGS -->
+    <div class="db-table t-accent-4">
+      <div class="db-table-header">
+        <div class="db-table-name">bookings</div>
+        <div class="db-table-pk">CORE</div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name pk">id</div><div class="db-field-constraint">PK · NOT NULL</div></div>
+        <div><div class="db-field-type">UUID</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name fk">user_id</div><div class="db-field-constraint">FK → users.id</div></div>
+        <div><div class="db-field-type">UUID</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name fk">resource_id</div><div class="db-field-constraint">FK → resources.id</div></div>
+        <div><div class="db-field-type">UUID</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name idx">booking_date</div><div class="db-field-constraint">NOT NULL</div></div>
+        <div><div class="db-field-type">DATE</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">start_time</div><div class="db-field-constraint">NOT NULL</div></div>
+        <div><div class="db-field-type">TIME</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">end_time</div><div class="db-field-constraint">NOT NULL</div></div>
+        <div><div class="db-field-type">TIME</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name idx">status</div><div class="db-field-constraint">pending|conf|canc</div></div>
+        <div><div class="db-field-type">ENUM</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">total_price</div></div>
+        <div><div class="db-field-type">DECIMAL(8,2)</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">qr_code_hash</div></div>
+        <div><div class="db-field-type">VARCHAR(64)</div></div>
+      </div>
+    </div>
+
+    <!-- PAYMENTS -->
+    <div class="db-table t-accent-5">
+      <div class="db-table-header">
+        <div class="db-table-name">payments</div>
+        <div class="db-table-pk">FINANCE</div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name pk">id</div><div class="db-field-constraint">PK · NOT NULL</div></div>
+        <div><div class="db-field-type">UUID</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name fk">booking_id</div><div class="db-field-constraint">FK → bookings.id</div></div>
+        <div><div class="db-field-type">UUID</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name fk">user_id</div><div class="db-field-constraint">FK → users.id</div></div>
+        <div><div class="db-field-type">UUID</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">stripe_payment_id</div><div class="db-field-constraint">UNIQUE</div></div>
+        <div><div class="db-field-type">VARCHAR(100)</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">amount</div><div class="db-field-constraint">NOT NULL</div></div>
+        <div><div class="db-field-type">DECIMAL(8,2)</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">currency</div><div class="db-field-constraint">DEFAULT 'EUR'</div></div>
+        <div><div class="db-field-type">CHAR(3)</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name idx">status</div><div class="db-field-constraint">pending|paid|refunded</div></div>
+        <div><div class="db-field-type">ENUM</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">platform_fee</div></div>
+        <div><div class="db-field-type">DECIMAL(6,2)</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">paid_at</div></div>
+        <div><div class="db-field-type">TIMESTAMP</div></div>
+      </div>
+    </div>
+
+    <!-- REVIEWS -->
+    <div class="db-table t-accent-6">
+      <div class="db-table-header">
+        <div class="db-table-name">reviews</div>
+        <div class="db-table-pk">COMMUNITY</div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name pk">id</div><div class="db-field-constraint">PK · NOT NULL</div></div>
+        <div><div class="db-field-type">UUID</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name fk">user_id</div><div class="db-field-constraint">FK → users.id</div></div>
+        <div><div class="db-field-type">UUID</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name fk">venue_id</div><div class="db-field-constraint">FK → venues.id</div></div>
+        <div><div class="db-field-type">UUID</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name fk">booking_id</div><div class="db-field-constraint">FK → bookings.id</div></div>
+        <div><div class="db-field-type">UUID</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name idx">rating</div><div class="db-field-constraint">CHECK(1-5)</div></div>
+        <div><div class="db-field-type">SMALLINT</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">comment</div></div>
+        <div><div class="db-field-type">TEXT</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">is_verified</div><div class="db-field-constraint">DEFAULT false</div></div>
+        <div><div class="db-field-type">BOOLEAN</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">created_at</div></div>
+        <div><div class="db-field-type">TIMESTAMP</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="pf">
+    <span>Sportly — Documento di Progetto — Seconda Consegna</span>
+    <div class="pf-dot"></div>
+    <span>06 Schema Database — Tabelle Core</span>
+    <div class="pf-dot"></div>
+    <span>Pagina 08 / 12</span>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════╗
+     ║    8 — SCHEMA DATABASE (pag 2)          ║
+     ╚══════════════════════════════════════════╝ -->
+<div class="page">
+  <div class="rh">
+    <div class="rh-left">
+      <img src="https://i.ibb.co/C3yKdHqw/asd.png" alt="Logo" class="rh-logo">
+      <div class="rh-divider"></div>
+      <span class="rh-section">06 — Schema Database (cont.)</span>
+    </div>
+    <span class="rh-page">09 / 12</span>
+  </div>
+
+  <div class="s-eyebrow">Sezione 06 — Continua</div>
+  <div class="s-title">Relazioni &amp;<br><em>Architettura</em></div>
+
+  <div class="ss-title">
+    <span class="ss-title-num">6.2</span>
+    Tabelle Secondarie — Community e Notifiche
+  </div>
+
+  <div class="db-schema-wrap">
+
+    <!-- NOTIFICATIONS -->
+    <div class="db-table">
+      <div class="db-table-header">
+        <div class="db-table-name">notifications</div>
+        <div class="db-table-pk">SYSTEM</div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name pk">id</div><div class="db-field-constraint">PK</div></div>
+        <div><div class="db-field-type">UUID</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name fk">user_id</div><div class="db-field-constraint">FK → users</div></div>
+        <div><div class="db-field-type">UUID</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">type</div><div class="db-field-constraint">booking|promo|reminder</div></div>
+        <div><div class="db-field-type">ENUM</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">title</div></div>
+        <div><div class="db-field-type">VARCHAR(200)</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">body</div></div>
+        <div><div class="db-field-type">TEXT</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name idx">is_read</div><div class="db-field-constraint">DEFAULT false</div></div>
+        <div><div class="db-field-type">BOOLEAN</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">sent_at</div></div>
+        <div><div class="db-field-type">TIMESTAMP</div></div>
+      </div>
+    </div>
+
+    <!-- MATCH_REQUESTS (community) -->
+    <div class="db-table t-accent-3">
+      <div class="db-table-header">
+        <div class="db-table-name">match_requests</div>
+        <div class="db-table-pk">COMMUNITY</div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name pk">id</div><div class="db-field-constraint">PK</div></div>
+        <div><div class="db-field-type">UUID</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name fk">requester_id</div><div class="db-field-constraint">FK → users</div></div>
+        <div><div class="db-field-type">UUID</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name idx">sport_type</div></div>
+        <div><div class="db-field-type">VARCHAR(50)</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">preferred_date</div></div>
+        <div><div class="db-field-type">DATE</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name idx">city</div></div>
+        <div><div class="db-field-type">VARCHAR(100)</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">skill_level</div><div class="db-field-constraint">beginner|mid|advanced</div></div>
+        <div><div class="db-field-type">ENUM</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name idx">status</div><div class="db-field-constraint">open|matched|closed</div></div>
+        <div><div class="db-field-type">ENUM</div></div>
+      </div>
+    </div>
+
+    <!-- VENUE_SUBSCRIPTIONS -->
+    <div class="db-table t-accent-5">
+      <div class="db-table-header">
+        <div class="db-table-name">venue_subscriptions</div>
+        <div class="db-table-pk">FINANCE</div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name pk">id</div><div class="db-field-constraint">PK</div></div>
+        <div><div class="db-field-type">UUID</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name fk">venue_id</div><div class="db-field-constraint">FK → venues</div></div>
+        <div><div class="db-field-type">UUID</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">plan</div><div class="db-field-constraint">base|std|premium</div></div>
+        <div><div class="db-field-type">ENUM</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">stripe_sub_id</div></div>
+        <div><div class="db-field-type">VARCHAR(100)</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name">starts_at</div></div>
+        <div><div class="db-field-type">TIMESTAMP</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name idx">ends_at</div></div>
+        <div><div class="db-field-type">TIMESTAMP</div></div>
+      </div>
+      <div class="db-field">
+        <div><div class="db-field-name idx">is_active</div><div class="db-field-constraint">DEFAULT true</div></div>
+        <div><div class="db-field-type">BOOLEAN</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="ss-title">
+    <span class="ss-title-num">6.3</span>
+    Diagramma Relazionale — ER Schema
+  </div>
+
+  <!-- ER diagram SVG -->
+  <div style="border:1px solid var(--border);background:var(--surface-2);padding:5mm;margin:3mm 0 4mm;overflow:hidden;">
+    <svg width="100%" viewBox="0 0 540 200" font-family="JetBrains Mono, monospace" font-size="6.5">
+
+      <!-- USERS box -->
+      <rect x="5" y="70" width="75" height="60" fill="#fff" stroke="#0d8c8c" stroke-width="1.5" rx="2"/>
+      <rect x="5" y="70" width="75" height="14" fill="#0d8c8c" rx="2"/>
+      <rect x="5" y="82" width="75" height="2" fill="#0d8c8c"/>
+      <text x="42" y="80" fill="#fff" text-anchor="middle" font-weight="600">users</text>
+      <text x="9" y="94" fill="#717171">id (PK)</text>
+      <text x="9" y="105" fill="#717171">email</text>
+      <text x="9" y="116" fill="#717171">role</text>
+      <text x="9" y="127" fill="#717171">sport_points</text>
+
+      <!-- VENUES box -->
+      <rect x="140" y="5" width="80" height="60" fill="#fff" stroke="#3a9e7a" stroke-width="1.5" rx="2"/>
+      <rect x="140" y="5" width="80" height="14" fill="#3a9e7a" rx="2"/>
+      <rect x="140" y="17" width="80" height="2" fill="#3a9e7a"/>
+      <text x="180" y="15" fill="#fff" text-anchor="middle" font-weight="600">venues</text>
+      <text x="144" y="29" fill="#717171">id (PK)</text>
+      <text x="144" y="40" fill="#717171">owner_id (FK)</text>
+      <text x="144" y="51" fill="#717171">city · lat · lng</text>
+      <text x="144" y="62" fill="#717171">sub_tier</text>
+
+      <!-- RESOURCES box -->
+      <rect x="270" y="5" width="80" height="55" fill="#fff" stroke="#2d9a90" stroke-width="1.5" rx="2"/>
+      <rect x="270" y="5" width="80" height="14" fill="#2d9a90" rx="2"/>
+      <text x="310" y="15" fill="#fff" text-anchor="middle" font-weight="600">resources</text>
+      <text x="274" y="29" fill="#717171">id (PK)</text>
+      <text x="274" y="40" fill="#717171">venue_id (FK)</text>
+      <text x="274" y="51" fill="#717171">sport_type · price</text>
+
+      <!-- BOOKINGS box (central) -->
+      <rect x="200" y="100" width="85" height="70" fill="#fff" stroke="#5daa60" stroke-width="2" rx="2"/>
+      <rect x="200" y="100" width="85" height="14" fill="#5daa60" rx="2"/>
+      <text x="242" y="110" fill="#fff" text-anchor="middle" font-weight="700">bookings</text>
+      <text x="204" y="124" fill="#717171">id (PK)</text>
+      <text x="204" y="135" fill="#717171">user_id (FK)</text>
+      <text x="204" y="146" fill="#717171">resource_id (FK)</text>
+      <text x="204" y="157" fill="#717171">date · time</text>
+      <text x="204" y="168" fill="#717171">status · price</text>
+
+      <!-- PAYMENTS box -->
+      <rect x="380" y="70" width="80" height="65" fill="#fff" stroke="#0a7a7a" stroke-width="1.5" rx="2"/>
+      <rect x="380" y="70" width="80" height="14" fill="#0a7a7a" rx="2"/>
+      <text x="420" y="80" fill="#fff" text-anchor="middle" font-weight="600">payments</text>
+      <text x="384" y="94" fill="#717171">id (PK)</text>
+      <text x="384" y="105" fill="#717171">booking_id (FK)</text>
+      <text x="384" y="116" fill="#717171">stripe_id</text>
+      <text x="384" y="127" fill="#717171">amount · fee</text>
+
+      <!-- REVIEWS box -->
+      <rect x="380" y="145" width="80" height="50" fill="#fff" stroke="#a3c639" stroke-width="1.5" rx="2"/>
+      <rect x="380" y="145" width="80" height="14" fill="#a3c639" rx="2"/>
+      <text x="420" y="155" fill="#0c0c0c" text-anchor="middle" font-weight="600">reviews</text>
+      <text x="384" y="169" fill="#717171">id (PK)</text>
+      <text x="384" y="180" fill="#717171">booking_id (FK)</text>
+      <text x="384" y="191" fill="#717171">rating · comment</text>
+
+      <!-- MATCH_REQUESTS box -->
+      <rect x="5" y="145" width="80" height="50" fill="#fff" stroke="#38a898" stroke-width="1.5" rx="2"/>
+      <rect x="5" y="145" width="80" height="14" fill="#38a898" rx="2"/>
+      <text x="45" y="155" fill="#fff" text-anchor="middle" font-weight="600">match_req</text>
+      <text x="9" y="169" fill="#717171">id (PK)</text>
+      <text x="9" y="180" fill="#717171">requester_id (FK)</text>
+      <text x="9" y="191" fill="#717171">sport · city · status</text>
+
+      <!-- RELATIONS arrows -->
+      <!-- users → venues (owner) -->
+      <line x1="80" y1="88" x2="140" y2="30" stroke="#3a9e7a" stroke-width="1" stroke-dasharray="3,2"/>
+      <text x="105" y="52" fill="#3a9e7a" font-size="5.5">owns</text>
+
+      <!-- venues → resources -->
+      <line x1="220" y1="32" x2="270" y2="32" stroke="#2d9a90" stroke-width="1" marker-end="url(#arrow)"/>
+      <text x="232" y="28" fill="#2d9a90" font-size="5.5">1:N</text>
+
+      <!-- users → bookings -->
+      <line x1="80" y1="110" x2="200" y2="130" stroke="#5daa60" stroke-width="1.5" marker-end="url(#arrow2)"/>
+      <text x="120" y="120" fill="#5daa60" font-size="5.5">makes</text>
+
+      <!-- resources → bookings -->
+      <line x1="310" y1="60" x2="270" y2="110" stroke="#5daa60" stroke-width="1.5" marker-end="url(#arrow2)"/>
+      <text x="296" y="88" fill="#5daa60" font-size="5.5">used in</text>
+
+      <!-- bookings → payments -->
+      <line x1="285" y1="135" x2="380" y2="105" stroke="#0a7a7a" stroke-width="1" marker-end="url(#arrow3)"/>
+      <text x="320" y="112" fill="#0a7a7a" font-size="5.5">1:1</text>
+
+      <!-- bookings → reviews -->
+      <line x1="285" y1="165" x2="380" y2="165" stroke="#a3c639" stroke-width="1" marker-end="url(#arrow4)"/>
+      <text x="322" y="158" fill="#7a9820" font-size="5.5">triggers</text>
+
+      <!-- users → match_requests -->
+      <line x1="45" y1="130" x2="45" y2="145" stroke="#38a898" stroke-width="1" stroke-dasharray="3,2"/>
+      <text x="48" y="140" fill="#38a898" font-size="5.5">posts</text>
+
+      <!-- arrowhead markers -->
+      <defs>
+        <marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L6,3 z" fill="#2d9a90"/>
+        </marker>
+        <marker id="arrow2" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L6,3 z" fill="#5daa60"/>
+        </marker>
+        <marker id="arrow3" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L6,3 z" fill="#0a7a7a"/>
+        </marker>
+        <marker id="arrow4" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L6,3 z" fill="#a3c639"/>
+        </marker>
+      </defs>
+    </svg>
+  </div>
+
+  <div class="ss-title">
+    <span class="ss-title-num">6.4</span>
+    Scelte Tecniche Principali
+  </div>
+
+  <table class="tbl">
+    <thead>
+      <tr>
+        <th>Scelta Tecnica</th>
+        <th>Motivazione</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>UUID come PK (vs integer auto-increment)</td><td>Evita enumerazione delle risorse via URL, compatibile con architettura distribuita multi-region</td></tr>
+      <tr><td>ENUM per campi stato</td><td>Garantisce coerenza dei dati a livello di database, evita valori non validi anche senza validazione applicativa</td></tr>
+      <tr><td>DECIMAL(8,2) per prezzi</td><td>Precisione monetaria garantita, evita errori di arrotondamento tipici del tipo FLOAT</td></tr>
+      <tr><td>Indici su city, sport_type, booking_date, status</td><td>Le query più frequenti (ricerca strutture per città, filtraggio per sport, slot disponibili) risultano O(log n)</td></tr>
+      <tr><td>Soft delete con is_active = false</td><td>Preserva lo storico prenotazioni e pagamenti anche dopo disattivazione di risorse o venue</td></tr>
+      <tr><td>Separazione payments da bookings</td><td>Permette rimborsi parziali, gestione multi-pagamento e audit finanziario indipendente dalla logica prenotazioni</td></tr>
+    </tbody>
+  </table>
+
+  <div class="pf">
+    <span>Sportly — Documento di Progetto — Seconda Consegna</span>
+    <div class="pf-dot"></div>
+    <span>06 Schema Database — ER e Relazioni</span>
+    <div class="pf-dot"></div>
+    <span>Pagina 09 / 12</span>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════╗
+     ║    9 — ARCHITETTURA SISTEMA             ║
+     ╚══════════════════════════════════════════╝ -->
+<div class="page">
+  <div class="rh">
+    <div class="rh-left">
+      <img src="https://i.ibb.co/C3yKdHqw/asd.png" alt="Logo" class="rh-logo">
+      <div class="rh-divider"></div>
+      <span class="rh-section">06 — Architettura del Sistema</span>
+    </div>
+    <span class="rh-page">10 / 12</span>
+  </div>
+
+  <div class="s-eyebrow">Sezione 06 — Architettura</div>
+  <div class="s-title">Architettura<br><em>del Sistema</em></div>
+
+  <p>L'architettura di Sportly è progettata secondo i principi del <strong>cloud-native development</strong>: stateless, containerizzata, scalabile orizzontalmente e resistente ai guasti. Il sistema è suddiviso in layer funzionali indipendenti che comunicano tramite API RESTful e code di messaggi asincroni.</p>
+
+  <div class="ss-title">
+    <span class="ss-title-num">6.5</span>
+    Stack per Layer — Architettura Completa
+  </div>
+
+  <div class="arch-layers">
+
+    <div class="arch-layer l1">
+      <div class="arch-layer-label">
+        <div class="arch-layer-label-text">Client Layer</div>
+      </div>
+      <div class="arch-layer-content">
+        <div class="arch-tech-block">
+          <div class="atb-name">React Native (Mobile)</div>
+          <div class="atb-desc">App iOS e Android cross-platform. Stessa codebase, UX nativa ottimizzata per entrambi i sistemi operativi.</div>
+        </div>
+        <div class="arch-tech-block">
+          <div class="atb-name">React.js (Web App)</div>
+          <div class="atb-desc">Portale web per gestori e utenti desktop. SPA con routing lato client, componenti condivisi con mobile.</div>
+        </div>
+        <div class="arch-tech-block">
+          <div class="atb-name">Google Maps SDK</div>
+          <div class="atb-desc">Mappa interattiva per ricerca strutture per geolocalizzazione, navigazione integrata, visualizzazione pin con disponibilità.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-layer l2">
+      <div class="arch-layer-label">
+        <div class="arch-layer-label-text">API Gateway</div>
+      </div>
+      <div class="arch-layer-content">
+        <div class="arch-tech-block">
+          <div class="atb-name">AWS API Gateway</div>
+          <div class="atb-desc">Punto di ingresso unico per tutte le richieste API. Rate limiting, autenticazione JWT, routing verso microservizi.</div>
+        </div>
+        <div class="arch-tech-block">
+          <div class="atb-name">JWT + Refresh Token</div>
+          <div class="atb-desc">Autenticazione stateless con access token 15min e refresh token 30gg. Revoca token su logout o cambio password.</div>
+        </div>
+        <div class="arch-tech-block">
+          <div class="atb-name">HTTPS / TLS 1.3</div>
+          <div class="atb-desc">Crittografia end-to-end su tutti i canali. Certificati gestiti automaticamente via AWS Certificate Manager.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-layer l3">
+      <div class="arch-layer-label">
+        <div class="arch-layer-label-text">Business Logic</div>
+      </div>
+      <div class="arch-layer-content">
+        <div class="arch-tech-block">
+          <div class="atb-name">Node.js / Express</div>
+          <div class="atb-desc">Microservizi REST per booking engine, user management, venue management. Deploy su AWS Lambda con autoscaling.</div>
+        </div>
+        <div class="arch-tech-block">
+          <div class="atb-name">Stripe API</div>
+          <div class="atb-desc">Gateway pagamenti PCI-DSS compliant. Gestione charge, refund, subscription ricorrenti per piani SaaS.</div>
+        </div>
+        <div class="arch-tech-block">
+          <div class="atb-name">Firebase Cloud Messaging</div>
+          <div class="atb-desc">Push notifications cross-platform per conferme prenotazione, reminder H-24, alert slot liberi e promozioni.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-layer l4">
+      <div class="arch-layer-label">
+        <div class="arch-layer-label-text">Data Layer</div>
+      </div>
+      <div class="arch-layer-content">
+        <div class="arch-tech-block">
+          <div class="atb-name">PostgreSQL (AWS RDS)</div>
+          <div class="atb-desc">Database relazionale principale con replica sincrona multi-AZ per alta disponibilità e failover automatico.</div>
+        </div>
+        <div class="arch-tech-block">
+          <div class="atb-name">Redis (ElastiCache)</div>
+          <div class="atb-desc">Cache sessioni utente, disponibilità slot in real-time, rate limiting. TTL configurato per ogni tipo di dato.</div>
+        </div>
+        <div class="arch-tech-block">
+          <div class="atb-name">AWS S3 + CloudFront</div>
+          <div class="atb-desc">Storage immagini strutture e asset statici. CDN globale per delivery rapida con cache edge nelle principali regioni.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-layer l5">
+      <div class="arch-layer-label">
+        <div class="arch-layer-label-text">DevOps</div>
+      </div>
+      <div class="arch-layer-content">
+        <div class="arch-tech-block">
+          <div class="atb-name">Docker + GitHub Actions</div>
+          <div class="atb-desc">Containerizzazione di tutti i servizi. Pipeline CI/CD automatizzata: test → build → staging → produzione a ogni merge su main.</div>
+        </div>
+        <div class="arch-tech-block">
+          <div class="atb-name">Sentry + Datadog</div>
+          <div class="atb-desc">Error tracking real-time, performance monitoring, alerting su soglie di latenza e error rate. Dashboard 24/7.</div>
+        </div>
+        <div class="arch-tech-block">
+          <div class="atb-name">Terraform (IaC)</div>
+          <div class="atb-desc">Infrastruttura AWS definita come codice. Riproducibilità degli ambienti, gestione versioni infrastruttura, disaster recovery.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="ss-title">
+    <span class="ss-title-num">6.6</span>
+    Sicurezza e Compliance
+  </div>
+
+  <div class="value-grid">
+    <div class="value-section">
+      <div class="value-section-label">Sicurezza Applicativa</div>
+      <div class="value-item">
+        <div class="value-dot"></div>
+        <div><div class="vi-title">Autenticazione JWT stateless</div><div class="vi-text">Token con scadenza breve (15 min), refresh token ruotati ad ogni utilizzo.</div></div>
+      </div>
+      <div class="value-item">
+        <div class="value-dot"></div>
+        <div><div class="vi-title">Password hashing bcrypt</div><div class="vi-text">Costo computazionale elevato (rounds=12), salt unico per utente, mai in chiaro nel DB.</div></div>
+      </div>
+      <div class="value-item">
+        <div class="value-dot"></div>
+        <div><div class="vi-title">Rate limiting per IP</div><div class="vi-text">Max 100 req/min per IP anonimo, 500 req/min per utente autenticato. Blocco automatico.</div></div>
+      </div>
+      <div class="value-item">
+        <div class="value-dot"></div>
+        <div><div class="vi-title">Validazione input server-side</div><div class="vi-text">Sanitizzazione di tutti i parametri in ingresso per prevenire SQL injection e XSS.</div></div>
+      </div>
+    </div>
+    <div class="value-section">
+      <div class="value-section-label">Compliance GDPR</div>
+      <div class="value-item">
+        <div class="value-dot teal"></div>
+        <div><div class="vi-title">Dati cifrati at rest</div><div class="vi-text">Cifratura AES-256 per tutti i dati personali nel database RDS e nei backup S3.</div></div>
+      </div>
+      <div class="value-item">
+        <div class="value-dot teal"></div>
+        <div><div class="vi-title">Diritto all'oblio</div><div class="vi-text">API per cancellazione account con anonimizzazione dei dati storici (prenotazioni mantenute aggregate).</div></div>
+      </div>
+      <div class="value-item">
+        <div class="value-dot teal"></div>
+        <div><div class="vi-title">Data residency EU</div><div class="vi-text">Tutti i dati personali ospitati in AWS eu-south-1 (Milano) per compliance GDPR Art. 44.</div></div>
+      </div>
+      <div class="value-item
