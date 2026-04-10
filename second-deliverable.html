@@ -3002,4 +3002,176 @@ p strong { color: var(--ink); font-weight: 500; }
     <div class="pf-dot"></div>
     <span>Pagina 11 / 12</span>
   </div>
+<<<<<<< HEAD
 </div>
+=======
+</div>
+
+<!-- ╔══════════════════════════════════════════╗
+     ║    9 — ARCHITETTURA SISTEMA             ║
+     ╚══════════════════════════════════════════╝ -->
+<div class="page">
+  <div class="rh">
+    <div class="rh-left">
+      <img src="https://i.ibb.co/C3yKdHqw/asd.png" alt="Logo" class="rh-logo">
+      <div class="rh-divider"></div>
+      <span class="rh-section">06 — Architettura del Sistema</span>
+    </div>
+    <span class="rh-page">10 / 12</span>
+  </div>
+
+  <div class="s-eyebrow">Sezione 06 — Architettura</div>
+  <div class="s-title">Architettura<br><em>del Sistema</em></div>
+
+  <p>L'architettura di Sportly è progettata secondo i principi del <strong>cloud-native development</strong>: stateless, containerizzata, scalabile orizzontalmente e resistente ai guasti. Il sistema è suddiviso in layer funzionali indipendenti che comunicano tramite API RESTful e code di messaggi asincroni.</p>
+
+  <div class="ss-title">
+    <span class="ss-title-num">6.5</span>
+    Stack per Layer — Architettura Completa
+  </div>
+
+  <div class="arch-layers">
+
+    <div class="arch-layer l1">
+      <div class="arch-layer-label">
+        <div class="arch-layer-label-text">Client Layer</div>
+      </div>
+      <div class="arch-layer-content">
+        <div class="arch-tech-block">
+          <div class="atb-name">React Native (Mobile)</div>
+          <div class="atb-desc">App iOS e Android cross-platform. Stessa codebase, UX nativa ottimizzata per entrambi i sistemi operativi.</div>
+        </div>
+        <div class="arch-tech-block">
+          <div class="atb-name">React.js (Web App)</div>
+          <div class="atb-desc">Portale web per gestori e utenti desktop. SPA con routing lato client, componenti condivisi con mobile.</div>
+        </div>
+        <div class="arch-tech-block">
+          <div class="atb-name">Google Maps SDK</div>
+          <div class="atb-desc">Mappa interattiva per ricerca strutture per geolocalizzazione, navigazione integrata, visualizzazione pin con disponibilità.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-layer l2">
+      <div class="arch-layer-label">
+        <div class="arch-layer-label-text">API Gateway</div>
+      </div>
+      <div class="arch-layer-content">
+        <div class="arch-tech-block">
+          <div class="atb-name">AWS API Gateway</div>
+          <div class="atb-desc">Punto di ingresso unico per tutte le richieste API. Rate limiting, autenticazione JWT, routing verso microservizi.</div>
+        </div>
+        <div class="arch-tech-block">
+          <div class="atb-name">JWT + Refresh Token</div>
+          <div class="atb-desc">Autenticazione stateless con access token 15min e refresh token 30gg. Revoca token su logout o cambio password.</div>
+        </div>
+        <div class="arch-tech-block">
+          <div class="atb-name">HTTPS / TLS 1.3</div>
+          <div class="atb-desc">Crittografia end-to-end su tutti i canali. Certificati gestiti automaticamente via AWS Certificate Manager.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-layer l3">
+      <div class="arch-layer-label">
+        <div class="arch-layer-label-text">Business Logic</div>
+      </div>
+      <div class="arch-layer-content">
+        <div class="arch-tech-block">
+          <div class="atb-name">Node.js / Express</div>
+          <div class="atb-desc">Microservizi REST per booking engine, user management, venue management. Deploy su AWS Lambda con autoscaling.</div>
+        </div>
+        <div class="arch-tech-block">
+          <div class="atb-name">Stripe API</div>
+          <div class="atb-desc">Gateway pagamenti PCI-DSS compliant. Gestione charge, refund, subscription ricorrenti per piani SaaS.</div>
+        </div>
+        <div class="arch-tech-block">
+          <div class="atb-name">Firebase Cloud Messaging</div>
+          <div class="atb-desc">Push notifications cross-platform per conferme prenotazione, reminder H-24, alert slot liberi e promozioni.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-layer l4">
+      <div class="arch-layer-label">
+        <div class="arch-layer-label-text">Data Layer</div>
+      </div>
+      <div class="arch-layer-content">
+        <div class="arch-tech-block">
+          <div class="atb-name">PostgreSQL (AWS RDS)</div>
+          <div class="atb-desc">Database relazionale principale con replica sincrona multi-AZ per alta disponibilità e failover automatico.</div>
+        </div>
+        <div class="arch-tech-block">
+          <div class="atb-name">Redis (ElastiCache)</div>
+          <div class="atb-desc">Cache sessioni utente, disponibilità slot in real-time, rate limiting. TTL configurato per ogni tipo di dato.</div>
+        </div>
+        <div class="arch-tech-block">
+          <div class="atb-name">AWS S3 + CloudFront</div>
+          <div class="atb-desc">Storage immagini strutture e asset statici. CDN globale per delivery rapida con cache edge nelle principali regioni.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-layer l5">
+      <div class="arch-layer-label">
+        <div class="arch-layer-label-text">DevOps</div>
+      </div>
+      <div class="arch-layer-content">
+        <div class="arch-tech-block">
+          <div class="atb-name">Docker + GitHub Actions</div>
+          <div class="atb-desc">Containerizzazione di tutti i servizi. Pipeline CI/CD automatizzata: test → build → staging → produzione a ogni merge su main.</div>
+        </div>
+        <div class="arch-tech-block">
+          <div class="atb-name">Sentry + Datadog</div>
+          <div class="atb-desc">Error tracking real-time, performance monitoring, alerting su soglie di latenza e error rate. Dashboard 24/7.</div>
+        </div>
+        <div class="arch-tech-block">
+          <div class="atb-name">Terraform (IaC)</div>
+          <div class="atb-desc">Infrastruttura AWS definita come codice. Riproducibilità degli ambienti, gestione versioni infrastruttura, disaster recovery.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="ss-title">
+    <span class="ss-title-num">6.6</span>
+    Sicurezza e Compliance
+  </div>
+
+  <div class="value-grid">
+    <div class="value-section">
+      <div class="value-section-label">Sicurezza Applicativa</div>
+      <div class="value-item">
+        <div class="value-dot"></div>
+        <div><div class="vi-title">Autenticazione JWT stateless</div><div class="vi-text">Token con scadenza breve (15 min), refresh token ruotati ad ogni utilizzo.</div></div>
+      </div>
+      <div class="value-item">
+        <div class="value-dot"></div>
+        <div><div class="vi-title">Password hashing bcrypt</div><div class="vi-text">Costo computazionale elevato (rounds=12), salt unico per utente, mai in chiaro nel DB.</div></div>
+      </div>
+      <div class="value-item">
+        <div class="value-dot"></div>
+        <div><div class="vi-title">Rate limiting per IP</div><div class="vi-text">Max 100 req/min per IP anonimo, 500 req/min per utente autenticato. Blocco automatico.</div></div>
+      </div>
+      <div class="value-item">
+        <div class="value-dot"></div>
+        <div><div class="vi-title">Validazione input server-side</div><div class="vi-text">Sanitizzazione di tutti i parametri in ingresso per prevenire SQL injection e XSS.</div></div>
+      </div>
+    </div>
+    <div class="value-section">
+      <div class="value-section-label">Compliance GDPR</div>
+      <div class="value-item">
+        <div class="value-dot teal"></div>
+        <div><div class="vi-title">Dati cifrati at rest</div><div class="vi-text">Cifratura AES-256 per tutti i dati personali nel database RDS e nei backup S3.</div></div>
+      </div>
+      <div class="value-item">
+        <div class="value-dot teal"></div>
+        <div><div class="vi-title">Diritto all'oblio</div><div class="vi-text">API per cancellazione account con anonimizzazione dei dati storici (prenotazioni mantenute aggregate).</div></div>
+      </div>
+      <div class="value-item">
+        <div class="value-dot teal"></div>
+        <div><div class="vi-title">Data residency EU</div><div class="vi-text">Tutti i dati personali ospitati in AWS eu-south-1 (Milano) per compliance GDPR Art. 44.</div></div>
+      </div>
+      <div class="value-item
+>>>>>>> d10215bc53598dcfd653768e8e57a2eacfe95a1f
